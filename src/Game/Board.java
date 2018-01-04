@@ -8,7 +8,7 @@ public class Board {
 
 	public void createFields() {
 
-		Start start = new Start(0, 3, "Start");
+		Start start = new Start(0, 4000, "Start");
 		fields[0] = start;
 		Street street1 = new Street(1, "Burger Joint", null, 1, Group.BROWN);
 		fields[1] = street1;

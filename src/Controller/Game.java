@@ -37,21 +37,7 @@ public class Game {
 
 			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vælger sit navn:");
 
-			int balance;
-
-			if (playerAmount == 2) {
-				balance = 20;
-			}
-
-			else if (playerAmount == 3) {
-				balance = 18;
-			}
-
-			else {
-				balance = 16;
-			}
-
-			players[i] = new Player(name, balance);
+			players[i] = new Player(name, 30000);
 		}
 
 		gui_controller.addPlayers(players);
