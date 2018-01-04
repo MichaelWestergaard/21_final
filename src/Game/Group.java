@@ -1,0 +1,5 @@
+package Game;
+
+public enum Group {
+	RED,GREEN,YELLOW,BROWN,PURPLE,ORANGE,LIGHTBLUE,DARKBLUE
+}
