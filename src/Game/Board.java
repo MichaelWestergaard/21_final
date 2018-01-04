@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Board {
 	
-	private Field[] fields = new Field[24];
+	private Field[] fields = new Field[40];
 
 	public void createFields() {
 
