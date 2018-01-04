@@ -18,6 +18,8 @@ public class Game {
 	private Player[] players;
 	private GUI_Controller gui_controller = new GUI_Controller();
 	private Board board = new Board();
+	
+	private String[] playerAmountOptions = {"3", "4", "5", "6"};
 
 	public void gameSetup() {
 
@@ -26,11 +28,9 @@ public class Game {
 
 		gui_controller.setupGUI(board.getFields());
 
-		int playerAmount = Integer.parseInt(gui_controller.getUserInput("Indtast antallet af spillere"));
-		while (playerAmount > 4 || playerAmount < 2) {
-			playerAmount = Integer.parseInt(gui_controller.getUserInput("Indtast antallet af spillere (2-4)"));
-		}
-
+		int playerAmount = gui_controller.getPlayerAmount("Vælg antallet af spillere", playerAmountOptions);
+		System.out.println(playerAmount);
+		
 		players = new Player[playerAmount];
 
 		for (int i = 0; i < playerAmount; i++) {

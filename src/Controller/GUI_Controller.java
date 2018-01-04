@@ -71,7 +71,7 @@ public class GUI_Controller {
 
 	public void addPlayers(Player[] players) {
 		
-		Color[] colors = {Color.BLACK, Color.BLUE, Color.GREEN, Color.YELLOW};
+		Color[] colors = {Color.BLACK, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.RED};
 		int i = 0;
 		for (Player player : players) {
 
@@ -130,5 +130,9 @@ public class GUI_Controller {
 		}
 		
 	}
-		
+	
+	public int getPlayerAmount(String text, String[] options) {
+		return Integer.parseInt(gui.getUserSelection(text, options));
+	}
+	
 }
