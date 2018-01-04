@@ -23,15 +23,21 @@ public class Chance extends Field {
 
 		Card[] cardList = new Card[15];
 
-		cardList[0] 	= new MoneyCard("Money", "Du har spist for meget slik. Betal 2,- til banken", -2);
-		cardList[1] 	= new MoneyCard("Money", "Du vandt en dansekonkurrencer og modtog 3,- som præmiepenge", 3);
-		cardList[2] 	= new MoneyCard("Money", "Du gik overfor rødt, og betalte en bøde på 5,-", -5);
-		cardList[3] 	= new MoneyCard("Money", "Du vandt på et skrabelod og modtog 10,-", 10);
-		cardList[4] 	= new MoneyCard("Money", "Du stoppede en bandit, og modtog 2,- for din gode gerning", 2);
-		cardList[5] 	= new MoneyCard("Money", "Din bil løb tør for benzin og betalte 3,- for genopfyldning", -3);
-		cardList[6] 	= new MoneyCard("Money", "Du vandt et bilrace og modtog 4,- som præmiepenge", 4);
-		cardList[7] 	= new MoneyCard("Money", "Du blev sulten og stoppede for at handle. Betal 1,-", -1);
-		cardList[8] 	= new MoneyCard("Money", "Du vandt en skøndhedskonkurrence og modtog 5,- som præmiepenge", 5);
+		cardList[0] 	= new MoneyCard("Money", "Du har solgt din gamle klude. Modtag 20,-", 20);
+		cardList[1] 	= new MoneyCard("Money", "Du har vasket din bil. Betal 10,-", -10);
+		cardList[2] 	= new MoneyCard("Money", "Du har været i udlandet og blev taget i tolden og skal betale en bøde. Betal 100,-", -100);
+		cardList[3] 	= new MoneyCard("Money", "Du har modtaget en parkeringsbøde. Betal 10,-", -10);
+		cardList[4] 	= new MoneyCard("Money", "Værdien af din egen avl fra nyttehaven udgør 200,-, som du modtager af banken.", 200);
+		cardList[5] 	= new MoneyCard("Money", "Modtag udbytte af Deres aktier. Modtag 100,-", 100);
+		cardList[6] 	= new MoneyCard("Money", "Du har anskaffet et nyt dæk til din bil. Betal 10,-", -10);
+		cardList[7] 	= new MoneyCard("Money", "Du har kørt frem for et Fuld Stop skilt. Betal 100 i bøde", -100);
+		
+
+
+		
+		
+		
+		
 		cardList[9] 	= new MoveCard("Move", "Du kørte for hurtigt, og derfor røg du i fængsel", 6); //Skift 19 til 18 når fængsel er implementeret
 		cardList[10] 	= new MoveCard("Move", "Ryk til start", 0);
 		cardList[11] 	= new MoveCard("Move", "Ryk til Boardwalk", 23);
