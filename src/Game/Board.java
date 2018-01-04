@@ -72,12 +72,12 @@ public class Board {
 		Street street16 = new Street(23, "Boardwalk", null, 5, Group.DARKBLUE);
 		fields[23] = street16;
 		
+		
+		
+		
+		
 		Parking parking = new Parking(21, "Parkering");
 		fields[21] = parking;
-		
-		
-		
-		
 		
 		Street street12 = new Street(22, "Trianglen", null, 5, Group.RED);
 		fields[22] = street12;
