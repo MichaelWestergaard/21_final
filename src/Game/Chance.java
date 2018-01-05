@@ -21,7 +21,7 @@ public class Chance extends Field {
 
 	public void createCardList() {
 
-		Card[] cardList = new Card[15];
+		Card[] cardList = new Card[31];
 
 		cardList[0] 	= new MoneyCard("Money", "Du har solgt din gamle klude. Modtag 20,-", 20);
 		cardList[1] 	= new MoneyCard("Money", "Du har vasket din bil. Betal 10,-", -10);
