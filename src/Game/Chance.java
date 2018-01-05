@@ -31,11 +31,14 @@ public class Chance extends Field {
 		cardList[5] 	= new MoneyCard("Money", "Modtag udbytte af Deres aktier. Modtag 100,-", 100);
 		cardList[6] 	= new MoneyCard("Money", "Du har anskaffet et nyt dæk til din bil. Betal 10,-", -10);
 		cardList[7] 	= new MoneyCard("Money", "Du har kørt frem for et Fuld Stop skilt. Betal 100 i bøde", -100);
-		
-
-
-		
-		
+		//cardlist[]		= new MoneyCard("Money", "Kul- og kokspriserne er steget og de skal betale: kr. 250,00 pr. hus og 1250,00 pr. hotel",)
+		//cardlist[]		= new MoneyCard("Money", "Ejendomsskattene er steget og ekstaudgifterne er: kr. 500,00 pr. hus og kr. 1250,00 pr hotel.",)
+		cardlist[]		=new MoneyCard("Money","Betal for vognvask og smøring. betal kr. 100,00",-100)
+		cardlist[]		=new MoneyCard("Money","De har måttet vedtage en parkeringsbøde. Betal kr. 200,00 til banken",-200)
+		cardlist[]		=new MoneyCard("Money","Grundet på dyrtiden har de fået gageforhøjelse. Modtag kr 250,00",250)
+		cardlist[]		=new MoneyCard("Money","Manufakturvarerne er blevt billigere og bedre, herved spare du kr. 500 som du modtager af banken",500)
+		cardlist[]		=new MoneyCard("Money","Efter auktionen på Assistenshuset, hvor de havde pantsat deres tøj, modtager de ekstra kr. 1200",1200)
+		cardlist[]		=new MoneyCard("Money","Deres præmieobligation er kommet ud. De modtager kr.1000,00 af banken",1000)
 		
 		
 		cardList[9] 	= new MoveCard("Move", "Du kørte for hurtigt, og derfor røg du i fængsel", 6); //Skift 19 til 18 når fængsel er implementeret
@@ -44,7 +47,9 @@ public class Chance extends Field {
 		cardList[12] 	= new MoveCard("Move",	"Du var heldig med at finde en parkeringsplads. Ryk til gratis parkering", 12);
 		cardList[13] 	= new MoveCard("Move", "Ryk til Tivoli", 7);
 		cardList[14] 	= new MoveCard("Move", "Ryk til The Zoo", 20);
-
+		//cardlist[]		= new MoveCard("Move","Ryk brikke frem til det nærmeste dampskibsselskab og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det af banken")
+		
+		
 		this.cardList = cardList;
 	}
 
