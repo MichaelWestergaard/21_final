@@ -59,9 +59,16 @@ public class Board {
 		
 		Ferry[] ferries = new Ferry[] {
 			//new Ferry(fieldNo, name, null, Group.BLACK, 4000, 500)
-			new Ferry(5, "Helsingør-helsinborg", null, Group.BLACK, 4000, 500),
-			
+			new Ferry(5, "Helsingør - helsinborg", null, Group.BLACK, 4000, 500),
+			new Ferry(15, "Scandlines - Mols linjen", null, Group.BLACK, 4000, 500),
+			new Ferry(25, "Scandlines - Gedser-Rostock", null, Group.BLACK, 4000, 500),
+			new Ferry(35, "Scandlines - Rødby Puttgarden", null, Group.BLACK, 4000, 500)
 		};
+		
+		Taxation[] taxations = new taxation[] {
+				new taxations(4, "Betal inkomstskat", null, Group.BLACK, 4000, )
+				new taxations(38, "Ekstraordinær statsskat", null, Group.BLACK, 2000, )
+		}
 		
 		//Sætter alle prøv lykken felter ind i fields[]
 		for (int i = 0; i < ferries.length; i++) {
@@ -74,14 +81,6 @@ public class Board {
 		Taxation taxation2 = new Taxation(38, "Ekstraordinær statsskat", "Betal Kr. 2.000");
 		fields[38] = taxation2;
 				
-		Ferry ferries2 = new Ferry(15, "Scandlines", "Mols linjen");
-		fields[15] = ferries2;
-		
-		Ferry ferries3 = new Ferry(25, "Scandlines", "Gedser-Rostock");
-		fields[25] = ferries3;
-		
-		Ferry ferries4 = new Ferry(35, "Scandlines", "Rødby Puttgarden");
-		fields[35] = ferries4;
 		
 		Jail jail1 = new Jail(10, "På besøg", "I fængsel");
 		fields[10] = jail1;
