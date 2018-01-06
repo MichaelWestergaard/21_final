@@ -21,14 +21,14 @@ public class Chance extends Field {
 
 		Card[] cardList = new Card[31];
 
-		cardList[0] 	= new MoneyCard("Money", "Du har solgt din gamle klude. Modtag 20,-", 20);
-		cardList[1] 	= new MoneyCard("Money", "Du har vasket din bil. Betal 10,-", -10);
-		cardList[2] 	= new MoneyCard("Money", "Du har været i udlandet og blev taget i tolden og skal betale en bøde. Betal 100,-", -100);
-		cardList[3] 	= new MoneyCard("Money", "Du har modtaget en parkeringsbøde. Betal 10,-", -10);
-		cardList[4] 	= new MoneyCard("Money", "Værdien af din egen avl fra nyttehaven udgør 200,-, som du modtager af banken.", 200);
-		cardList[5] 	= new MoneyCard("Money", "Modtag udbytte af Deres aktier. Modtag 100,-", 100);
-		cardList[6] 	= new MoneyCard("Money", "Du har anskaffet et nyt dæk til din bil. Betal 10,-", -10);
-		cardList[7] 	= new MoneyCard("Money", "Du har kørt frem for et Fuld Stop skilt. Betal 100 i bøde", -100);
+		cardList[0] 	= new MoneyCard("Money", "Du har solgt dit gamle udstyr i garagen. Modtag kr. 500,-", 500);
+		cardList[1] 	= new MoneyCard("Money", "Du har vasket din bil. Betal kr. 150,-", -150);
+		cardList[2] 	= new MoneyCard("Money", "Du har været i udlandet og blev taget i tolden og skal betale en bøde. Betal kr. 1500,-", -1500);
+		cardList[3] 	= new MoneyCard("Money", "Du har modtaget en parkeringsbøde. Betal kr. 800,-", -800);
+		cardList[4] 	= new MoneyCard("Money", "Værdien af din egen avl fra nyttehaven udgør kr. 2000,-, som du modtager af banken.", 2000);
+		cardList[5] 	= new MoneyCard("Money", "Modtag udbytte af Deres aktier. Modtag kr. 1500,-", 1500);
+		cardList[6] 	= new MoneyCard("Money", "Du har anskaffet et nyt dæk til din bil. Betal kr. 2000,-", -2000);
+		cardList[7] 	= new MoneyCard("Money", "Du har kørt frem for et Fuld Stop skilt. Betal 1000 i bøde", -1000);
 		//cardlist[]	= new MoneyCard("Money", "Kul- og kokspriserne er steget og de skal betale: kr. 250,00 pr. hus og 1250,00 pr. hotel",)
 		//cardlist[]	= new MoneyCard("Money", "Ejendomsskattene er steget og ekstaudgifterne er: kr. 500,00 pr. hus og kr. 1250,00 pr hotel.",)
 		cardList[8]		= new MoneyCard("Money","Betal for vognvask og smøring. betal kr. 100,00",-100);
