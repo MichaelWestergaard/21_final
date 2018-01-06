@@ -7,6 +7,7 @@ import Game.Field;
 import Game.Player;
 import Game.Street;
 import Game.Ferry;
+import Game.Buyable;
 
 //Vi mangler at lave delen, med at finde ud af hvem der er ejeren.
 //Hvis man ejer to felter, skal man betale dobbelt så meget.
@@ -19,7 +20,7 @@ public class Game {
 	private Player[] players;
 	private GUI_Controller gui_controller = new GUI_Controller();
 	private Board board = new Board();
-	
+
 	private String[] playerAmountOptions = {"3", "4", "5", "6"};
 
 	public void gameSetup() {
@@ -31,7 +32,7 @@ public class Game {
 
 		int playerAmount = gui_controller.getPlayerAmount("Vælg antallet af spillere", playerAmountOptions);
 		System.out.println(playerAmount);
-		
+
 		players = new Player[playerAmount];
 
 		for (int i = 0; i < playerAmount; i++) {
@@ -113,21 +114,18 @@ public class Game {
 						}
 					}  else if (board.getField(newFieldNo).getType() == "Ferry") {
 						if (!players[i].equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
-							if (checkOwner(newFieldNo)) {
-								gui_controller.showMessage(((Street) board.getField(newFieldNo)).getOwner().getName() + " Ejer to af samme felter, og du betaler derfor dobbelt husleje.");
-								board.getField(newFieldNo).landOnField(players[i]); // Betaler igen
-							} else {
-								gui_controller.showMessage("Du betalte " + ((Street) board.getField(newFieldNo)).getOwner().getName() + " "+ ((Street) board.getField(newFieldNo)).getRent() + ",- for opholdet.");
-							}
+							int ownerOwns = getSameGroupAmount(newFieldNo);
+							int amountToPay = ownerOwns * ((Ferry) board.getField(newFieldNo)).getRent();
+
+							gui_controller.showMessage(amountToPay + " Skal betales.");
 						}
 					}
 
-					 if(board.getField(newFieldNo).getType() == "Street") {
-					 if(((Street) board.getField(newFieldNo)).getOwner() ==
-					 players[i]) {
-					 gui_controller.setOwner(players[i], newFieldNo);
-					 }
-					 }
+//					if(board.getField(newFieldNo).getType() == "Street") {
+//						if(((Street) board.getField(newFieldNo)).getOwner() == players[i]) {
+//							gui_controller.setOwner(players[i], newFieldNo);
+//						}
+//					}
 
 					gui_controller.updateBalance(players);
 
@@ -161,12 +159,21 @@ public class Game {
 		}
 		gui_controller.showMessage(winner.getName() + " har vundet med " + winner.getPoints() + ",-");
 	}
-	
-	public int sameGroupAmount(int fieldNo) {
-		
-		
-		
-		return 0;
+
+	public int getSameGroupAmount(int fieldNo) {
+
+		int sameGroupAmount = 0;
+
+		Field field = board.getField(fieldNo);
+		Field[] fields = board.getFields();
+
+		for (Field fieldN : fields) {
+			if(fieldN.getType() == field.getType() && ((Buyable) field).getGroup() == ((Buyable) field).getGroup()) {
+				sameGroupAmount++;
+			}
+		}
+
+		return sameGroupAmount;
 	}
 
 	public boolean checkOwner(int fieldNo) {

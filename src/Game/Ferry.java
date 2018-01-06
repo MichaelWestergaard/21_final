@@ -9,6 +9,14 @@ public class Ferry extends Buyable {
 		this.rent = rent;
 	}
 
+	public int getRent() {
+		return rent;
+	}
+
+	public void setRent(int rent) {
+		this.rent = rent;
+	}
+	
 	public void landOnField(Player player,int diceSum, int rent) {
 		int amountToPay = rent; //Lejen der skal betales
 		
