@@ -2,8 +2,9 @@ package Game;
 
 public class Beverage extends Buyable {
 
-	public Beverage(int fieldNo, String name, Player owner, int price, int pledgePrice) {
-		super(fieldNo, name, owner, price, pledgePrice);
+	public Beverage(int fieldNo, String name, Player owner, Group group, int price) {
+		super(fieldNo, name, owner, group, price);
 	}
+
 
 }
