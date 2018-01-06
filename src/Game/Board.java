@@ -23,7 +23,7 @@ public class Board {
 		Taxation taxation1 = new Taxation(4, "Betal inkomstskat", "10% eller Kr. 4.000");
 		fields[4] = taxation1;
 		
-		Ferries ferries1 = new Ferries(5, "Scandlines", "????");
+		Ferries ferries1 = new Ferries(5, "Scandlines", "Helsingør-helsinborg");
 		fields[5] = ferries1;
 		
 		Street street3 = new Street(6, "Roskildevej", null, 2, Group.ORANGE);
@@ -51,7 +51,7 @@ public class Board {
 		Street street8 = new Street(14, "Gl. Kongevej", null, 3, Group.LIGHTGREEN);
 		fields[14] = street8;
 		
-		Ferries ferries2 = new Ferries(15, "Scandlines", "????");
+		Ferries ferries2 = new Ferries(15, "Scandlines", "Mols linjen");
 		fields[15] = ferries2;
 		
 		Street street9 = new Street(16, "Bernstorffsvej", null, 4, Group.LIGHTGREY);
@@ -79,7 +79,7 @@ public class Board {
 		Street street14 = new Street(24, "Grønningen", null, 5, Group.RED);
 		fields[24] = street14;
 		
-		Ferries ferries3 = new Ferries(25, "Scandlines", "????");
+		Ferries ferries3 = new Ferries(25, "Scandlines", "Gedser- rostock");
 		fields[25] = ferries3;
 		
 		Street street15 = new Street(26, "Bredgade", null, 6, Group.WHITE);
@@ -107,7 +107,7 @@ public class Board {
 		Street street20 = new Street(34, "Nygade", null, 7, Group.YELLOW);
 		fields[34] = street20;
 		
-		Ferries ferries4 = new Ferries(35, "Scandlines", "????");
+		Ferries ferries4 = new Ferries(35, "Scandlines", "Rødby Puttgarden");
 		fields[35] = ferries4;
 		
 		Chance chance6 = new Chance(36, "Prøv lykken");
