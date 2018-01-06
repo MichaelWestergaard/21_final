@@ -6,7 +6,6 @@ public abstract class Field {
 	protected String name;
 
 	public Field(int fieldNo, String name) {
-
 		this.fieldNo = fieldNo;
 		this.name = name;
 	}
@@ -14,7 +13,7 @@ public abstract class Field {
 	public abstract void landOnField(Player player);
 	
 	public String getType() {
-		return getType();
+		return this.getClass().getName();
 	}
 	
 	public int getFieldNo() {

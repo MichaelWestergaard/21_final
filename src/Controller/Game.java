@@ -2,7 +2,7 @@ package Controller;
 
 import Game.Board;
 import Game.Chance;
-import Game.Dice;
+import Game.DiceCup;
 import Game.Field;
 import Game.Player;
 import Game.Street;
@@ -14,7 +14,7 @@ public class Game {
 
 	private boolean gameStarted = false;
 
-	private Dice dice = new Dice();
+	private DiceCup diceCup = new DiceCup();
 	private Player[] players;
 	private GUI_Controller gui_controller = new GUI_Controller();
 	private Board board = new Board();
@@ -72,13 +72,12 @@ public class Game {
 
 					gui_controller.showMessage("Spiller " + (i + 1) + "s tur \n Tryk [OK] for at slå med terningerne");
 
-					dice.rollDice();
-					int faceValue = dice.getFaceValue();
-					gui_controller.setDie(faceValue);
+					diceCup.rollDices();
+					gui_controller.setDice(diceCup.getDiceValue(0),diceCup.getDiceValue(1));
 
 					int field = players[i].getFieldNo();
 
-					int newFieldNo = field + faceValue;
+					int newFieldNo = field + diceCup.getDiceSum();
 
 					if (newFieldNo < 24) {
 						players[i].setFieldNo(newFieldNo);

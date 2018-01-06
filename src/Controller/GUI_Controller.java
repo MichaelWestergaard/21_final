@@ -30,7 +30,7 @@ public class GUI_Controller {
 		GUI_Field[] GUIFields = new GUI_Field[fields.length];
 
 		for (Field field : fields) {
-
+			
 			if (field.getType() == "Street") {
 
 				GUI_Street s = new GUI_Street();
@@ -108,8 +108,8 @@ public class GUI_Controller {
 		}
 	}
 	
-	public void setDie(int faceValue) {
-		gui.setDie(faceValue);
+	public void setDice(int faceValue1, int faceValue2) {
+		gui.setDice(faceValue1, faceValue2);
 	}
 	
 	public String getUserInput(String msg) {
