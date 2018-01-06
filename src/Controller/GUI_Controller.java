@@ -2,17 +2,22 @@ package Controller;
 
 import java.awt.Color;
 
+import Game.Buyable;
 import Game.Field;
 import Game.Player;
 import Game.Start;
 import Game.Street;
+import gui_fields.GUI_Brewery;
 import gui_fields.GUI_Chance;
 import gui_fields.GUI_Field;
 import gui_fields.GUI_Jail;
 import gui_fields.GUI_Ownable;
 import gui_fields.GUI_Player;
+import gui_fields.GUI_Refuge;
+import gui_fields.GUI_Shipping;
 import gui_fields.GUI_Start;
 import gui_fields.GUI_Street;
+import gui_fields.GUI_Tax;
 import gui_main.GUI;
 
 public class GUI_Controller {
@@ -26,44 +31,63 @@ public class GUI_Controller {
 	}
 
 	public void createGUIFields(Field[] fields) {
-		for (Field field : fields) {
-			System.out.println(field.getName());
-		}
-		
+				
 		GUI_Field[] GUIFields = new GUI_Field[fields.length];
 
 		for (Field field : fields) {
-			
-			if (field.getType() == "Street") {
+
+			if (field.getType() == "Game.Street") {
 
 				GUI_Street s = new GUI_Street();
-				
+
 				GUIFields[field.getFieldNo()] = s;//farven af rammen af alle felter
 				
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
 				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Street) field).getPrice() + ",- ");
-				GUIFields[field.getFieldNo()].setForeGroundColor(Color.black); //tekst farve
 				
-			} else if (field.getType() == "Jail") {
+			} else if (field.getType() == "Game.Jail") {
 
 				GUIFields[field.getFieldNo()] = new GUI_Jail();
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
 
-			} else if (field.getType() == "Chancekort") {
+			} else if (field.getType() == "Game.Chance") {
 
 				GUIFields[field.getFieldNo()] = new GUI_Chance();
+				GUIFields[field.getFieldNo()].setBackGroundColor(Color.BLACK);
+				GUIFields[field.getFieldNo()].setForeGroundColor(Color.WHITE);
 
-			} else if (field.getType() == "Start") {
+			} else if (field.getType() == "Game.Start") {
 
 				GUIFields[field.getFieldNo()] = new GUI_Start();
 				GUIFields[field.getFieldNo()].setTitle("Start");
-				GUIFields[field.getFieldNo()].setBackGroundColor(new Color(255, 0 ,0));
-				GUIFields[field.getFieldNo()].setSubText("Modtag: " + ((Start) field).getBonus() + ",-");
+				GUIFields[field.getFieldNo()].setBackGroundColor(new Color(255, 0, 0));
+				GUIFields[field.getFieldNo()].setForeGroundColor(new Color(255, 255, 255));
+				GUIFields[field.getFieldNo()].setSubText(((Start) field).getBonus() + ",-");
 				
-			} else if (field.getType() == "Parking") {
+			} else if (field.getType() == "Game.Parking") {
 
-				GUIFields[field.getFieldNo()] = new GUI_Start();
-				GUIFields[field.getFieldNo()].setTitle("Gratis Parkering");
+				GUIFields[field.getFieldNo()] = new GUI_Refuge();
+				
+			} else if (field.getType() == "Game.Ferry") {
+
+				GUIFields[field.getFieldNo()] = new GUI_Shipping();
+				
+				GUIFields[field.getFieldNo()].setTitle(field.getName());
+				GUIFields[field.getFieldNo()].setDescription(field.getName());
+				GUIFields[field.getFieldNo()].setSubText(((Buyable) field).getPrice() + " kr.");
+				
+			} else if (field.getType() == "Game.Beverage") {
+
+				GUIFields[field.getFieldNo()] = new GUI_Brewery();
+				GUIFields[field.getFieldNo()].setDescription(field.getName());
+				GUIFields[field.getFieldNo()].setTitle(field.getName());
+				GUIFields[field.getFieldNo()].setSubText(((Buyable) field).getPrice() + " kr.");
+				
+			} else if (field.getType() == "Game.GovernmentTax" || field.getType() == "Game.IncomeTax") {
+
+				GUIFields[field.getFieldNo()] = new GUI_Tax();
+				GUIFields[field.getFieldNo()].setDescription(field.getName());
+				GUIFields[field.getFieldNo()].setTitle(field.getName());
 				
 			}
 			
