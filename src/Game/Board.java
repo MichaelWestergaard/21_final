@@ -23,7 +23,11 @@ public class Board {
 		Taxation taxation1 = new Taxation(4, "Betal inkomstskat", "10% eller Kr. 4.000");
 		fields[4] = taxation1;
 		
+<<<<<<< HEAD
 		Ferries ferries1 = new Ferries(5, "Scandlines", "Helsingør-helsinborg");
+=======
+		Ferry ferries1 = new Ferries(5, "Scandlines", "????");
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
 		fields[5] = ferries1;
 		
 		Street street3 = new Street(6, "Roskildevej", null, 2, Group.ORANGE);
@@ -43,7 +47,7 @@ public class Board {
 		Street street6 = new Street(11, "Frederiksberg Allé", null, 3, Group.LIGHTGREEN);
 		fields[11] = street6;
 		
-		Beverages beverages1 = new Beverages(12, "Squash");
+		Beverage beverages1 = new Beverage(12, "Squash");
 		fields[12] = beverages1;
 		
 		Street street7 = new Street(13, "Bülowsvej", null, 3, Group.LIGHTGREEN);
@@ -51,7 +55,11 @@ public class Board {
 		Street street8 = new Street(14, "Gl. Kongevej", null, 3, Group.LIGHTGREEN);
 		fields[14] = street8;
 		
+<<<<<<< HEAD
 		Ferries ferries2 = new Ferries(15, "Scandlines", "Mols linjen");
+=======
+		Ferry ferries2 = new Ferry(15, "Scandlines", "????");
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
 		fields[15] = ferries2;
 		
 		Street street9 = new Street(16, "Bernstorffsvej", null, 4, Group.LIGHTGREY);
@@ -79,7 +87,11 @@ public class Board {
 		Street street14 = new Street(24, "Grønningen", null, 5, Group.RED);
 		fields[24] = street14;
 		
+<<<<<<< HEAD
 		Ferries ferries3 = new Ferries(25, "Scandlines", "Gedser- rostock");
+=======
+		Ferry ferries3 = new Ferry(25, "Scandlines", "????");
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
 		fields[25] = ferries3;
 		
 		Street street15 = new Street(26, "Bredgade", null, 6, Group.WHITE);
@@ -87,7 +99,7 @@ public class Board {
 		Street street16 = new Street(27, "Kgs. Nytorv", null, 6, Group.WHITE);
 		fields[27] = street16;
 		
-		Beverages beverages2 = new Beverages(28, "Coca Cola");
+		Beverage beverages2 = new Beverage(28, "Coca Cola");
 		fields[28] = beverages2;
 		
 		Street street17 = new Street(29, "Østergade", null, 6, Group.WHITE);
@@ -107,7 +119,11 @@ public class Board {
 		Street street20 = new Street(34, "Nygade", null, 7, Group.YELLOW);
 		fields[34] = street20;
 		
+<<<<<<< HEAD
 		Ferries ferries4 = new Ferries(35, "Scandlines", "Rødby Puttgarden");
+=======
+		Ferry ferries4 = new Ferry(35, "Scandlines", "????");
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
 		fields[35] = ferries4;
 		
 		Chance chance6 = new Chance(36, "Prøv lykken");
