@@ -57,9 +57,9 @@ public class Board {
 		
 		Ferry[] ferries = new Ferry[] {
 			new Ferry(5, "Helsingør - Helsinborg", null, Group.BLACK, 4000, 500),
-			new Ferry(15, "Scandlines - Mols linjen", null, Group.BLACK, 4000, 500),
-			new Ferry(25, "Scandlines - Gedser-Rostock", null, Group.BLACK, 4000, 500),
-			new Ferry(35, "Scandlines - Rødby Puttgarden", null, Group.BLACK, 4000, 500)
+			new Ferry(15, "Mols linjen", null, Group.BLACK, 4000, 500),
+			new Ferry(25, "Gedser - Rostock", null, Group.BLACK, 4000, 500),
+			new Ferry(35, "Rødby - Puttgarden", null, Group.BLACK, 4000, 500)
 		};
 		
 		//Sætter alle prøv lykken felter ind i fields[]
@@ -68,8 +68,8 @@ public class Board {
 		}
 		
 		Taxation[] taxations = new Taxation[] {
-			new IncomeTax(4, "Betal inkomstskat", 4000),
-			new GovernmentTax(38, "Betal inkomstskat", 2000)
+			new IncomeTax(4, "Betal inkomstskat, 10% eller 4000", 4000),
+			new GovernmentTax(38, "Ekstraordinær statsskat, betal 2000", 2000)
 		};
 		
 		//Sætter alle prøv lykken felter ind i fields[]
