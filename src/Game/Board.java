@@ -35,7 +35,7 @@ public class Board {
 			new Street(32, "Vimmelskaffet", null, Group.YELLOW, 6000, new int[] {550, 2600, 7800, 18000, 22000, 25000}, 4000),
 			new Street(34, "Nygade", null, Group.YELLOW, 6400, new int[] {600, 3000, 9000, 20000, 24000, 28000}, 4000),
 			new Street(37, "Frederiksberggade", null, Group.PURPLE, 7000, new int[] {800, 3500, 10000, 22000, 26000, 30000}, 4000),
-			new Street(39, "Rådhuspladsen", null, Group.PURPLE, 8000, new int[] {1000, 4000, 12000, 28000, 34000, 40000}, 4000),
+			new Street(39, "Rådhuspladsen", null, Group.PURPLE, 8000, new int[] {1000, 4000, 12000, 28000, 34000, 40000}, 4000)
 		};
 		
 		//Sætter alle ejendomme ind i fields[]
@@ -57,16 +57,23 @@ public class Board {
 			fields[chances[i].getFieldNo()] = chances[i];
 		}
 		
+		Ferry[] ferries = new Ferry[] {
+			//new Ferry(fieldNo, name, null, Group.BLACK, 4000, 500)
+			new Ferry(5, "Helsingør-helsinborg", null, Group.BLACK, 4000, 500),
+			
+		};
+		
+		//Sætter alle prøv lykken felter ind i fields[]
+		for (int i = 0; i < ferries.length; i++) {
+			fields[ferries[i].getFieldNo()] = ferries[i];
+		}
 		
 		Taxation taxation1 = new Taxation(4, "Betal inkomstskat", "10% eller Kr. 4.000");
 		fields[4] = taxation1;
 
 		Taxation taxation2 = new Taxation(38, "Ekstraordinær statsskat", "Betal Kr. 2.000");
 		fields[38] = taxation2;
-		
-		Ferry ferries1 = new Ferry(5, "Scandlines", "Helsingør-helsinborg");
-		fields[5] = ferries1;
-		
+				
 		Ferry ferries2 = new Ferry(15, "Scandlines", "Mols linjen");
 		fields[15] = ferries2;
 		

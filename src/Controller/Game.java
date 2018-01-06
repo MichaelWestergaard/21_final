@@ -6,6 +6,7 @@ import Game.DiceCup;
 import Game.Field;
 import Game.Player;
 import Game.Street;
+import Game.Ferry;
 
 //Vi mangler at lave delen, med at finde ud af hvem der er ejeren.
 //Hvis man ejer to felter, skal man betale dobbelt så meget.
@@ -101,7 +102,17 @@ public class Game {
 						gui_controller.showMessage("Gå i fængsel");
 						gui_controller.movePlayers(players);
 					} else if (board.getField(newFieldNo).getType() == "Street") {
+						//Skal ændres til at virke med 2-3 felter af samme slags + Gør så man betaler efter hvor mange huse/hoteller der er på feltet
 						if (!players[i].equals(((Street) board.getField(newFieldNo)).getOwner())) {
+							if (checkOwner(newFieldNo)) {
+								gui_controller.showMessage(((Street) board.getField(newFieldNo)).getOwner().getName() + " Ejer to af samme felter, og du betaler derfor dobbelt husleje.");
+								board.getField(newFieldNo).landOnField(players[i]); // Betaler igen
+							} else {
+								gui_controller.showMessage("Du betalte " + ((Street) board.getField(newFieldNo)).getOwner().getName() + " "+ ((Street) board.getField(newFieldNo)).getRent() + ",- for opholdet.");
+							}
+						}
+					}  else if (board.getField(newFieldNo).getType() == "Ferry") {
+						if (!players[i].equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
 							if (checkOwner(newFieldNo)) {
 								gui_controller.showMessage(((Street) board.getField(newFieldNo)).getOwner().getName() + " Ejer to af samme felter, og du betaler derfor dobbelt husleje.");
 								board.getField(newFieldNo).landOnField(players[i]); // Betaler igen
@@ -149,6 +160,13 @@ public class Game {
 
 		}
 		gui_controller.showMessage(winner.getName() + " har vundet med " + winner.getPoints() + ",-");
+	}
+	
+	public int sameGroupAmount(int fieldNo) {
+		
+		
+		
+		return 0;
 	}
 
 	public boolean checkOwner(int fieldNo) {

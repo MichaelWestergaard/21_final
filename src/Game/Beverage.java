@@ -20,8 +20,7 @@ public class Beverage extends Buyable {
 			else {
 				player.setBankrupt(true); //ændre til pantsat
 			}
-		} 
-		else { // Hvis der er en ejer, så betaler man
+		} else { // Hvis der er en ejer, så betaler man
 
 			if (player.getPoints() >= amountToPay || player.getPoints() >= (amountToPay * 2)) {
 				player.addPoints(amountToPay * -1);
