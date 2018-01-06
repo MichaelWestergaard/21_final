@@ -50,12 +50,8 @@ public class Board {
 		fields[13] = street7;
 		Street street8 = new Street(14, "Gl. Kongevej", null, 3, Group.LIGHTGREEN);
 		fields[14] = street8;
-		
-<<<<<<< HEAD
-		Ferries ferries2 = new Ferries(15, "Scandlines", "Mols linjen");
-=======
-		Ferry ferries2 = new Ferry(15, "Scandlines", "????");
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
+
+		Ferry ferries2 = new Ferry(15, "Scandlines", "Mols linjen");
 		fields[15] = ferries2;
 		
 		Street street9 = new Street(16, "Bernstorffsvej", null, 4, Group.LIGHTGREY);
@@ -82,12 +78,8 @@ public class Board {
 		fields[23] = street13;
 		Street street14 = new Street(24, "Grønningen", null, 5, Group.RED);
 		fields[24] = street14;
-		
-<<<<<<< HEAD
-		Ferries ferries3 = new Ferries(25, "Scandlines", "Gedser- rostock");
-=======
-		Ferry ferries3 = new Ferry(25, "Scandlines", "????");
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
+
+		Ferry ferries3 = new Ferry(25, "Scandlines", "Gedser-Rostock");
 		fields[25] = ferries3;
 		
 		Street street15 = new Street(26, "Bredgade", null, 6, Group.WHITE);
@@ -114,12 +106,8 @@ public class Board {
 		
 		Street street20 = new Street(34, "Nygade", null, 7, Group.YELLOW);
 		fields[34] = street20;
-		
-<<<<<<< HEAD
-		Ferries ferries4 = new Ferries(35, "Scandlines", "Rødby Puttgarden");
-=======
-		Ferry ferries4 = new Ferry(35, "Scandlines", "????");
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
+
+		Ferry ferries4 = new Ferry(35, "Scandlines", "Rødby Puttgarden");
 		fields[35] = ferries4;
 		
 		Chance chance6 = new Chance(36, "Prøv lykken");
