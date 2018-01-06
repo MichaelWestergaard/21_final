@@ -88,9 +88,9 @@ public class Game {
 						newFieldNo -= 24;
 						players[i].setFieldNo(newFieldNo);
 						gui_controller.movePlayers(players);
-						gui_controller.showMessage("Du kørte over start og modtog derfor 3,-");
+						gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
 						if (newFieldNo != 0) {
-							players[i].addPoints(3);
+							players[i].addPoints(4000);
 						}
 					}
 
