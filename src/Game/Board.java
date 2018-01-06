@@ -23,7 +23,7 @@ public class Board {
 		Taxation taxation1 = new Taxation(4, "Betal inkomstskat", "10% eller Kr. 4.000");
 		fields[4] = taxation1;
 		
-		Ferry ferries1 = new Ferries(5, "Scandlines", "????");
+		Ferry ferries1 = new Ferry(5, "Scandlines", "????");
 		fields[5] = ferries1;
 		
 		Street street3 = new Street(6, "Roskildevej", null, 2, Group.ORANGE);
