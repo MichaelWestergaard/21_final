@@ -4,19 +4,17 @@ public abstract class Field {
 
 	protected int fieldNo;
 	protected String name;
-	protected String type;
 
-	public Field(int fieldNo, String name, String type) {
+	public Field(int fieldNo, String name) {
 
 		this.fieldNo = fieldNo;
 		this.name = name;
-		this.type = type;
 	}
 
 	public abstract void landOnField(Player player);
 	
 	public String getType() {
-		return type;
+		return getType();
 	}
 	
 	public int getFieldNo() {

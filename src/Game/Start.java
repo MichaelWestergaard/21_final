@@ -5,7 +5,7 @@ public class Start extends Field {
 	private int bonus;
 
 	public Start(int fieldNo, int bonus, String name) {
-		super(fieldNo, name, "Start");
+		super(fieldNo, name);
 		this.bonus = bonus;
 	}
 

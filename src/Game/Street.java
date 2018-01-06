@@ -1,7 +1,5 @@
 package Game;
 
-import Controller.Game;
-
 public class Street extends Field {
 
 	private Player owner;
@@ -9,7 +7,7 @@ public class Street extends Field {
 	private Group group;
 
 	public Street(int fieldNo, String name, Player owner, int rent, Group group) {
-		super(fieldNo, name, "Street");
+		super(fieldNo, name);
 		this.owner = owner;
 		this.rent = rent;
 		this.setGroup(group);
