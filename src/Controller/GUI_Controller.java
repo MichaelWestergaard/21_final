@@ -38,7 +38,7 @@ public class GUI_Controller {
 				GUIFields[field.getFieldNo()] = s;//farven af rammen af alle felter
 				
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
-				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Street) field).getRent() + ",- ");
+				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Street) field).getPrice() + ",- ");
 				GUIFields[field.getFieldNo()].setForeGroundColor(Color.black); //tekst farve
 				
 			} else if (field.getType() == "Jail") {

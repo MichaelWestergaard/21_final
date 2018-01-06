@@ -105,12 +105,7 @@ public class Game {
 					} else if (board.getField(newFieldNo).getType() == "Street") {
 						//Skal ændres til at virke med 2-3 felter af samme slags + Gør så man betaler efter hvor mange huse/hoteller der er på feltet
 						if (!players[i].equals(((Street) board.getField(newFieldNo)).getOwner())) {
-							if (checkOwner(newFieldNo)) {
-								gui_controller.showMessage(((Street) board.getField(newFieldNo)).getOwner().getName() + " Ejer to af samme felter, og du betaler derfor dobbelt husleje.");
-								board.getField(newFieldNo).landOnField(players[i]); // Betaler igen
-							} else {
-								gui_controller.showMessage("Du betalte " + ((Street) board.getField(newFieldNo)).getOwner().getName() + " "+ ((Street) board.getField(newFieldNo)).getRent() + ",- for opholdet.");
-							}
+							
 						}
 					}  else if (board.getField(newFieldNo).getType() == "Ferry") {
 						if (!players[i].equals(((Ferry) board.getField(newFieldNo)).getOwner())) {

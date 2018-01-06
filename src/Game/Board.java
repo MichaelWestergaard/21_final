@@ -65,33 +65,30 @@ public class Board {
 			new Ferry(35, "Scandlines - Rødby Puttgarden", null, Group.BLACK, 4000, 500)
 		};
 		
-		Taxation[] taxations = new taxation[] {
-				new taxations(4, "Betal inkomstskat", null, Group.BLACK, 4000, )
-				new taxations(38, "Ekstraordinær statsskat", null, Group.BLACK, 2000, )
-		}
-		
 		//Sætter alle prøv lykken felter ind i fields[]
 		for (int i = 0; i < ferries.length; i++) {
 			fields[ferries[i].getFieldNo()] = ferries[i];
 		}
 		
-		Taxation taxation1 = new Taxation(4, "Betal inkomstskat", "10% eller Kr. 4.000");
-		fields[4] = taxation1;
-
-		Taxation taxation2 = new Taxation(38, "Ekstraordinær statsskat", "Betal Kr. 2.000");
-		fields[38] = taxation2;
-				
+		Taxation[] taxations = new Taxation[] {
+			new IncomeTax(4, "Betal inkomstskat", 4000),
+			new GovernmentTax(38, "Betal inkomstskat", 2000)
+		};
+		
+		//Sætter alle prøv lykken felter ind i fields[]
+		for (int i = 0; i < taxations.length; i++) {
+			fields[taxations[i].getFieldNo()] = taxations[i];
+		}
 		
 		Jail jail1 = new Jail(10, "På besøg", "I fængsel");
 		fields[10] = jail1;
 		Jail jail2 = new Jail(30, "De fængsles", "Fængsel");
 		fields[30] = jail2;	
 		
-		Beverage beverages1 = new Beverage(12, "Squash");
-		fields[12] = beverages1;
-		Beverage beverages2 = new Beverage(28, "Coca Cola");
-		fields[28] = beverages2;
-	
+		Beverage beverage1 = new Beverage(12, "Squash", null, Group.BROWN, 3000, 100);
+		Beverage beverage2 = new Beverage(28, "Coca Cola", null, Group.BROWN, 3000, 100);
+		fields[12] = beverage1;
+		fields[28] = beverage2;	
 		
 		Parking parking = new Parking(20, "Parkering");
 		fields[20] = parking;	
