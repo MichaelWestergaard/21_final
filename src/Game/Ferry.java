@@ -9,9 +9,8 @@ public class Ferry extends Buyable {
 		this.rent = rent;
 	}
 	public void landOnField(Player player,int diceSum, int rent) {
-		//int amountToPay = 500; //renten der skal betales
+		int amountToPay = 500; //renten der skal betales
 		
-		int[] færgepris = {500,1000,1500,2000};
 		
 		Player owner = super.getOwner();
 		
@@ -27,7 +26,7 @@ public class Ferry extends Buyable {
 		} 
 		else { // Hvis der er en ejer, så betaler man
 
-			if (player.getPoints() >= amountToPay || player.getPoints() >= (amountToPay * 2)) {
+			if (player.getPoints() >= amountToPay || player.getPoints() >= (amountToPay * 2)){
 				player.addPoints(amountToPay * -1);
 				owner.addPoints(amountToPay);
 			} else if (player.getPoints()) {
