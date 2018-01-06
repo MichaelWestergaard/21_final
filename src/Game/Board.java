@@ -20,11 +20,11 @@ public class Board {
 		Street street2 = new Street(3, "Hvidovrevej", null, 1, Group.LIGHTBLUE);
 		fields[3] = street2;
 		
-		Beskatning beskatning1 = new Beskatning(4, "Betal inkomstskat", "10% eller Kr. 4.000");
-		fields[4] = beskatning1;
+		Taxation taxation1 = new Taxation(4, "Betal inkomstskat", "10% eller Kr. 4.000");
+		fields[4] = taxation1;
 		
-		Scandlines scandlines1 = new Scandlines(5, "Scandlines", "????");
-		fields[5] = scandlines1;
+		Ferries ferries1 = new Ferries(5, "Scandlines", "????");
+		fields[5] = ferries1;
 		
 		Street street3 = new Street(6, "Roskildevej", null, 2, Group.ORANGE);
 		fields[6] = street3;
@@ -51,8 +51,8 @@ public class Board {
 		Street street8 = new Street(14, "Gl. Kongevej", null, 3, Group.LIGHTGREEN);
 		fields[14] = street8;
 		
-		Scandlines scandlines2 = new Scandlines(15, "Scandlines", "????");
-		fields[15] = scandlines2;
+		Ferries ferries2 = new Ferries(15, "Scandlines", "????");
+		fields[15] = ferries2;
 		
 		Street street9 = new Street(16, "Bernstorffsvej", null, 4, Group.LIGHTGREY);
 		fields[16] = street9;
@@ -79,8 +79,8 @@ public class Board {
 		Street street14 = new Street(24, "Grønningen", null, 5, Group.RED);
 		fields[24] = street14;
 		
-		Scandlines scandlines3 = new Scandlines(25, "Scandlines", "????");
-		fields[25] = scandlines3;
+		Ferries ferries3 = new Ferries(25, "Scandlines", "????");
+		fields[25] = ferries3;
 		
 		Street street15 = new Street(26, "Bredgade", null, 6, Group.WHITE);
 		fields[26] = street15;
@@ -107,8 +107,8 @@ public class Board {
 		Street street20 = new Street(34, "Nygade", null, 7, Group.YELLOW);
 		fields[34] = street20;
 		
-		Scandlines scandlines4 = new Scandlines(35, "Scandlines", "????");
-		fields[35] = scandlines4;
+		Ferries ferries4 = new Ferries(35, "Scandlines", "????");
+		fields[35] = ferries4;
 		
 		Chance chance6 = new Chance(36, "Prøv lykken");
 		fields[36] = chance6;
@@ -116,8 +116,8 @@ public class Board {
 		Street street21 = new Street(37, "Frederiksberggade", null, 8, Group.PURPLE);
 		fields[37] = street21;
 		
-		Beskatning beskatning2 = new Beskatning(38, "Ekstraordinær statsskat", "Betal Kr. 2.000");
-		fields[38] = beskatning2;
+		Taxation taxation2 = new Taxation(38, "Ekstraordinær statsskat", "Betal Kr. 2.000");
+		fields[38] = taxation2;
 		
 		Street street22 = new Street(39, "Rådhuspladsen", null, 8, Group.PURPLE);
 		fields[39] = street22;
