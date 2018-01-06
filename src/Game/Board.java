@@ -11,14 +11,31 @@ public class Board {
 		Start start = new Start(0, 4000, "Start");
 		fields[0] = start;
 		
-		Street street1 = new Street(1, "Rødovrevej", null, 1, Group.LIGHTBLUE);
-		fields[1] = street1;
+		Street[] streets = new Street[] {
+			new Street(1, "Rødovrevej", null, Group.LIGHTBLUE, 1200, new int[] {50, 250, 750, 2250, 4000, 6000}, 1000),
+			new Street(3, "Hvidovrevej", null, Group.LIGHTBLUE, 1200, new int[] {50, 250, 750, 2250, 4000, 6000}, 1000)
+		};
 		
-		Chance chance1 = new Chance(2, "Prøv lykken");
-		fields[2] = chance1;
+		//Sætter alle ejendomme ind i fields[]
+		for (int i = 0; i < streets.length; i++) {
+			fields[streets[i].getFieldNo()] = streets[i];
+		}
 		
-		Street street2 = new Street(3, "Hvidovrevej", null, 1, Group.LIGHTBLUE);
-		fields[3] = street2;
+		Chance[] chances = new Chance[] {
+			new Chance(2, "Prøv lykken"),
+			new Chance(7, "Prøv lykken"),
+			new Chance(17, "Prøv lykken"),
+			new Chance(22, "Prøv lykken"),
+			new Chance(33, "Prøv lykken"),
+			new Chance(36, "Prøv lykken")
+		};
+		
+		//Sætter alle prøv lykken felter ind i fields[]
+		for (int i = 0; i < chances.length; i++) {
+			fields[chances[i].getFieldNo()] = chances[i];
+		}
+		
+		//AlenDK laver det her..
 		
 		Taxation taxation1 = new Taxation(4, "Betal inkomstskat", "10% eller Kr. 4.000");
 		fields[4] = taxation1;
@@ -29,8 +46,6 @@ public class Board {
 		Street street3 = new Street(6, "Roskildevej", null, 2, Group.ORANGE);
 		fields[6] = street3;
 		
-		Chance chance2 = new Chance(7, "Prøv lykken");
-		fields[7] = chance2;
 		
 		Street street4 = new Street(8, "Valby Langgade", null, 2, Group.ORANGE);
 		fields[8] = street4;
@@ -57,9 +72,6 @@ public class Board {
 		Street street9 = new Street(16, "Bernstorffsvej", null, 4, Group.LIGHTGREY);
 		fields[16] = street9;
 		
-		Chance chance3 = new Chance(17, "Prøv lykken");
-		fields[17] = chance3;
-		
 		Street street10 = new Street(18, "Hellerupvej", null, 4, Group.LIGHTGREY);
 		fields[18] = street10;
 		Street street11 = new Street(19, "Strandvejen", null, 4, Group.LIGHTGREY);
@@ -70,9 +82,6 @@ public class Board {
 		
 		Street street12 = new Street(21, "Trianglen", null, 5, Group.RED);
 		fields[21] = street12;
-		
-		Chance chance4 = new Chance(22, "Prøv lykken");
-		fields[22] = chance4;
 		
 		Street street13 = new Street(23, "Østerbrogade", null, 5, Group.RED);
 		fields[23] = street13;
@@ -101,17 +110,11 @@ public class Board {
 		Street street19 = new Street(32, "Vimmelskaffet", null, 7, Group.YELLOW);
 		fields[32] = street19;
 		
-		Chance chance5 = new Chance(33, "Prøv lykken");
-		fields[33] = chance5;
-		
 		Street street20 = new Street(34, "Nygade", null, 7, Group.YELLOW);
 		fields[34] = street20;
 
 		Ferry ferries4 = new Ferry(35, "Scandlines", "Rødby Puttgarden");
 		fields[35] = ferries4;
-		
-		Chance chance6 = new Chance(36, "Prøv lykken");
-		fields[36] = chance6;
 		
 		Street street21 = new Street(37, "Frederiksberggade", null, 8, Group.PURPLE);
 		fields[37] = street21;

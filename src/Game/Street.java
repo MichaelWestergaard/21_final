@@ -1,58 +1,26 @@
 package Game;
 
-public class Street extends Field {
+public class Street extends Buyable {
 
-	private Player owner;
-	private int rent;
-	private Group group;
-
-	public Street(int fieldNo, String name, Player owner, int rent, Group group) {
-		super(fieldNo, name);
-		this.owner = owner;
+	private int[] rent;
+	private int housePrice;
+	
+	public Street(int fieldNo, String name, Player owner, Group group, int price, int[] rent, int housePrice) {
+		super(fieldNo, name, owner, group, price);
 		this.rent = rent;
-		this.setGroup(group);
+		this.housePrice = housePrice;
 	}
 
 	public Player getOwner() {
-		return owner;
+		return super.owner;
 	}
 
 	public void setOwner(Player owner) {
-		this.owner = owner;
+		super.owner = owner;
 	}
 
-	public int getRent() {
-		return rent;
+	public int getRent(int i) {
+		return rent[i];
 	}
 
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
-	}
-
-	@Override
-	public void landOnField(Player player) {
-
-		if (owner == null) {// hvis der er ingen ejer, så køber man feltet
-			if (player.getPoints() >= getRent()) {
-				player.addPoints(getRent() * -1);
-				setOwner(player);
-			} else {
-				player.setBankrupt(true);
-			}
-		} else { // Hvis der er en ejer, så betaler man
-
-			if (player.getPoints() >= getRent() || player.getPoints() >= (getRent() * 2)) {
-				player.addPoints(getRent() * -1);
-				owner.addPoints(getRent());
-			} else {
-				player.setBankrupt(true);
-			}
-
-		}
-
-	}
 }
