@@ -8,7 +8,6 @@ public class Board {
 
 	public void createFields() {
 
-		
 		Start start = new Start(0, 4000, "Start");
 		fields[0] = start;
 		
@@ -18,7 +17,6 @@ public class Board {
 			new Street(6, "Roskildevej", null, Group.ORANGE, 2000, new int[] {100, 600, 1800, 5400, 8000, 11000}, 1000),
 			new Street(8, "Valby Langgade", null, Group.ORANGE, 2000, new int[] {100, 600, 1800, 5400, 8000, 11000}, 1000),
 			new Street(9, "Allégade", null, Group.ORANGE, 2400, new int[] {150, 800, 2000, 6000, 9000, 12000}, 1000),
-			new Street(11, "Frederiksberg Allé", null, Group.LIGHTGREEN, 2800, new int[] {200, 1000, 3000, 9000, 12500, 15000}, 2000),
 			new Street(11, "Frederiksberg Allé", null, Group.LIGHTGREEN, 2800, new int[] {200, 1000, 3000, 9000, 12500, 15000}, 2000),
 			new Street(13, "Bülowsvej", null, Group.LIGHTGREEN, 2800, new int[] {200, 1000, 3000, 9000, 12500, 15000}, 2000),
 			new Street(14, "Gl. Kongevej", null, Group.LIGHTGREEN, 3200, new int[] {250, 1250, 3750, 10000, 14000, 18000}, 2000),
@@ -58,8 +56,7 @@ public class Board {
 		}
 		
 		Ferry[] ferries = new Ferry[] {
-			//new Ferry(fieldNo, name, null, Group.BLACK, 4000, 500)
-			new Ferry(5, "Helsingør - helsinborg", null, Group.BLACK, 4000, 500),
+			new Ferry(5, "Helsingør - Helsinborg", null, Group.BLACK, 4000, 500),
 			new Ferry(15, "Scandlines - Mols linjen", null, Group.BLACK, 4000, 500),
 			new Ferry(25, "Scandlines - Gedser-Rostock", null, Group.BLACK, 4000, 500),
 			new Ferry(35, "Scandlines - Rødby Puttgarden", null, Group.BLACK, 4000, 500)

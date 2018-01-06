@@ -27,7 +27,7 @@ public class Game {
 
 		// Create fields + board
 		board.createFields();
-
+				
 		gui_controller.setupGUI(board.getFields());
 
 		int playerAmount = gui_controller.getPlayerAmount("Vælg antallet af spillere", playerAmountOptions);

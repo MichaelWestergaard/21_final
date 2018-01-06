@@ -26,7 +26,10 @@ public class GUI_Controller {
 	}
 
 	public void createGUIFields(Field[] fields) {
-
+		for (Field field : fields) {
+			System.out.println(field.getName());
+		}
+		
 		GUI_Field[] GUIFields = new GUI_Field[fields.length];
 
 		for (Field field : fields) {
