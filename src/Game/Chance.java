@@ -40,16 +40,11 @@ public class Chance extends Field {
 		cardList[14]	= new MoneyCard("Money", "De har lagt penge ud til sammenskudsgilde. M�rkv�rdigvis betaler alle straks. Modtag fra hver medspiller kr. 25,00.", 25);
 		
 		
-		cardList[15] 	= new MoveCard("Move", "Du kørte for hurtigt, og derfor røg du i fængsel", 6); //Skift 19 til 18 når fængsel er implementeret
-		cardList[16] 	= new MoveCard("Move", "Ryk til start", 0);
-		cardList[17] 	= new MoveCard("Move", "Ryk til Boardwalk", 23);
-		cardList[18] 	= new MoveCard("Move",	"Du var heldig med at finde en parkeringsplads. Ryk til gratis parkering", 12);
-		cardList[19] 	= new MoveCard("Move", "Ryk til Tivoli", 7);
-		cardList[20] 	= new MoveCard("Move", "Ryk til The Zoo", 20);
+	
 		//cardlist[]	= new MoveCard("Move","Ryk brikke frem til det nærmeste dampskibsselskab og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de købe det af banken")
-		cardList[21]	= new MoveCard("Move", "Tag ind p� R�dhuspladsen", 39);
-		cardList[22]	= new MoveCard("Move", "Ryk frem til Gr�nningen. Hvis De passerer >>Start<<, indkass�r da kr. 2000,00.", 24);
-		cardList[23]	= new MoveCard("Move", "Tag med �resundsb�den --- Flyt brikken frem, og hvis De passerer >>Start<<, indkass�r kr. 2000,00.", 5);
+		cardList[21]	= new MoveCard("Move", "Tag ind på Rådhuspladsen", 39);
+		cardList[22]	= new MoveCard("Move", "Ryk frem til Grønningen. Hvis De passerer >>Start<<, indkasser da 2000,-", 24);
+		cardList[23]	= new MoveCard("Move", "Tag med øresundsbåden --- Flyt brikken frem, og hvis De passerer >>Start<<, indkasser kr. 2000,00.", 5);
 		cardList[24]	= new MoveCard("Move", "G� i f�ngsel. Ryk direkte til f�ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
 		cardList[25]	= new MoveCard("Move", "G� i f�ngsel. Ryk direkte til f�ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
 		cardList[26]	= new MoveCard("Move", "G� i f�ngsel. Ryk direkte til f�ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);

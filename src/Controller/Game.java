@@ -81,11 +81,11 @@ public class Game {
 
 					int newFieldNo = field + diceCup.getDiceSum();
 
-					if (newFieldNo < 24) {
+					if (newFieldNo < 40) {
 						players[i].setFieldNo(newFieldNo);
 						gui_controller.movePlayers(players);
 					} else {
-						newFieldNo -= 24;
+						newFieldNo -= 40;
 						players[i].setFieldNo(newFieldNo);
 						gui_controller.movePlayers(players);
 						gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");

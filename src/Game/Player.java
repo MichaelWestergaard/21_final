@@ -10,6 +10,8 @@ public class Player {
 	private int fieldNo = 0;
 	private boolean isBankrupt = false;
 	private boolean isJailed = false;
+	private int jailCounter = 0;
+	private int jailCard = 0;
 	
 	public String getName(){
 		return name;	
@@ -61,4 +63,21 @@ public class Player {
 		this.isJailed = isJailed;
 	}
 	
+	public void setJailCounter(int jailCounter) {
+		this.jailCounter = jailCounter;
+	}
+	public void increaseJailCounter() {
+		jailCounter++;
+	}
+	public int getJailCounter() {
+		return jailCounter;
+	}
+	
+	public void setJailCard(int jailCard) {
+		this.jailCard = jailCard;
+	}
+	
+	public int getJailCard() {
+		return jailCard;
+	}
 }
