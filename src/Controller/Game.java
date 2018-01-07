@@ -189,9 +189,10 @@ public class Game {
 			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
 			((Parking) board.getField(20)).increaseAmount(2000);
 			System.out.println(((Parking) board.getField(20)).getAmount());
+			
 		}
 	}
-
+	
 	public void getWinner() {
 		int highscore = 0;
 		Player winner = null;
