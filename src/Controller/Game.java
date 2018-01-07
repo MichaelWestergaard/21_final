@@ -60,6 +60,46 @@ public class Game {
 						players[i].setJailed(false);
 						break;
 					}
+					
+					// Tjekker om spilleren sidder i fængsel
+					if (players[i].isJailed() == true) {
+						gui_controller.showMessage("Spiller " + (i + 1) + " sidder i fængsel. \n Tryk [OK] for at vælge, hvordan du vil fortsætte");
+						//board.getField(players[i].getFieldNo()).landOnField(players[i]);
+						
+						// Tjekker om spilleren har mulighed for at vælge, hvordan han vil komme ud af fængslet
+						if (players[i].getJailCounter() < 3 && players[i].getPoints() >= 1000) {
+							String[] options = {"Slå 2 ens", "Betal kaution"};
+							String optionsChoice = gui_controller.multipleChoice("Vil du prøve at slå 2 ens med terningerne eller betale din kaution på kr. 1000,00?", options);
+							
+							// Hvis spilleren vælger at prøve at slå 2 ens med terningerne
+							if (options[0].matches(optionsChoice)) {
+								diceCup.rollDices();
+								gui_controller.setDice(diceCup.getDiceValue(0), diceCup.getDiceValue(1));
+								
+								if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
+									gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet løsladt fra fængslet!");
+									players[i].setJailed(false);
+									players[i].setJailCounter(0);
+								} else {
+									gui_controller.showMessage("Du slog ikke 2 ens. Bedre held næste gang! \n Du har nu " + (3 - players[i].getJailCounter()) + " forsøg tilbage, før du skal betale kaution");
+									players[i].increaseJailCounter();
+									break;
+								}
+							
+							// Hvis spilleren vælger at betale kaution
+							} else if (options[1].matches(optionsChoice)) {
+								gui_controller.showMessage("Du betaler nu kr. 1000,00 i kaution.");
+								players[i].addPoints(-1000);
+								players[i].setJailed(false);
+							}
+						
+						// Hvis spilleren er tvunget til at betale kaution	
+						} else if (players[i].getJailCounter() == 3 && players[i].getPoints() >= 1000) {
+							gui_controller.showMessage("Du har opbrugt alle dine forsøg med terningerne, og er tvunget til at betale kaution. \n Kr. 1000,00 vil blive trukket fra din konto.");
+							players[i].addPoints(-1000);
+							players[i].setJailed(false);
+						}
+					}
 
 					gui_controller.showMessage("Spiller " + (i + 1) + "s tur \n Tryk [OK] for at slÃ¥ med terningerne");
 
