@@ -158,8 +158,8 @@ public class GUI_Controller {
 		
 	}
 	
-	public int getPlayerAmount(String text, String[] options) {
-		return Integer.parseInt(gui.getUserSelection(text, options));
+	public String getPlayerAmount(String text, String[] options) {
+		return gui.getUserSelection(text, options);
 	}
 	
 }
