@@ -6,8 +6,14 @@ public class IncomeTax extends Taxation {
 		super(fieldNo, name, tax);
 	}
 	
-	public void payTax(Parking amount, Player player) {
-		
+	@Override
+	public void landOnField(Player player) {
+		if (player.getPoints() > getTax()) {
+			player.addPoints(getTax() * -1);
+			System.out.println("je");
+		} //else {
+		//Pansæt
+		//falit
 	}
 	
 

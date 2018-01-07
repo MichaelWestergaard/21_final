@@ -4,6 +4,8 @@ import Game.Board;
 import Game.Chance;
 import Game.DiceCup;
 import Game.Field;
+import Game.GovernmentTax;
+import Game.Parking;
 import Game.Player;
 import Game.Street;
 import Game.Ferry;
@@ -60,32 +62,32 @@ public class Game {
 						break;
 					}
 					
-					// Tjekker om spilleren sidder i fængsel
+					// Tjekker om spilleren sidder i fï¿½ngsel
 					if (players[i].isJailed() == true) {
-						gui_controller.showMessage("Spiller " + (i + 1) + " sidder i fængsel. \n Tryk [OK] for at vælge, hvordan du vil fortsætte");
+						gui_controller.showMessage("Spiller " + (i + 1) + " sidder i fï¿½ngsel. \n Tryk [OK] for at vï¿½lge, hvordan du vil fortsï¿½tte");
 						//board.getField(players[i].getFieldNo()).landOnField(players[i]);
 						
-						// Tjekker om spilleren har mulighed for at vælge, hvordan han vil komme ud af fængslet
+						// Tjekker om spilleren har mulighed for at vï¿½lge, hvordan han vil komme ud af fï¿½ngslet
 						if (players[i].getJailCounter() < 3 && players[i].getPoints() >= 1000) {
-							String[] options = {"Slå 2 ens", "Betal kaution"};
-							String optionsChoice = gui_controller.multipleChoice("Vil du prøve at slå 2 ens med terningerne eller betale din kaution på kr. 1000,00?", options);
+							String[] options = {"Slï¿½ 2 ens", "Betal kaution"};
+							String optionsChoice = gui_controller.multipleChoice("Vil du prï¿½ve at slï¿½ 2 ens med terningerne eller betale din kaution pï¿½ kr. 1000,00?", options);
 							
-							// Hvis spilleren vælger at prøve at slå 2 ens med terningerne
+							// Hvis spilleren vï¿½lger at prï¿½ve at slï¿½ 2 ens med terningerne
 							if (options[0].matches(optionsChoice)) {
 								diceCup.rollDices();
 								gui_controller.setDice(diceCup.getDiceValue(0), diceCup.getDiceValue(1));
 								
 								if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
-									gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet løsladt fra fængslet!");
+									gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet lï¿½sladt fra fï¿½ngslet!");
 									players[i].setJailed(false);
 									players[i].setJailCounter(0);
 								} else {
-									gui_controller.showMessage("Du slog ikke 2 ens. Bedre held næste gang! \n Du har nu " + (3 - players[i].getJailCounter()) + " forsøg tilbage, før du skal betale kaution");
+									gui_controller.showMessage("Du slog ikke 2 ens. Bedre held nï¿½ste gang! \n Du har nu " + (3 - players[i].getJailCounter()) + " forsï¿½g tilbage, fï¿½r du skal betale kaution");
 									players[i].increaseJailCounter();
 									break;
 								}
 							
-							// Hvis spilleren vælger at betale kaution
+							// Hvis spilleren vï¿½lger at betale kaution
 							} else if (options[1].matches(optionsChoice)) {
 								gui_controller.showMessage("Du betaler nu kr. 1000,00 i kaution.");
 								players[i].addPoints(-1000);
@@ -94,7 +96,7 @@ public class Game {
 						
 						// Hvis spilleren er tvunget til at betale kaution	
 						} else if (players[i].getJailCounter() == 3 && players[i].getPoints() >= 1000) {
-							gui_controller.showMessage("Du har opbrugt alle dine forsøg med terningerne, og er tvunget til at betale kaution. \n Kr. 1000,00 vil blive trukket fra din konto.");
+							gui_controller.showMessage("Du har opbrugt alle dine forsï¿½g med terningerne, og er tvunget til at betale kaution. \n Kr. 1000,00 vil blive trukket fra din konto.");
 							players[i].addPoints(-1000);
 							players[i].setJailed(false);
 						}
@@ -181,6 +183,12 @@ public class Game {
 
 				gui_controller.showMessage(amountToPay + " Skal betales.");
 			}
+		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
+			System.out.println(player.getPoints());
+			gui_controller.showMessage("EkstraordinÃ¦r statsskat, betal 2000");
+			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
+			((Parking) board.getField(20)).increaseAmount(2000);
+			System.out.println(player.getPoints());
 		}
 	}
 

@@ -6,13 +6,14 @@ public class GovernmentTax extends Taxation {
 		super(fieldNo, name, tax);
 	}
 	
-	public  void payTax(Parking amount, Player player) {
-		setTax(2000);
-		if (player.getPoints() > tax) {
-			player.addPoints(-1 * tax);
-			amount.increaseAmount(tax);
+	@Override
+	public void landOnField(Player player) {
+		if (player.getPoints() > getTax()) {
+			player.addPoints(getTax() * -1);
 		} //else {
 		//Pansæt
 		//falit
 	}
+	
+
 }
