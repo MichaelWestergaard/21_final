@@ -1,17 +1,25 @@
 package Game;
 
-public class Taxation extends Field {
+public abstract class Taxation extends Field {
 
-	int tax;
+	protected int tax;
 
 	public Taxation(int fieldNo, String name, int tax) {
 		super(fieldNo, name);
-		this.tax = tax;
 	}
 
+	public abstract void payTax(Parking amount, Player player);
+	
+	public void setTax(int tax) {
+		this.tax = tax;
+	}
+	
 	public int getTax() {
 		return tax;
 	}
+	
+	
+	
 
 	@Override
 	public void landOnField(Player player) {
