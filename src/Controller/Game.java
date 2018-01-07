@@ -56,16 +56,7 @@ public class Game {
 			boolean runGame = true;
 
 			while (runGame) {
-
-				// Udkommentér dette for at teste med ejer af to felter
-				// Field[] fields = board.getFields();
-				//
-				// for (Field fieldN : fields) {
-				// if(fieldN.getType() == "Street") {
-				// ((Street) fieldN).setOwner(players[0]);
-				// }
-				// }
-
+				
 				for (int i = 0; i < players.length; i++) {
 					if (players[i].isJailed()) {
 						players[i].setJailed(false);
@@ -99,7 +90,7 @@ public class Game {
 					if (board.getField(newFieldNo).getType() == "Chancekort") {
 						gui_controller.showMessage(((Chance) board.getField(newFieldNo)).getCardDescription());
 						gui_controller.movePlayers(players);
-					} else if (board.getField(newFieldNo).getFieldNo() == 18) {
+					} else if (board.getField(newFieldNo).getFieldNo() == 30) {
 						gui_controller.showMessage("Gå i fængsel");
 						gui_controller.movePlayers(players);
 					} else if (board.getField(newFieldNo).getType() == "Street") {
