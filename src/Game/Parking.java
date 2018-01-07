@@ -13,9 +13,8 @@ public class Parking extends Field {
 		this.amount = amount;
 	}
 
-	public int increaseAmount(int amount) {
+	public void increaseAmount(int amount) {
 		this.amount += amount;
-		return amount;
 	}
 	public int getAmount() {
 		return amount;
@@ -23,7 +22,7 @@ public class Parking extends Field {
 
 	public void landOnField(Player player) {
 		player.addPoints(amount);	
-		setAmount(amount);	
+		setAmount(0);	
 	}
 
 
