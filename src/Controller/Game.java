@@ -36,9 +36,7 @@ public class Game {
 		players = new Player[playerAmount];
 
 		for (int i = 0; i < playerAmount; i++) {
-
 			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vælger sit navn:");
-
 			players[i] = new Player(name, 30000);
 		}
 
@@ -72,16 +70,16 @@ public class Game {
 
 					int newFieldNo = field + diceCup.getDiceSum();
 
-					if (newFieldNo < 24) {
+					if (newFieldNo < 40) {
 						players[i].setFieldNo(newFieldNo);
 						gui_controller.movePlayers(players);
 					} else {
-						newFieldNo -= 24;
+						newFieldNo -= 40;
 						players[i].setFieldNo(newFieldNo);
 						gui_controller.movePlayers(players);
-						gui_controller.showMessage("Du kørte over start og modtog derfor 3,-");
+						gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
 						if (newFieldNo != 0) {
-							players[i].addPoints(3);
+							players[i].addPoints(4000);
 						}
 					}
 
@@ -94,10 +92,36 @@ public class Game {
 						gui_controller.showMessage("Gå i fængsel");
 						gui_controller.movePlayers(players);
 					} else if (board.getField(newFieldNo).getType() == "Street") {
-						//Skal ændres til at virke med 2-3 felter af samme slags + Gør så man betaler efter hvor mange huse/hoteller der er på feltet
 						if (!players[i].equals(((Street) board.getField(newFieldNo)).getOwner())) {
 							
+							//Hvis feltet ikke ejes af nogle kan det købes
+							if(((Street) board.getField(newFieldNo)).getOwner() == null) {
+								//Køb felt
+							}
+							
+							//Hvis feltet ejes af en anden skal der betales husleje
+							else {
+								int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
+							
+								if(((Street) board.getField(newFieldNo)).getHouse() == 0 && ((Street) board.getField(newFieldNo)).getHotel() == 0) {
+									if(checkMonopoly(newFieldNo)) {
+										amountToPay = amountToPay * 2;
+									}
+								}
+							
+								gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
+							}
+						
 						}
+						
+						
+					
+						
+						
+						
+						
+						
+						
 					}  else if (board.getField(newFieldNo).getType() == "Ferry") {
 						if (!players[i].equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
 							int ownerOwns = getSameGroupAmount(newFieldNo);
@@ -146,15 +170,16 @@ public class Game {
 		gui_controller.showMessage(winner.getName() + " har vundet med " + winner.getPoints() + ",-");
 	}
 
-	public int getSameGroupAmount(int fieldNo) {
+	
 
+	public int getSameGroupAmount(int fieldNo) {
 		int sameGroupAmount = 0;
 
 		Field field = board.getField(fieldNo);
 		Field[] fields = board.getFields();
 
 		for (Field fieldN : fields) {
-			if(fieldN.getType() == field.getType() && ((Buyable) field).getGroup() == ((Buyable) field).getGroup()) {
+			if(fieldN.getType() == field.getType() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
 				sameGroupAmount++;
 			}
 		}
@@ -162,6 +187,8 @@ public class Game {
 		return sameGroupAmount;
 	}
 
+
+	//Er denne funktion stadig nødvendig?
 	public boolean checkOwner(int fieldNo) {
 		boolean sameOwner = false;
 
@@ -181,4 +208,29 @@ public class Game {
 
 	}
 
+	public boolean checkMonopoly(int fieldNo) {
+		boolean monopoly = false;
+			
+		Field field = board.getField(fieldNo);
+		String fieldGroup = ((Street) field).getGroup().name();
+		
+		if("LIGHTBLUE".equalsIgnoreCase(fieldGroup) || "PURPLE".equalsIgnoreCase(fieldGroup)) {
+			if(getSameGroupAmount(fieldNo) == 2) {
+				monopoly = true;
+			}	
+		}
+		
+		if(	"ORANGE".equalsIgnoreCase(fieldGroup) || "LIGHTGREEN".equalsIgnoreCase(fieldGroup) ||
+			"LIGHTGREY".equalsIgnoreCase(fieldGroup) || "RED".equalsIgnoreCase(fieldGroup) ||
+			"WHITE".equalsIgnoreCase(fieldGroup) || "YELLOW".equalsIgnoreCase(fieldGroup) 			) {
+			
+			if(getSameGroupAmount(fieldNo) == 3) {
+				monopoly = true;
+			}
+		}
+		
+		return monopoly;
+	}
+	
+	
 }

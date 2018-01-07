@@ -2,14 +2,29 @@ package Game;
 
 public class Parking extends Field {
 
-	public Parking(int fieldNo, String name) {
+	private int amount;
+
+	public Parking(int fieldNo, String name, int amount) {
 		super(fieldNo, name);
-		
+		amount = 0;
 	}
 
-	@Override
-	public void landOnField(Player player) {
-		
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
+
+	public int increaseAmount(int amount) {
+		this.amount += amount;
+		return amount;
+	}
+	public int getAmount() {
+		return amount;
+	}
+
+	public void landOnField(Player player) {
+		player.addPoints(amount);	
+		setAmount(amount);	
+	}
+
 
 }

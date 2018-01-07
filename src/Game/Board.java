@@ -87,7 +87,7 @@ public class Board {
 		fields[12] = beverage1;
 		fields[28] = beverage2;	
 		
-		Parking parking = new Parking(20, "Parkering");
+		Parking parking = new Parking(20, "Parkering", 0);
 		fields[20] = parking;	
 		
 	}

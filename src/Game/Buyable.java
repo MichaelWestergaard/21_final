@@ -18,7 +18,7 @@ public class Buyable extends Field {
 
 	@Override
 	public void landOnField(Player player) {
-				
+		//Test af commit [Tim]		
 	}
 
 	public Group getGroup() {

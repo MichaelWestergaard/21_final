@@ -6,4 +6,9 @@ public class IncomeTax extends Taxation {
 		super(fieldNo, name, tax);
 	}
 	
+	public void payTax(Parking amount, Player player) {
+		
+	}
+	
+
 }
