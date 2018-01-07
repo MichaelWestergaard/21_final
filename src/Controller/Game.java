@@ -74,8 +74,7 @@ public class Game {
 							
 							// Hvis spilleren v�lger at pr�ve at sl� 2 ens med terningerne
 							if (options[0].matches(optionsChoice)) {
-								diceCup.rollDices();
-								gui_controller.setDice(diceCup.getDiceValue(0), diceCup.getDiceValue(1));
+								rollDice();
 								
 								if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
 									gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet l�sladt fra f�ngslet!");
