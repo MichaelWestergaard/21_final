@@ -184,11 +184,11 @@ public class Game {
 				gui_controller.showMessage(amountToPay + " Skal betales.");
 			}
 		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
-			System.out.println(player.getPoints());
+			System.out.println(((Parking) board.getField(20)).getAmount());
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
 			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
 			((Parking) board.getField(20)).increaseAmount(2000);
-			System.out.println(player.getPoints());
+			System.out.println(((Parking) board.getField(20)).getAmount());
 		}
 	}
 

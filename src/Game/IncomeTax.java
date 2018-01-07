@@ -10,7 +10,7 @@ public class IncomeTax extends Taxation {
 	public void landOnField(Player player) {
 		if (player.getPoints() > getTax()) {
 			player.addPoints(getTax() * -1);
-			System.out.println("je");
+		
 		} //else {
 		//Pansæt
 		//falit
