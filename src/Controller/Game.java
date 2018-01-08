@@ -65,7 +65,40 @@ public class Game {
 						//board.getField(players[i].getFieldNo()).landOnField(players[i]);
 						
 						// Tjekker om spilleren har mulighed for at v�lge, hvordan han vil komme ud af f�ngslet
-						if (players[i].getJailCounter() < 3 && players[i].getPoints() >= 1000) {
+						if (players[i].getJailCounter() < 3 && players[i].getPoints() >= 1000 && players[i].getJailCard() > 0) {
+							String[] options = {"Sl� 2 ens", "Betal kaution", "Brug fængselskort"};
+							String optionsChoice = gui_controller.multipleChoice("Vil du pr�ve at sl� 2 ens med terningerne eller betale din kaution p� kr. 1000,00?", options);
+							
+							// Hvis spilleren v�lger at pr�ve at sl� 2 ens med terningerne
+							if (options[0].matches(optionsChoice)) {
+								rollDice();
+								
+								if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
+									gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet l�sladt fra f�ngslet!");
+									players[i].setJailed(false);
+									players[i].setJailCounter(0);
+								} else {
+									gui_controller.showMessage("Du slog ikke 2 ens. Bedre held n�ste gang! \n Du har nu " + (3 - players[i].getJailCounter()) + " fors�g tilbage, f�r du skal betale kaution");
+									players[i].increaseJailCounter();
+									break;
+								}
+							
+							// Hvis spilleren v�lger at betale kaution
+							} else if (options[1].matches(optionsChoice)) {
+								gui_controller.showMessage("Du betaler nu kr. 1000,00 i kaution.");
+								players[i].addPoints(-1000);
+								players[i].setJailCounter(0);
+								players[i].setJailed(false);
+								
+							// Hvis spilleren vælger at bruge sit fængselskort	
+							} else if (options[2].matches(optionsChoice)) {
+								gui_controller.showMessage("Du har brugt dit kort, og bliver hermed løsladt.");
+								players[i].setJailCard(-1);
+								players[i].setJailCounter(0);
+								players[i].setJailed(false);
+							}
+						
+						} else if (players[i].getJailCounter() < 3 && players[i].getPoints() >= 1000 && players[i].getJailCard() == 0) {
 							String[] options = {"Sl� 2 ens", "Betal kaution"};
 							String optionsChoice = gui_controller.multipleChoice("Vil du pr�ve at sl� 2 ens med terningerne eller betale din kaution p� kr. 1000,00?", options);
 							
@@ -90,7 +123,7 @@ public class Game {
 								players[i].setJailed(false);
 								players[i].setJailCounter(0);
 							}
-						
+							
 						// Hvis spilleren er tvunget til at betale kaution	
 						} else if (players[i].getJailCounter() == 3 && players[i].getPoints() >= 1000) {
 							gui_controller.showMessage("Du har opbrugt alle dine fors�g med terningerne, og er tvunget til at betale kaution. \n Kr. 1000,00 vil blive trukket fra din konto.");
