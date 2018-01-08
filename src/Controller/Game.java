@@ -235,7 +235,9 @@ public class Game {
 			if(options[1].matches(optionsChoice)){
 				
 				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
+				for(int i=0 ; i < 10; i++){
 				player.addPoints((player.getPoints()/100*10)*-1);
+				}
 				System.out.println(player.getPoints());
 			}
 		}
