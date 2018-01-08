@@ -10,6 +10,6 @@ public class MoveCard extends Card{
 	}
 	
 	public int getField() {
-		return fieldNo;
+		return this.fieldNo;
 	}
 }

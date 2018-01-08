@@ -173,34 +173,44 @@ public class Game {
 			}
 		}
 		
-		System.out.println(player.getPoints());
 		board.getField(newFieldNo).landOnField(player);
 		
-
-		if (board.getField(newFieldNo).getType() == "Chancekort") {
+		if (board.getField(newFieldNo).getType() == "Game.Chancekort") {
 			gui_controller.showMessage(((Chance) board.getField(newFieldNo)).getCardDescription());
 			gui_controller.movePlayers(players);
 		} else if (board.getField(newFieldNo).getFieldNo() == 30) {
 			gui_controller.showMessage("Gå i fængsel");
 			gui_controller.movePlayers(players);
-		} else if (board.getField(newFieldNo).getType() == "Street") {
+		} else if (board.getField(newFieldNo).getType() == "Game.Street") {
 			if (!player.equals(((Street) board.getField(newFieldNo)).getOwner())) {
-
+		
 				//Hvis feltet ikke ejes af nogle kan det købes
 				if(((Street) board.getField(newFieldNo)).getOwner() == null) {
-					//Køb felt
+					
+					String[] options = {"Køb felt", "Spring over"};
+					String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
+					
+					if(options[0].matches(optionsChoice)) {
+						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
+							((Street) board.getField(newFieldNo)).landOnField(player, false, true);
+							//Tilføj opdateringer til GUI'en ???
+						}
+					}
+					
 				} else {
+					((Street) board.getField(newFieldNo)).landOnField(player, true, false);
 					int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
 					
 					if(((Street) board.getField(newFieldNo)).getHouse() == 0 && ((Street) board.getField(newFieldNo)).getHotel() == 0) {
 						if(checkMonopoly(newFieldNo)) {
+							((Street) board.getField(newFieldNo)).landOnField(player, true, false);
 							amountToPay = amountToPay * 2;
 						}
 					}
 					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 				}
 			}
-		} else if (board.getField(newFieldNo).getType() == "Ferry") {
+		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
 			if (!player.equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
 				int ownerOwns = getSameGroupAmount(newFieldNo);
 				int amountToPay = ownerOwns * ((Ferry) board.getField(newFieldNo)).getRent();
@@ -214,32 +224,40 @@ public class Game {
 			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
 			((Parking) board.getField(20)).increaseAmount(2000);
 			System.out.println(((Parking) board.getField(20)).getAmount());
+		} else if (board.getField(newFieldNo).getFieldNo() == 4) {
+			//incometax
+			//Hvis man lander på incometax, skal man betale 4000 eller 10%
+			//pengene skal blive ført over til parkeringen (kig på game, hvordan man har gjort det)
 			
-		}
-		//incometax
-		//Hvis man lander på incometax, skal man betale 4000 eller 10%
-		//pengene skal blive ført over til parkeringen (kig på game, hvordan man har gjort det)
-		
-		else if (board.getField(newFieldNo).getFieldNo() == 4) {
 			System.out.println(player.getPoints());
 			String[] options = {"Betal 4000", "Betal 10%"};
 			String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 4000 eller 10 %");
 			if(options[0].matches(optionsChoice)){
-				System.out.println(player.getPoints());
 				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
 				((Parking) board.getField(20)).increaseAmount(4000);	
 				player.addPoints(-4000);
-				System.out.println(player.getPoints());
 			}
 			if(options[1].matches(optionsChoice)){
 				
 				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
-				//for(int i=0 ; i < 10; i++){
 				player.addPoints((player.getPoints()/100*10)*-1);
-			}
+<<<<<<< HEAD
+=======
 				System.out.println(player.getPoints());
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
+			}
+<<<<<<< HEAD
+				System.out.println(player.getPoints());
+=======
+		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
+			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(newFieldNo)).getAmount() + " kr.");
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
 		}
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
 	}
 	
 	public void getWinner() {
