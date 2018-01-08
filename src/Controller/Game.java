@@ -212,11 +212,11 @@ public class Game {
 			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
 			((Parking) board.getField(20)).increaseAmount(2000);
 			System.out.println(((Parking) board.getField(20)).getAmount());
-		}
-		//incometax
-		//Hvis man lander på incometax, skal man betale 4000 eller 10%
-		//pengene skal blive ført over til parkeringen (kig på game, hvordan man har gjort det)
-		else if (board.getField(newFieldNo).getFieldNo() == 4) {
+		} else if (board.getField(newFieldNo).getFieldNo() == 4) {
+			//incometax
+			//Hvis man lander på incometax, skal man betale 4000 eller 10%
+			//pengene skal blive ført over til parkeringen (kig på game, hvordan man har gjort det)
+			
 			System.out.println(player.getPoints());
 			String[] options = {"Betal 4000", "Betal 10%"};
 			String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
@@ -229,9 +229,7 @@ public class Game {
 			if(options[1].matches(optionsChoice)){
 				
 				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
-				//for(int i=0 ; i < 10; i++){
 				player.addPoints((player.getPoints()/100*10)*-1);
-				}
 				System.out.println(player.getPoints());
 			}
 		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
