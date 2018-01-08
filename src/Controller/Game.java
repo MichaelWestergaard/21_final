@@ -175,7 +175,7 @@ public class Game {
 		
 		board.getField(newFieldNo).landOnField(player);
 		
-		if (board.getField(newFieldNo).getType() == "Game.Chancekort") {
+		if (board.getField(newFieldNo).getType() == "Game.Chance") {
 			gui_controller.showMessage(((Chance) board.getField(newFieldNo)).getCardDescription());
 			gui_controller.movePlayers(players);
 		} else if (board.getField(newFieldNo).getFieldNo() == 30) {
