@@ -51,7 +51,7 @@ public class Chance extends Field {
 		cardList[27]	= new MoveCard("Move", "Ryk tre felter tilbage.", (getFieldNo()-3));
 		cardList[28]	= new MoveCard("Move", "Ryk tre felter tilbage.", (getFieldNo()-3));
 		cardList[29]	= new MoveCard("Move", "Ryk frem til >>Start<<.", 0);
-		cardList[30]	= new MoveCard("Move", "Ryk frem til >>Start<<.", 0);
+		cardList[30]	= new JailCard("Move", "Jail card");
 		
 		this.cardList = cardList;
 	}

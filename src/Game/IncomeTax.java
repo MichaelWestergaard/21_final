@@ -8,13 +8,11 @@ public class IncomeTax extends Taxation {
 	
 	@Override
 	public void landOnField(Player player) {
-		if (player.getPoints() > getTax()) {
-			player.addPoints(getTax() * -1);
-		
+	
 		} //else {
 		//Pansæt
 		//falit
 	}
 	
 
-}
+

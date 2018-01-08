@@ -5,6 +5,7 @@ import Game.Chance;
 import Game.DiceCup;
 import Game.Field;
 import Game.GovernmentTax;
+import Game.IncomeTax;
 import Game.Parking;
 import Game.Player;
 import Game.Street;
@@ -102,28 +103,50 @@ public class Game {
 					}
 
 					
-					String nextAction = gui_controller.getPlayerAmount("Vælg handling", new String[] {"Kast terning", "Køb huse/hoteller", "Pansæt"});
-
-					if(nextAction == "Kast terning") {
-						rollDice();
-						checkField(players[i]);
-					}
-
-					gui_controller.updateBalance(players);
-
 					// Tjek om spilleren er bankerot
 					// Hvis der er en der er bankerot, så stoppes while loopet
 					if (players[i].isBankrupt()) {
 						runGame = false;
 					}
+					
+					String nextAction = gui_controller.getPlayerAmount("Vælg handling", new String[] {"Kast terning", "Køb huse/hoteller", "Pansæt"});
 
+					if(nextAction == "Kast terning") {
+						rollDice();
+						
+						// Hvis spillerens sl�r 2 ens
+						if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
+							players[i].increaseHitDouble();
+							
+							// Hvis spilleren har sl�et 2 ens for mange (3) gange
+							if (players[i].getHitDouble() == 3) {
+								gui_controller.showMessage("Du har sl�et 2 ens for mange gange og f�ngsles for at snyde med terningerne!");								
+								players[i].setFieldNo(6);
+								players[i].setJailed(true);
+								gui_controller.movePlayers(players);
+							} else {
+								checkField(players[i]);
+							}
+							
+							// Giver spilleren en eksta tur
+							if (i == 0) {
+								i = players.length;
+							} else {
+								i--;
+							}
+							
+						} else {
+							players[i].resetHitDouble();
+							checkField(players[i]);
+						}
+					}
+
+					gui_controller.updateBalance(players);
 				}
 			}
 			getWinner();
 		} else {
-
 			gameSetup();
-
 		}
 	}
 	
@@ -149,16 +172,16 @@ public class Game {
 				player.addPoints(4000);
 			}
 		}
-
+		
 		board.getField(newFieldNo).landOnField(player);
-
-		if (board.getField(newFieldNo).getType() == "Chancekort") {
+		
+		if (board.getField(newFieldNo).getType() == "Game.Chancekort") {
 			gui_controller.showMessage(((Chance) board.getField(newFieldNo)).getCardDescription());
 			gui_controller.movePlayers(players);
 		} else if (board.getField(newFieldNo).getFieldNo() == 30) {
 			gui_controller.showMessage("Gå i fængsel");
 			gui_controller.movePlayers(players);
-		} else if (board.getField(newFieldNo).getType() == "Street") {
+		} else if (board.getField(newFieldNo).getType() == "Game.Street") {
 			if (!player.equals(((Street) board.getField(newFieldNo)).getOwner())) {
 		
 				//Hvis feltet ikke ejes af nogle kan det købes
@@ -187,30 +210,61 @@ public class Game {
 					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 				}
 			}
+<<<<<<< HEAD
 		
 	
 		
 		} 
 			
 			else if (board.getField(newFieldNo).getType() == "Ferry") {
+=======
+		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final
 			if (!player.equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
 				int ownerOwns = getSameGroupAmount(newFieldNo);
 				int amountToPay = ownerOwns * ((Ferry) board.getField(newFieldNo)).getRent();
 
 				gui_controller.showMessage(amountToPay + " Skal betales.");
 			}
+			//government tax
 		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
 			System.out.println(((Parking) board.getField(20)).getAmount());
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
 			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
 			((Parking) board.getField(20)).increaseAmount(2000);
 			System.out.println(((Parking) board.getField(20)).getAmount());
+		} else if (board.getField(newFieldNo).getFieldNo() == 4) {
+			//incometax
+			//Hvis man lander på incometax, skal man betale 4000 eller 10%
+			//pengene skal blive ført over til parkeringen (kig på game, hvordan man har gjort det)
+			
+			System.out.println(player.getPoints());
+			String[] options = {"Betal 4000", "Betal 10%"};
+			String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
+			gui_controller.showMessage("Ekstraordinær statsskat, betal 4000 eller 10 %");
+			if(options[0].matches(optionsChoice)){
+				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
+				((Parking) board.getField(20)).increaseAmount(4000);	
+				player.addPoints(-4000);
+			}
+			if(options[1].matches(optionsChoice)){
+				
+				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
+				player.addPoints((player.getPoints()/100*10)*-1);
+				System.out.println(player.getPoints());
+			}
+		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
+			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(newFieldNo)).getAmount() + " kr.");
 		}
+<<<<<<< HEAD
 	
 	
 	
+=======
+		
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final
 	}
-
+	
 	public void getWinner() {
 		int highscore = 0;
 		Player winner = null;

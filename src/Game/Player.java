@@ -12,6 +12,7 @@ public class Player {
 	private boolean isJailed = false;
 	private int jailCounter = 0;
 	private int jailCard = 0;
+	private int hitDouble = 0;
 	
 	public String getName(){
 		return name;	
@@ -79,5 +80,17 @@ public class Player {
 	
 	public int getJailCard() {
 		return jailCard;
+	}
+	
+	public int getHitDouble() {
+		return hitDouble;
+	}
+	
+	public void increaseHitDouble() {
+		this.hitDouble++;
+	}
+	
+	public void resetHitDouble() {
+		this.hitDouble = 0;
 	}
 }
