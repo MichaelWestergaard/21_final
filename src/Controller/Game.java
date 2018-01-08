@@ -102,28 +102,50 @@ public class Game {
 					}
 
 					
-					String nextAction = gui_controller.getPlayerAmount("VÃ¦lg handling", new String[] {"Kast terning", "KÃ¸b huse/hoteller", "PansÃ¦t"});
-
-					if(nextAction == "Kast terning") {
-						rollDice();
-						checkField(players[i]);
-					}
-
-					gui_controller.updateBalance(players);
-
 					// Tjek om spilleren er bankerot
 					// Hvis der er en der er bankerot, sÃ¥ stoppes while loopet
 					if (players[i].isBankrupt()) {
 						runGame = false;
 					}
+					
+					String nextAction = gui_controller.getPlayerAmount("VÃ¦lg handling", new String[] {"Kast terning", "KÃ¸b huse/hoteller", "PansÃ¦t"});
 
+					if(nextAction == "Kast terning") {
+						rollDice();
+						
+						// Hvis spillerens slår 2 ens
+						if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
+							players[i].increaseHitDouble();
+							
+							// Hvis spilleren har slået 2 ens for mange (3) gange
+							if (players[i].getHitDouble() == 3) {
+								gui_controller.showMessage("Du har slået 2 ens for mange gange og fængsles for at snyde med terningerne!");								
+								players[i].setFieldNo(6);
+								players[i].setJailed(true);
+								gui_controller.movePlayers(players);
+							} else {
+								checkField(players[i]);
+							}
+							
+							// Giver spilleren en eksta tur
+							if (i == 0) {
+								i = players.length;
+							} else {
+								i--;
+							}
+							
+						} else {
+							players[i].resetHitDouble();
+							checkField(players[i]);
+						}
+					}
+
+					gui_controller.updateBalance(players);
 				}
 			}
 			getWinner();
 		} else {
-
 			gameSetup();
-
 		}
 	}
 	
