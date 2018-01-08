@@ -264,19 +264,23 @@ public class Game {
 			String[] options = {"Betal 4000", "Betal 10%"};
 			String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 4000 eller 10 %");
+			System.out.println(((Parking) board.getField(20)).getAmount());
 			if(options[0].matches(optionsChoice)){
 				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
 				((Parking) board.getField(20)).increaseAmount(4000);	
 				player.addPoints(-4000);
+				System.out.println(((Parking) board.getField(20)).getAmount());
 			}
 			if(options[1].matches(optionsChoice)){
-				
+				System.out.println(((Parking) board.getField(20)).getAmount());
 				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
 				player.addPoints((player.getPoints()/100*10)*-1);
+				System.out.println(((Parking) board.getField(20)).getAmount());
 			}
 
 		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
-			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(newFieldNo)).getAmount() + " kr.");
+			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(20)).getAmount() + " kr.");
+			((Parking) board.getField(20)).setAmount(0);
 		}
 	}
 	
