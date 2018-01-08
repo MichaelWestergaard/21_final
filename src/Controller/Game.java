@@ -210,16 +210,7 @@ public class Game {
 					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 				}
 			}
-<<<<<<< HEAD
-		
-	
-		
-		} 
-			
-			else if (board.getField(newFieldNo).getType() == "Ferry") {
-=======
 		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final
 			if (!player.equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
 				int ownerOwns = getSameGroupAmount(newFieldNo);
 				int amountToPay = ownerOwns * ((Ferry) board.getField(newFieldNo)).getRent();
@@ -256,13 +247,7 @@ public class Game {
 		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
 			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(newFieldNo)).getAmount() + " kr.");
 		}
-<<<<<<< HEAD
-	
-	
-	
-=======
-		
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final
+
 	}
 	
 	public void getWinner() {
