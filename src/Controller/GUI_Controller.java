@@ -45,6 +45,42 @@ public class GUI_Controller {
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
 				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Street) field).getPrice() + ",- ");
 				
+
+				switch(((Street) field).getGroup().toString()) {
+					case "LIGHTBLUE":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.BLUE);
+						break;
+					case "PINK":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.PINK);
+						break;
+					case "LIGHTGREEN":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.GREEN);
+						break;
+					case "LIGHTGREY":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.GRAY);
+						break;
+					case "RED":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.RED);
+						break;
+					case "WHITE":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.WHITE);
+						break;
+					case "YELLOW":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.YELLOW);
+						break;
+					case "PURPLE":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.decode("#551A8B"));
+						break;
+					case "BLACK":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.BLACK);
+						GUIFields[field.getFieldNo()].setForeGroundColor(Color.WHITE);
+						break;
+					case "BROWN":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.MAGENTA);
+						break;
+				}
+				
+				
 			} else if (field.getType() == "Game.Jail") {
 
 				GUIFields[field.getFieldNo()] = new GUI_Jail();
