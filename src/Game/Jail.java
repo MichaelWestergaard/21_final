@@ -8,8 +8,8 @@ public class Jail extends Field {
 
 	@Override
 	public void landOnField(Player player) {
-		if (player.getFieldNo() == 18) {
-			player.setFieldNo(6);
+		if (player.getFieldNo() == 30) {
+			player.setFieldNo(10);
 			player.setJailed(true);
 		}
 

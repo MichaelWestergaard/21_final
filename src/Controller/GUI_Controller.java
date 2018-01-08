@@ -162,7 +162,7 @@ public class GUI_Controller {
 		return gui.getUserSelection(text, options);
 	}
 	
-	// Bruges til at stille et "multiple choice"-spørgsmål 
+	// Bruges til at stille et "multiple choice"-spï¿½rgsmï¿½l 
 	public String multipleChoice(String message, String[] buttonNames) {
 		return gui.getUserButtonPressed(message, buttonNames);
 	}

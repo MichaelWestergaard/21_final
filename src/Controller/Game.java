@@ -193,7 +193,12 @@ public class Game {
 					if(options[0].matches(optionsChoice)) {
 						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
 							((Street) board.getField(newFieldNo)).landOnField(player, false, true);
+<<<<<<< HEAD
 							//Tilføj opdateringer til GUI'en ???x
+=======
+							gui_controller.setOwner(player, newFieldNo);
+							//Tilføj opdateringer til GUI'en ???
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final
 						}
 					}
 					
@@ -242,12 +247,11 @@ public class Game {
 				
 				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
 				player.addPoints((player.getPoints()/100*10)*-1);
-				System.out.println(player.getPoints());
 			}
+
 		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
 			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(newFieldNo)).getAmount() + " kr.");
 		}
-
 	}
 	
 	
