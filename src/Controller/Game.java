@@ -140,7 +140,7 @@ public class Game {
 						runGame = false;
 					}
 					
-					String nextAction = gui_controller.getPlayerAmount("Vælg handling", new String[] {"Kast terning", "Køb huse/hoteller", "Pansæt"});
+					String nextAction = gui_controller.getPlayerAmount("Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
 
 					if(nextAction == "Kast terning") {
 						rollDice();
@@ -170,33 +170,41 @@ public class Game {
 							players[i].resetHitDouble();
 							checkField(players[i]);
 						}
-					} else if (nextAction == "Pansæt") {
+					} else if (nextAction == "Administrer Ejendomme") {
 						
-						int[] ownedFieldNumbers = players[i].getOwnedFieldNumbers();
+						String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Sælg Ejendom"});
 						
-						int ownedStreets = 0;
+						if(propertyAction == "Huse/Hoteller") {
 						
-						for (int j = 0; j < ownedFieldNumbers.length; j++) {
-							if(ownedFieldNumbers[j] != 0) {
-								ownedStreets++;
-							}
-						}
-						
-						if(ownedStreets > 0 ) {
-
-							String[] ownedStreetOptions = new String [ownedStreets];
+						} else if(propertyAction == "Pantsæt") {
+							int[] ownedFieldNumbers = players[i].getOwnedFieldNumbers();
+							
+							int ownedStreets = 0;
 							
 							for (int j = 0; j < ownedFieldNumbers.length; j++) {
 								if(ownedFieldNumbers[j] != 0) {
-									ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j]).getName();	
-								}					
+									ownedStreets++;
+								}
 							}
 							
-							String getStreetamount = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
-						} else {
-							gui_controller.showMessage("Du ejer ingen ejendomme");
+							if(ownedStreets > 0 ) {
+
+								String[] ownedStreetOptions = new String [ownedStreets];
+								
+								for (int j = 0; j < ownedFieldNumbers.length; j++) {
+									if(ownedFieldNumbers[j] != 0) {
+										ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j]).getName();	
+									}					
+								}
+								
+								String getStreetamount = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
+							} else {
+								gui_controller.showMessage("Du ejer ingen ejendomme");
+								
+								//Man skal ikke kunne miste din tur her...
+							}
+						} else if(propertyAction == "Sælg Ejendom") {
 							
-							//Man skal ikke kunne miste din tur her...
 						}
 					
 					}
