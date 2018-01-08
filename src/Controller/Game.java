@@ -292,7 +292,7 @@ public class Game {
 		Field[] fields = board.getFields();
 
 		for (Field fieldN : fields) {
-			if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
+			if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup() && field.getType() == "Street") {
 				ownerGroupAmount++;
 			}
 		}
