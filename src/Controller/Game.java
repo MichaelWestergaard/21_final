@@ -170,6 +170,15 @@ public class Game {
 							players[i].resetHitDouble();
 							checkField(players[i]);
 						}
+					} else if (nextAction == "Pansæt") {
+						String[] ownedStreetOptions = new String[2];
+						String[] ownedFieldNo = {"1", "3"};
+						
+						for (int j = 0; j < ownedFieldNo.length; j++) {
+						ownedStreetOptions[j] = board.getField(Integer.parseInt(ownedFieldNo[j])).getName();	
+						}	
+						String getStreetamount = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
+					
 					}
 
 					gui_controller.updateBalance(players);
