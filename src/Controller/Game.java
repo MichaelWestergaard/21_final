@@ -120,6 +120,7 @@ public class Game {
 								gui_controller.showMessage("Du betaler nu kr. 1000,00 i kaution.");
 								players[i].addPoints(-1000);
 								players[i].setJailed(false);
+								players[i].setJailCounter(0);
 							}
 							
 						// Hvis spilleren er tvunget til at betale kaution	
@@ -127,6 +128,7 @@ public class Game {
 							gui_controller.showMessage("Du har opbrugt alle dine fors�g med terningerne, og er tvunget til at betale kaution. \n Kr. 1000,00 vil blive trukket fra din konto.");
 							players[i].addPoints(-1000);
 							players[i].setJailed(false);
+							players[i].setJailCounter(0);
 						}
 					}
 
@@ -319,12 +321,13 @@ public class Game {
 		Field field = board.getField(fieldNo);
 		Field[] fields = board.getFields();
 
-		for (Field fieldN : fields) {
-			if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
-				ownerGroupAmount++;
+		if(field.getType() == "Street") {
+			for (Field fieldN : fields) {
+				if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
+					ownerGroupAmount++;
+				}
 			}
 		}
-
 		return ownerGroupAmount;
 	}
 	
