@@ -243,22 +243,11 @@ public class Game {
 				
 				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
 				player.addPoints((player.getPoints()/100*10)*-1);
-<<<<<<< HEAD
-=======
-				System.out.println(player.getPoints());
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
 			}
-<<<<<<< HEAD
-				System.out.println(player.getPoints());
-=======
+
 		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
 			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(newFieldNo)).getAmount() + " kr.");
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
 		}
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final.git
 	}
 	
 	public void getWinner() {
