@@ -9,7 +9,7 @@ public class Chance extends Field {
 	}
 
 	public Card getCard() {
-		int random = (int) (Math.random() * (15) + (0));
+		int random = (int) (Math.random() * 26);
 		return cardList[random];
 	}
 
@@ -19,7 +19,7 @@ public class Chance extends Field {
 
 	public void createCardList() {
 
-		Card[] cardList = new Card[31];
+		Card[] cardList = new Card[26];
 
 		cardList[0] 	= new MoneyCard("Money", "Du har solgt dit gamle udstyr i garagen. Modtag kr. 500,-", 500);
 		cardList[1] 	= new MoneyCard("Money", "Du har vasket din bil. Betal kr. 150,-", -150);
@@ -42,16 +42,18 @@ public class Chance extends Field {
 		
 	
 		//cardlist[]	= new MoveCard("Move","Ryk brikke frem til det nÃ¦rmeste dampskibsselskab og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen, kan de kÃ¸be det af banken")
-		cardList[21]	= new MoveCard("Move", "Tag ind pÃ¥ RÃ¥dhuspladsen", 39);
-		cardList[22]	= new MoveCard("Move", "Ryk frem til GrÃ¸nningen. Hvis De passerer >>Start<<, indkasser da 2000,-", 24);
-		cardList[23]	= new MoveCard("Move", "Tag med Ã¸resundsbÃ¥den --- Flyt brikken frem, og hvis De passerer >>Start<<, indkasser kr. 2000,00.", 5);
-		cardList[24]	= new MoveCard("Move", "Gï¿½ i fï¿½ngsel. Ryk direkte til fï¿½ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
-		cardList[25]	= new MoveCard("Move", "Gï¿½ i fï¿½ngsel. Ryk direkte til fï¿½ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
-		cardList[26]	= new MoveCard("Move", "Gï¿½ i fï¿½ngsel. Ryk direkte til fï¿½ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
-		cardList[27]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
-		cardList[28]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
-		cardList[29]	= new MoveCard("Move", "Ryk frem til >>Start<<.", 0);
-		cardList[30]	= new JailCard("Move", "Jail card");
+		cardList[15]	= new MoveCard("Move", "Tag ind pÃ¥ RÃ¥dhuspladsen", 39);
+		cardList[16]	= new MoveCard("Move", "Ryk frem til GrÃ¸nningen. Hvis De passerer >>Start<<, indkasser da 2000,-", 24);
+		cardList[17]	= new MoveCard("Move", "Tag med Ã¸resundsbÃ¥den --- Flyt brikken frem, og hvis De passerer >>Start<<, indkasser kr. 2000,00.", 5);
+		cardList[18]	= new MoveCard("Move", "Gï¿½ i fï¿½ngsel. Ryk direkte til fï¿½ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
+		cardList[19]	= new MoveCard("Move", "Gï¿½ i fï¿½ngsel. Ryk direkte til fï¿½ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
+		cardList[20]	= new MoveCard("Move", "Gï¿½ i fï¿½ngsel. Ryk direkte til fï¿½ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
+		cardList[21]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
+		cardList[22]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
+		cardList[23]	= new MoveCard("Move", "Ryk frem til >>Start<<.", 0);
+		cardList[24]	= new JailCard("Move", "Fængselskort: Du kan bruge dette kort til at købe dig fri fra fængslet!");
+		cardList[25]	= new JailCard("Move", "Fængselskort: Du kan bruge dette kort til at købe dig fri fra fængslet!");
+		cardList[26]	= new JailCard("Move", "Fængselskort: Du kan bruge dette kort til at købe dig fri fra fængslet!");
 		
 		this.cardList = cardList;
 	}
@@ -70,9 +72,9 @@ public class Chance extends Field {
 				player.setFieldNo(((MoveCard) drawncard).getField());
 			}
 			
-			if(((MoveCard) drawncard).getField() == 6) {
-				player.setJailed(true);
-			}			
+		} else if(drawncard instanceof JailCard) {
+			player.setFieldNo(10);
+			player.setJailed(true);
 		}
 	}
 
