@@ -193,7 +193,7 @@ public class Game {
 					if(options[0].matches(optionsChoice)) {
 						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
 							((Street) board.getField(newFieldNo)).landOnField(player, false, true);
-							//Tilføj opdateringer til GUI'en ???
+							//Tilføj opdateringer til GUI'en ???x
 						}
 					}
 					
@@ -250,6 +250,8 @@ public class Game {
 
 	}
 	
+	
+	
 	public void getWinner() {
 		int highscore = 0;
 		Player winner = null;
@@ -265,6 +267,8 @@ public class Game {
 		gui_controller.showMessage(winner.getName() + " har vundet med " + winner.getPoints() + ",-");
 	}
 
+	
+	
 	public int getSameGroupAmount(int fieldNo) {
 		int sameGroupAmount = 0;
 
@@ -280,25 +284,43 @@ public class Game {
 		return sameGroupAmount;
 	}
 
+	
+	
+	public int getOwnerGroupAmount(int fieldNo) {
+		int ownerGroupAmount = 0;
+
+		Field field = board.getField(fieldNo);
+		Field[] fields = board.getFields();
+
+		for (Field fieldN : fields) {
+			if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
+				ownerGroupAmount++;
+			}
+		}
+
+		return ownerGroupAmount;
+	}
+	
+	
+	
 	public boolean checkMonopoly(int fieldNo) {
 		boolean monopoly = false;
-
+		
 		Field field = board.getField(fieldNo);
 		String fieldGroup = ((Street) field).getGroup().name();
 
 		if("LIGHTBLUE".equalsIgnoreCase(fieldGroup) || "PURPLE".equalsIgnoreCase(fieldGroup)) {
-			if(getSameGroupAmount(fieldNo) == 2) {
+			if(getOwnerGroupAmount(fieldNo) == 2) {
 				monopoly = true;
 			}	
 		}
 
 		if(	"ORANGE".equalsIgnoreCase(fieldGroup) || "LIGHTGREEN".equalsIgnoreCase(fieldGroup) || "LIGHTGREY".equalsIgnoreCase(fieldGroup) || "RED".equalsIgnoreCase(fieldGroup) || "WHITE".equalsIgnoreCase(fieldGroup) || "YELLOW".equalsIgnoreCase(fieldGroup) ) {
-			if(getSameGroupAmount(fieldNo) == 3) {
+			if(getOwnerGroupAmount(fieldNo) == 3) {
 				monopoly = true;
 			}
 		}
 		return monopoly;
 	}
-
 
 }
