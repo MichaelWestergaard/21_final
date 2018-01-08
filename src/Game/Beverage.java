@@ -8,7 +8,7 @@ public class Beverage extends Buyable {
 		super(fieldNo, name, owner, group, price);
 		this.rent = rent; 
 	}
-	public void landOnField(Player player,int diceSum, int rent) {
+	public void landOnField(Player player,int diceSum, int rent, boolean owned, boolean buy) {
 		int amountToPay = diceSum*rent; //renten der skal betales
 
 		Player owner = super.getOwner();
@@ -27,14 +27,26 @@ public class Beverage extends Buyable {
 				owner.addPoints(amountToPay);
 			} else {
 				player.setBankrupt(true); //ændre til pantsat
-				
 			}
 		}
+
 		
+		//Det her skal lige spørges, om det er rigtigt lavet. Alp
 		
-		
-	}
+		//Hvis feltet ikke ejes af en anden spiller
+		if(!owned) {
+			//Hvis spilleren vælger at købe feltet
+			if(buy) {
+				player.addPoints((super.price * -1));
+				setOwner(player);
+			}	
+		}
+	} 
+
+
+
 }
+
 
 
 
