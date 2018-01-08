@@ -300,6 +300,7 @@ public class Game {
 	
 	
 	
+	
 	public boolean checkMonopoly(int fieldNo) {
 		boolean monopoly = false;
 		
