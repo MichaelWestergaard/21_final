@@ -6,7 +6,7 @@ public class Parking extends Field {
 
 	public Parking(int fieldNo, String name, int amount) {
 		super(fieldNo, name);
-		amount = 0;
+		this.amount = amount;
 	}
 
 	public void setAmount(int amount) {
@@ -17,11 +17,11 @@ public class Parking extends Field {
 		this.amount += amount;
 	}
 	public int getAmount() {
-		return amount;
+		return this.amount;
 	}
 
 	public void landOnField(Player player) {
-		player.addPoints(amount);	
+		player.addPoints(this.amount);	
 		setAmount(0);
 	}
 	
