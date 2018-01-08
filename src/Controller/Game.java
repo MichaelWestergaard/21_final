@@ -171,13 +171,33 @@ public class Game {
 							checkField(players[i]);
 						}
 					} else if (nextAction == "Pansæt") {
-						String[] ownedStreetOptions = new String[2];
-						String[] ownedFieldNo = {"1", "3"};
 						
-						for (int j = 0; j < ownedFieldNo.length; j++) {
-						ownedStreetOptions[j] = board.getField(Integer.parseInt(ownedFieldNo[j])).getName();	
-						}	
-						String getStreetamount = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
+						int[] ownedFieldNumbers = players[i].getOwnedFieldNumbers();
+						
+						int ownedStreets = 0;
+						
+						for (int j = 0; j < ownedFieldNumbers.length; j++) {
+							if(ownedFieldNumbers[j] != 0) {
+								ownedStreets++;
+							}
+						}
+						
+						if(ownedStreets > 0 ) {
+
+							String[] ownedStreetOptions = new String [ownedStreets];
+							
+							for (int j = 0; j < ownedFieldNumbers.length; j++) {
+								if(ownedFieldNumbers[j] != 0) {
+									ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j]).getName();	
+								}					
+							}
+							
+							String getStreetamount = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
+						} else {
+							gui_controller.showMessage("Du ejer ingen ejendomme");
+							
+							//Man skal ikke kunne miste din tur her...
+						}
 					
 					}
 
