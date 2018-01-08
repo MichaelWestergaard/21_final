@@ -193,12 +193,7 @@ public class Game {
 					if(options[0].matches(optionsChoice)) {
 						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
 							((Street) board.getField(newFieldNo)).landOnField(player, false, true);
-<<<<<<< HEAD
-							//Tilføj opdateringer til GUI'en ???x
-=======
 							gui_controller.setOwner(player, newFieldNo);
-							//Tilføj opdateringer til GUI'en ???
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final
 						}
 					}
 					
