@@ -10,6 +10,6 @@ public class MoneyCard extends Card {
 	}
 	
 	public int getAmount() {
-		return amount;
+		return this.amount;
 	}
 }
