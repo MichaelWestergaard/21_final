@@ -183,22 +183,43 @@ public class Game {
 			gui_controller.movePlayers(players);
 		} else if (board.getField(newFieldNo).getType() == "Game.Street") {
 			if (!player.equals(((Street) board.getField(newFieldNo)).getOwner())) {
-
+		
 				//Hvis feltet ikke ejes af nogle kan det købes
 				if(((Street) board.getField(newFieldNo)).getOwner() == null) {
-					//Køb felt
+					
+					String[] options = {"Køb felt", "Spring over"};
+					String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
+					
+					if(options[0].matches(optionsChoice)) {
+						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
+							((Street) board.getField(newFieldNo)).landOnField(player, false, true);
+							//Tilføj opdateringer til GUI'en ???
+						}
+					}
+					
 				} else {
+					((Street) board.getField(newFieldNo)).landOnField(player, true, false);
 					int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
 					
 					if(((Street) board.getField(newFieldNo)).getHouse() == 0 && ((Street) board.getField(newFieldNo)).getHotel() == 0) {
 						if(checkMonopoly(newFieldNo)) {
+							((Street) board.getField(newFieldNo)).landOnField(player, true, false);
 							amountToPay = amountToPay * 2;
 						}
 					}
 					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 				}
 			}
+<<<<<<< HEAD
+		
+	
+		
+		} 
+			
+			else if (board.getField(newFieldNo).getType() == "Ferry") {
+=======
 		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final
 			if (!player.equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
 				int ownerOwns = getSameGroupAmount(newFieldNo);
 				int amountToPay = ownerOwns * ((Ferry) board.getField(newFieldNo)).getRent();
@@ -235,7 +256,13 @@ public class Game {
 		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
 			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(newFieldNo)).getAmount() + " kr.");
 		}
+<<<<<<< HEAD
+	
+	
+	
+=======
 		
+>>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final
 	}
 	
 	public void getWinner() {
