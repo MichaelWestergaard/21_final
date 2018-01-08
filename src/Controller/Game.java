@@ -87,6 +87,7 @@ public class Game {
 							} else if (options[1].matches(optionsChoice)) {
 								gui_controller.showMessage("Du betaler nu kr. 1000,00 i kaution.");
 								players[i].addPoints(-1000);
+								players[i].setJailCounter(0);
 								players[i].setJailed(false);
 								
 							// Hvis spilleren vælger at bruge sit fængselskort	
