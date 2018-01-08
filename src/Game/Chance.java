@@ -48,8 +48,8 @@ public class Chance extends Field {
 		cardList[24]	= new MoveCard("Move", "G� i f�ngsel. Ryk direkte til f�ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
 		cardList[25]	= new MoveCard("Move", "G� i f�ngsel. Ryk direkte til f�ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
 		cardList[26]	= new MoveCard("Move", "G� i f�ngsel. Ryk direkte til f�ngslet. Selv om De passerer >>Start<<, indkasserer De ikke kr. 2000,00.", 10);
-		cardList[27]	= new MoveCard("Move", "Ryk tre felter tilbage.", (getFieldNo()-3));
-		cardList[28]	= new MoveCard("Move", "Ryk tre felter tilbage.", (getFieldNo()-3));
+		cardList[27]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
+		cardList[28]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
 		cardList[29]	= new MoveCard("Move", "Ryk frem til >>Start<<.", 0);
 		cardList[30]	= new JailCard("Move", "Jail card");
 		
@@ -64,7 +64,12 @@ public class Chance extends Field {
 			player.addPoints(((MoneyCard) drawncard).getAmount());
 	
 		} else if(drawncard instanceof MoveCard) {
-			player.setFieldNo(((MoveCard) drawncard).getField());
+			if (((MoveCard) drawncard).getField() < 0) {
+				player.setFieldNo(player.getFieldNo() + ((MoveCard) drawncard).getField());
+			} else {
+				player.setFieldNo(((MoveCard) drawncard).getField());
+			}
+			
 			if(((MoveCard) drawncard).getField() == 6) {
 				player.setJailed(true);
 			}			
