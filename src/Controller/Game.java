@@ -173,17 +173,15 @@ public class Game {
 			}
 		}
 		
-		System.out.println(player.getPoints());
 		board.getField(newFieldNo).landOnField(player);
 		
-
-		if (board.getField(newFieldNo).getType() == "Chancekort") {
+		if (board.getField(newFieldNo).getType() == "Game.Chancekort") {
 			gui_controller.showMessage(((Chance) board.getField(newFieldNo)).getCardDescription());
 			gui_controller.movePlayers(players);
 		} else if (board.getField(newFieldNo).getFieldNo() == 30) {
 			gui_controller.showMessage("Gå i fængsel");
 			gui_controller.movePlayers(players);
-		} else if (board.getField(newFieldNo).getType() == "Street") {
+		} else if (board.getField(newFieldNo).getType() == "Game.Street") {
 			if (!player.equals(((Street) board.getField(newFieldNo)).getOwner())) {
 
 				//Hvis feltet ikke ejes af nogle kan det købes
@@ -200,7 +198,7 @@ public class Game {
 					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 				}
 			}
-		} else if (board.getField(newFieldNo).getType() == "Ferry") {
+		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
 			if (!player.equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
 				int ownerOwns = getSameGroupAmount(newFieldNo);
 				int amountToPay = ownerOwns * ((Ferry) board.getField(newFieldNo)).getRent();
@@ -214,23 +212,19 @@ public class Game {
 			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
 			((Parking) board.getField(20)).increaseAmount(2000);
 			System.out.println(((Parking) board.getField(20)).getAmount());
-			
 		}
 		//incometax
 		//Hvis man lander på incometax, skal man betale 4000 eller 10%
 		//pengene skal blive ført over til parkeringen (kig på game, hvordan man har gjort det)
-		
 		else if (board.getField(newFieldNo).getFieldNo() == 4) {
 			System.out.println(player.getPoints());
 			String[] options = {"Betal 4000", "Betal 10%"};
 			String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 4000 eller 10 %");
 			if(options[0].matches(optionsChoice)){
-				System.out.println(player.getPoints());
 				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
 				((Parking) board.getField(20)).increaseAmount(4000);	
 				player.addPoints(-4000);
-				System.out.println(player.getPoints());
 			}
 			if(options[1].matches(optionsChoice)){
 				
@@ -240,6 +234,8 @@ public class Game {
 				}
 				System.out.println(player.getPoints());
 			}
+		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
+			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(newFieldNo)).getAmount() + " kr.");
 		}
 		
 	}
