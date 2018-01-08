@@ -58,10 +58,6 @@ public class Game {
 			while (runGame) {
 
 				for (int i = 0; i < players.length; i++) {
-					if (players[i].isJailed()) {
-						players[i].setJailed(false);
-						break;
-					}
 					
 					// Tjekker om spilleren sidder i f�ngsel
 					if (players[i].isJailed() == true) {
