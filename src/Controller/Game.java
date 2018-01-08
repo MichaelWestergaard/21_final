@@ -5,6 +5,7 @@ import Game.Chance;
 import Game.DiceCup;
 import Game.Field;
 import Game.GovernmentTax;
+import Game.IncomeTax;
 import Game.Parking;
 import Game.Player;
 import Game.Street;
@@ -182,6 +183,7 @@ public class Game {
 
 				gui_controller.showMessage(amountToPay + " Skal betales.");
 			}
+			//government tax
 		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
 			System.out.println(((Parking) board.getField(20)).getAmount());
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
@@ -190,6 +192,29 @@ public class Game {
 			System.out.println(((Parking) board.getField(20)).getAmount());
 			
 		}
+		//incometax
+		//Hvis man lander på incometax, skal man betale 4000 eller 10%
+		//pengene skal blive ført over til parkeringen (kig på game, hvordan man har gjort det)
+		
+		else if (board.getField(newFieldNo).getFieldNo() == 4) {
+			System.out.println(player.getPoints());
+			String[] options = {"Betal 4000", "Betal 10%"};
+			String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
+			gui_controller.showMessage("Ekstraordinær statsskat, betal 4000 eller 10 %");
+			if(options[0].matches(optionsChoice)){
+				System.out.println(player.getPoints());
+				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
+				((Parking) board.getField(20)).increaseAmount(4000);	
+				System.out.println(player.getPoints());
+			}
+			if(options[1].matches(optionsChoice)){
+				System.out.println(player.getPoints());
+				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
+				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
+				System.out.println(player.getPoints());
+			}
+		}
+		
 	}
 	
 	public void getWinner() {
