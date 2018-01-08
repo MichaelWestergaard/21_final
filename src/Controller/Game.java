@@ -197,7 +197,8 @@ public class Game {
 									}					
 								}
 								
-								String getStreetamount = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
+								String chosenStreet = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
+								//Kald metode til at pantsætte chosenStreet
 							} else {
 								gui_controller.showMessage("Du ejer ingen ejendomme");
 								
