@@ -13,15 +13,28 @@ public class Player {
 	private int jailCounter = 0;
 	private int jailCard = 0;
 	private int hitDouble = 0;
-	
-	public String getName(){
-		return name;	
-	}
+	private int[] ownedFieldNumbers = new int[19];
 	
 	public Player (String name,int balance) {
 		this.name = name;
 		this.account = new Account(balance);
-		
+	}
+	
+	public int[] getOwnedFieldNumbers() {
+		return ownedFieldNumbers;
+	}
+
+	public void setOwnedFieldNumber(int fieldNumber) {
+		for (int i = 0; i < ownedFieldNumbers.length; i++) {
+			if(ownedFieldNumbers[i] == 0) {
+				this.ownedFieldNumbers[i]= fieldNumber;
+				break;
+			}
+		}
+	}
+
+	public String getName(){
+		return name;	
 	}
 	
 	public void addPoints(int points){
