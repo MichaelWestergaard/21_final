@@ -114,13 +114,13 @@ public class Game {
 					if(nextAction == "Kast terning") {
 						rollDice();
 						
-						// Hvis spillerens slår 2 ens
+						// Hvis spillerens slï¿½r 2 ens
 						if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
 							players[i].increaseHitDouble();
 							
-							// Hvis spilleren har slået 2 ens for mange (3) gange
+							// Hvis spilleren har slï¿½et 2 ens for mange (3) gange
 							if (players[i].getHitDouble() == 3) {
-								gui_controller.showMessage("Du har slået 2 ens for mange gange og fængsles for at snyde med terningerne!");								
+								gui_controller.showMessage("Du har slï¿½et 2 ens for mange gange og fï¿½ngsles for at snyde med terningerne!");								
 								players[i].setFieldNo(6);
 								players[i].setJailed(true);
 								gui_controller.movePlayers(players);
@@ -172,8 +172,10 @@ public class Game {
 				player.addPoints(4000);
 			}
 		}
-
+		
+		System.out.println(player.getPoints());
 		board.getField(newFieldNo).landOnField(player);
+		
 
 		if (board.getField(newFieldNo).getType() == "Chancekort") {
 			gui_controller.showMessage(((Chance) board.getField(newFieldNo)).getCardDescription());
@@ -227,12 +229,13 @@ public class Game {
 				System.out.println(player.getPoints());
 				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
 				((Parking) board.getField(20)).increaseAmount(4000);	
+				player.addPoints(-4000);
 				System.out.println(player.getPoints());
 			}
 			if(options[1].matches(optionsChoice)){
-				System.out.println(player.getPoints());
-				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
+				
 				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
+				player.addPoints((player.getPoints()/100*10)*-1);
 				System.out.println(player.getPoints());
 			}
 		}
