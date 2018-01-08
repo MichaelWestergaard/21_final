@@ -9,7 +9,7 @@ public class Chance extends Field {
 	}
 
 	public Card getCard() {
-		int random = (int) (Math.random() * 24);
+		int random = (int) (Math.random() * 26);
 		return cardList[random];
 	}
 
@@ -19,7 +19,7 @@ public class Chance extends Field {
 
 	public void createCardList() {
 
-		Card[] cardList = new Card[24];
+		Card[] cardList = new Card[26];
 
 		cardList[0] 	= new MoneyCard("Money", "Du har solgt dit gamle udstyr i garagen. Modtag kr. 500,-", 500);
 		cardList[1] 	= new MoneyCard("Money", "Du har vasket din bil. Betal kr. 150,-", -150);
