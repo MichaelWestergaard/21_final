@@ -157,9 +157,10 @@ public class Game {
 								// Hvis spilleren har sl�et 2 ens for mange (3) gange
 								if (players[i].getHitDouble() == 3) {
 									gui_controller.showMessage("Du har sl�et 2 ens for mange gange og f�ngsles for at snyde med terningerne!");								
-									players[i].setFieldNo(6);
+									players[i].setFieldNo(10);
 									players[i].setJailed(true);
 									gui_controller.movePlayers(players);
+									break;
 								} else {
 									checkField(players[i]);
 								}
@@ -265,13 +266,6 @@ public class Game {
 								
 								// Hvis spilleren vælger at lade være med at sælge noget alligevel
 								if (chosenStreetName.matches(ownedStreetOptions[0])) {
-									// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
-									if (i == 0) {
-										i = players.length;
-									} else {
-										i--;
-									}
-									
 									break;
 								
 								// Hvis spilleren vælger en ejendom, der skal sælges	
@@ -284,40 +278,20 @@ public class Game {
 										
 										((Street) chosenField).sellField(players[i]);
 										
-										// Skal have gjort, så GUI'en viser feltet som ikke-ejet
-										// gui_controller.setOwner(players[i], chosenField.getFieldNo());
-										
-										// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
-										if (i == 0) {
-											i = players.length;
-										} else {
-											i--;
-										}
+										// GUI'en ændrer feltets border-farve til grå og opdaterer spillerens point
+										gui_controller.setOwner(null, chosenField.getFieldNo());
+										gui_controller.updateBalance(players);
 										
 										break;
 										
 									} else {
 										gui_controller.showMessage("Fejl: spillet kunne ikke finde den ønskede ejendom.");
 										
-										// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
-										if (i == 0) {
-											i = players.length;
-										} else {
-											i--;
-										}
-										
 										break;
 									}
 								}								
 							} else {
 								gui_controller.showMessage("Du ejer ingen ejendomme.");
-								
-								// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
-								if (i == 0) {
-									i = players.length;
-								} else {
-									i--;
-								}
 								
 								break;
 							}
