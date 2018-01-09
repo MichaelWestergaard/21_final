@@ -177,6 +177,75 @@ public class Game {
 
 						if(propertyAction == "Huse/Hoteller") {
 
+							String[] optionsBuySell = {"Køb", "Sælg"};
+							String buySellChoice = gui_controller.multipleChoice("Vil du købe eller sælge?", optionsBuySell);
+							
+							if(optionsBuySell[0].matches(buySellChoice)) {
+								int[] ownedFieldNumbers = players[i].getOwnedFieldNumbers();
+								int[] ownedStreetNumbers = new int[ownedFieldNumbers.length];
+								int numberOfStreets = 0;
+								
+								//Sorter alle "Street" i et nyt array
+								for(int j = 0; j < ownedFieldNumbers.length; j++) {
+									if(board.getField(ownedFieldNumbers[j]).getType() == "Game.Street") {
+										ownedStreetNumbers[numberOfStreets] = ownedFieldNumbers[j];
+										numberOfStreets++;
+									}
+								}
+								
+								String[] ownedStreetNames = new String[numberOfStreets];
+								
+								for(int j = 0; j < numberOfStreets; j++) {
+									ownedStreetNames[j] = board.getField(ownedStreetNumbers[j]).getName();
+								}
+								
+								String chosenStreetName = gui_controller.getPlayerAmount("Hvilket felt vil du bygge på?", ownedStreetNames);
+								
+								//Bestem det tilhørende fieldNo
+								Field[] fields = board.getFields();
+								int chosenStreetNumber = 0;
+								
+								for(int j = 0; j < fields.length; j++) {
+									if(fields[j].getName() == chosenStreetName) {
+										chosenStreetNumber = fields[j].getFieldNo();
+										break;
+									}
+								}
+								
+								String[] optionsHouseHotel = {"Hus", "Hotel"};
+								String houseHotelChoice = gui_controller.multipleChoice("Hvad vil du bygge?", optionsHouseHotel);
+								
+								if(optionsHouseHotel[0].matches(houseHotelChoice)) {
+									if(checkMonopoly(chosenStreetNumber)) {
+										if(((Street) board.getField(chosenStreetNumber)).getHouse() < 4) {
+											//Tjek om de huse der eventuelt må være på gruppen er fordelt ligelidt, og tag højde for eventuelle hoteller.
+											
+												//Tjek om spilleren har råd til huset.
+													//Træk penge fra spilleren.
+													//Øg houseCounter.
+				
+										}
+										else {
+											gui_controller.showMessage("Du kan maksimalt have 4 huse på én grund.");
+										}
+									}
+									
+									else {
+										gui_controller.showMessage("Du skal eje alle felter af samme farve for at kunne bygge huse på et af dem.");
+									}
+									
+		
+								
+								} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {
+									//Køb hotel
+								}
+					
+								
+						} else if (optionsBuySell[1].matches(buySellChoice)) {
+								//Sælg
+							}
+								
+							
 						} else if(propertyAction == "Pantsæt") {
 							int[] ownedFieldNumbers = players[i].getOwnedFieldNumbers();
 
