@@ -266,13 +266,6 @@ public class Game {
 								
 								// Hvis spilleren vælger at lade være med at sælge noget alligevel
 								if (chosenStreetName.matches(ownedStreetOptions[0])) {
-									// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
-									if (i == 0) {
-										i = players.length;
-									} else {
-										i--;
-									}
-									
 									break;
 								
 								// Hvis spilleren vælger en ejendom, der skal sælges	
@@ -289,37 +282,16 @@ public class Game {
 										gui_controller.setOwner(null, chosenField.getFieldNo());
 										gui_controller.updateBalance(players);
 										
-										// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
-										if (i == 0) {
-											i = players.length;
-										} else {
-											i--;
-										}
-										
 										break;
 										
 									} else {
 										gui_controller.showMessage("Fejl: spillet kunne ikke finde den ønskede ejendom.");
-										
-										// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
-										if (i == 0) {
-											i = players.length;
-										} else {
-											i--;
-										}
 										
 										break;
 									}
 								}								
 							} else {
 								gui_controller.showMessage("Du ejer ingen ejendomme.");
-								
-								// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
-								if (i == 0) {
-									i = players.length;
-								} else {
-									i--;
-								}
 								
 								break;
 							}
