@@ -67,14 +67,17 @@ public class Chance extends Field {
 	
 		} else if(drawncard instanceof MoveCard) {
 			if (((MoveCard) drawncard).getField() < 0) {
-				player.setFieldNo(player.getFieldNo() + ((MoveCard) drawncard).getField());
+				if (player.getFieldNo() < 3) {
+					player.setFieldNo(player.getFieldNo() + 40 + ((MoveCard) drawncard).getField());
+				} else {
+					player.setFieldNo(player.getFieldNo() + ((MoveCard) drawncard).getField());
+				}
 			} else {
 				player.setFieldNo(((MoveCard) drawncard).getField());
 			}
 			
 		} else if(drawncard instanceof JailCard) {
-			player.setFieldNo(10);
-			player.setJailed(true);
+			player.setJailCard(1);
 		}
 	}
 

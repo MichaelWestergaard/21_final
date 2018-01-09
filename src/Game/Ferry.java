@@ -17,8 +17,9 @@ public class Ferry extends Buyable {
 		this.rent = rent;
 	}
 	
-	public void landOnField(Player player,int diceSum, int rent) {
+	public void landOnField(Player player, int rent, boolean owned, boolean buy) {
 		int amountToPay = rent; //Lejen der skal betales
+		
 				
 		Player owner = super.getOwner();
 
@@ -28,7 +29,7 @@ public class Ferry extends Buyable {
 				setOwner(player);
 			} 
 			else {
-				player.setBankrupt(true); //ændre til pantsat
+				player.setBankrupt(true); //ændre til pantsat. Spørg om det skal fjernes!!.
 			}
 		} 
 		else { // Hvis der er en ejer, så betaler man

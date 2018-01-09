@@ -27,18 +27,6 @@ public class Beverage extends Buyable {
 				owner.addPoints(amountToPay);
 			} else {
 				player.setBankrupt(true); //ændre til pantsat
-			}
-		}
-
-		
-		//Det her skal lige spørges, om det er rigtigt lavet. Alp
-		
-		//Hvis feltet ikke ejes af en anden spiller
-		if(!owned) {
-			//Hvis spilleren vælger at købe feltet
-			if(buy) {
-				player.addPoints((super.price * -1));
-				setOwner(player);
 			}	
 		}
 	} 

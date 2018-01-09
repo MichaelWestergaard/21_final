@@ -99,5 +99,14 @@ public class Board {
 	public Field[] getFields() {
 		return fields;
 	}
+	
+	public Field getFieldFromName(String name) {
+		for (int i = 0; i < fields.length; i++) {
+			if (fields[i].getName().matches(name)) {
+				return fields[i];
+			}
+		}		
+		return null;
+	}
 
 }
