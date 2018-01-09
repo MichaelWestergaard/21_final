@@ -158,7 +158,7 @@ public class Game {
 										//Øg houseCounter.
 								
 								
-									//Hej Tim. Jeg har ændret street, så et hotel er lig med (houseCounter = 5). Så der er ingen hotelCounter. Skulle gerne have rettet det i din kode - Michael
+									//Hej Aktøren Timmy Turner. Jeg har ændret street, så et hotel er lig med (houseCounter = 5). Så der er ingen hotelCounter. Skulle gerne have rettet det i din kode - Michael
 	
 							}
 							else {
@@ -246,6 +246,7 @@ public class Game {
 				}
 
 				//Stadig spillerens tur
+				gui_controller.updateBalance(players);
 				playerActions(player);
 
 			} else if(propertyAction == "Sælg Ejendom") {
@@ -275,15 +276,23 @@ public class Game {
 					} else {
 						if (board.getFieldFromName(chosenStreetName) != null) {
 							Field chosenField = board.getFieldFromName(chosenStreetName);
+							if ( ((Buyable) chosenField).isPledged()) {
+								player.addPoints(((Buyable) chosenField).getPledgePrice());
+								gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Ejendommen er pantsat, så du modtager den halve købspris " + ((Buyable) chosenField).getPledgePrice() + " kr.");
+							} else {
+								player.addPoints(((Buyable) chosenField).getPrice());
+								gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Du modtager nu " + ((Buyable) chosenField).getPrice() + " kr.");
+							}
+							
 
-							gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Du modtager nu " + ((Buyable) chosenField).getPrice() + " kr.");
-
-							((Street) chosenField).sellField(player);
+							((Buyable) chosenField).resetOwner(player);
 
 							// GUI'en ændrer feltets border-farve til grå og opdaterer spillerens point
 							gui_controller.setOwner(null, chosenField.getFieldNo());
 							gui_controller.updateBalance(players);
-
+						
+							
+							
 						} else {
 							gui_controller.showMessage("Fejl: spillet kunne ikke finde den ønskede ejendom.");
 						}
@@ -293,6 +302,7 @@ public class Game {
 				}
 
 				//Stadig spillerens tur
+				gui_controller.updateBalance(players);
 				playerActions(player);
 			}
 		}
@@ -472,27 +482,27 @@ public class Game {
 			}
 
 		} else if (board.getField(newFieldNo).getType() == "Game.Beverage") {
-			if (!player.equals(((Beverage) board.getField(newFieldNo)).getOwner())) {
+			int beverageRent =  ((Beverage) board.getField(newFieldNo)).getRent();
+			//Hvis feltet ikke ejes af nogle kan det købes
+			if(((Beverage) board.getField(newFieldNo)).getOwner() == null) {
+				String[] options = {"Køb felt", "Spring over"};
+				String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
 
-				//Hvis feltet ikke ejes af nogle kan det købes
-				if(((Beverage) board.getField(newFieldNo)).getOwner() == null) {
-
-					String[] options = {"Køb felt", "Spring over"};
-					String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
-
-					if(options[0].matches(optionsChoice)) {
-						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
-							((Beverage) board.getField(newFieldNo)).landOnField(player,diceCup.getDiceSum(), 100, false, true);
-							gui_controller.setOwner(player, newFieldNo);
-							//gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
-						}
+				if(options[0].matches(optionsChoice)) {
+					if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
+						((Beverage) board.getField(newFieldNo)).landOnField(player,diceCup.getDiceSum(), beverageRent, false, true);
+						gui_controller.setOwner(player, newFieldNo);
 					}
-
-				} else {
-					((Beverage) board.getField(newFieldNo)).landOnField(player, diceCup.getDiceSum(), 100, true, false);
 				}
+			} else {
 
+				if( ((Buyable) board.getField(12)).getOwner() == ((Buyable) board.getField(28)).getOwner() ) {
+					beverageRent = beverageRent * 2;	
+				}
+				((Beverage) board.getField(newFieldNo)).landOnField(player, diceCup.getDiceSum(), beverageRent, true, false);
 			}
+
+			
 		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
 
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
