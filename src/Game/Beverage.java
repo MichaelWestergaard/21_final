@@ -2,7 +2,7 @@ package Game;
 
 public class Beverage extends Buyable {
 
-	int rent;
+	private int rent;
 
 	public Beverage(int fieldNo, String name, Player owner, Group group, int price, int rent) {
 		super(fieldNo, name, owner, group, price);
@@ -29,12 +29,13 @@ public class Beverage extends Buyable {
 				player.setBankrupt(true); //ændre til pantsat
 			}	
 		}
-	} 
-
-
-
+	}
+	
+	public int getRent() {
+		return rent;
+	}
+	public void setRent(int rent) {
+		this.rent = rent;
+	}
+	
 }
-
-
-
-
