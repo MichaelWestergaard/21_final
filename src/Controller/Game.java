@@ -245,7 +245,8 @@ public class Game {
 		board.getField(newFieldNo).landOnField(player);
 		
 		if (board.getField(newFieldNo).getType() == "Game.Chance") {
-			gui_controller.showMessage(((Chance) board.getField(newFieldNo)).getCardDescription());
+			gui_controller.showMessage("Tryk [OK] for at trække et chancekort.");
+			gui_controller.displayChanceCard(((Chance) board.getField(newFieldNo)).getCardDescription());
 			gui_controller.movePlayers(players);
 		} else if (board.getField(newFieldNo).getFieldNo() == 30) {
 			gui_controller.showMessage("Gå i fængsel");

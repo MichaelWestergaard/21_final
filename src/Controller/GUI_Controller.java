@@ -183,6 +183,10 @@ public class GUI_Controller {
 		gui.showMessage(msg);
 	}
 	
+	public void displayChanceCard(String msg) {
+		gui.displayChanceCard(msg);
+	}
+	
 	public void setOwner(Player player, int newFieldNo) {
 		Color primaryColor = player.getGUI_player().getPrimaryColor();
 		GUI_Field field = getField(newFieldNo);
