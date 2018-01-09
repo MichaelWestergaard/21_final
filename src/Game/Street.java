@@ -30,20 +30,6 @@ public class Street extends Buyable {
 			super.owner.addPoints(getRent());
 		}
 	}
-	
-	public void sellField(Player player) {
-		player.addPoints(super.price);
-		resetOwner(player);
-	}
-	
-	public Player getOwner() {
-		return super.owner;
-	}
-
-	public void resetOwner(Player owner) {
-		super.owner = null;
-		owner.resetOwnedFieldNumber(super.fieldNo);
-	}
 
 	public int getRent() {
 		return rent[houseCounter];	
