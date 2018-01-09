@@ -44,7 +44,7 @@ public class GUI_Controller {
 				
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
 				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Street) field).getPrice() + ",- ");
-				
+				GUIFields[field.getFieldNo()].setDescription("Leje: " + ((Street) field).getRent());
 
 				switch(((Street) field).getGroup().toString()) {
 					case "LIGHTBLUE":

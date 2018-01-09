@@ -140,7 +140,7 @@ public class Game {
 						runGame = false;
 					}
 					
-					String nextAction = gui_controller.getPlayerAmount("Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
+					String nextAction = gui_controller.getPlayerAmount(players[i].getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
 
 					if(nextAction == "Kast terning") {
 						rollDice();
