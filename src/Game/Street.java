@@ -33,6 +33,10 @@ public class Street extends Buyable {
 		}
 	}
 	
+	public void sellField(Player player) {
+		player.addPoints(super.price);
+		resetOwner(player);
+	}
 	
 	public Player getOwner() {
 		return super.owner;
@@ -41,6 +45,11 @@ public class Street extends Buyable {
 	public void setOwner(Player owner) {
 		super.owner = owner;
 		owner.setOwnedFieldNumber(super.fieldNo);
+	}
+	
+	public void resetOwner(Player owner) {
+		super.owner = null;
+		owner.resetOwnedFieldNumber(super.fieldNo);
 	}
 
 	public int getRent() {

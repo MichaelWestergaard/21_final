@@ -32,6 +32,15 @@ public class Player {
 			}
 		}
 	}
+	
+	public void resetOwnedFieldNumber(int fieldNumber) {
+		for (int i = 0; i < ownedFieldNumbers.length; i++) {
+			if(ownedFieldNumbers[i] == fieldNumber) {
+				this.ownedFieldNumbers[i] = 0;
+				break;
+			}
+		}
+	}
 
 	public String getName(){
 		return name;	

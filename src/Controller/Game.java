@@ -205,9 +205,85 @@ public class Game {
 								//Man skal ikke kunne miste din tur her...
 							}
 						} else if(propertyAction == "Sælg Ejendom") {
+							int[] ownedFieldNumbers = players[i].getOwnedFieldNumbers();							
+							int ownedStreetsCounter = 0;
 							
-						}
-					
+							for (int j = 0; j < ownedFieldNumbers.length; j++) {
+								if(ownedFieldNumbers[j] != 0) {
+									ownedStreetsCounter++;
+								}
+							}
+							
+							if(ownedStreetsCounter > 0 ) {
+
+								String[] ownedStreetOptions = new String [ownedStreetsCounter + 1];
+								ownedStreetOptions[0] = "Ingen";
+								
+								for (int j = 1; j <= ownedStreetsCounter; j++) {
+									ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j - 1]).getName();
+								}
+								
+								String chosenStreetName = gui_controller.multipleChoice("Hvilken ejendom vil du sælge?", ownedStreetOptions);
+								
+								// Hvis spilleren vælger at lade være med at sælge noget alligevel
+								if (chosenStreetName.matches(ownedStreetOptions[0])) {
+									// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
+									if (i == 0) {
+										i = players.length;
+									} else {
+										i--;
+									}
+									
+									break;
+								
+								// Hvis spilleren vælger en ejendom, der skal sælges	
+								} else {
+									if (board.getFieldFromName(chosenStreetName) != null) {
+										Field chosenField = board.getFieldFromName(chosenStreetName);
+										
+										gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." +
+																	"\n Du modtager nu kr. " + ((Buyable) chosenField).getPrice() + ",00.");
+										
+										((Street) chosenField).sellField(players[i]);
+										
+										// Skal have gjort, så GUI'en viser feltet som ikke-ejet
+										// gui_controller.setOwner(players[i], chosenField.getFieldNo());
+										
+										// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
+										if (i == 0) {
+											i = players.length;
+										} else {
+											i--;
+										}
+										
+										break;
+										
+									} else {
+										gui_controller.showMessage("Fejl: spillet kunne ikke finde den ønskede ejendom.");
+										
+										// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
+										if (i == 0) {
+											i = players.length;
+										} else {
+											i--;
+										}
+										
+										break;
+									}
+								}								
+							} else {
+								gui_controller.showMessage("Du ejer ingen ejendomme.");
+								
+								// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
+								if (i == 0) {
+									i = players.length;
+								} else {
+									i--;
+								}
+								
+								break;
+							}
+						}					
 					}
 
 					gui_controller.updateBalance(players);
