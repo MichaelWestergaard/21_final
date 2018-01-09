@@ -94,9 +94,11 @@ public class Player {
 	public void setJailCounter(int jailCounter) {
 		this.jailCounter = jailCounter;
 	}
+	
 	public void increaseJailCounter() {
 		jailCounter++;
 	}
+	
 	public int getJailCounter() {
 		return jailCounter;
 	}
