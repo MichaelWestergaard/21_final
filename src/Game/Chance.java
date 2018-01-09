@@ -73,8 +73,7 @@ public class Chance extends Field {
 			}
 			
 		} else if(drawncard instanceof JailCard) {
-			player.setFieldNo(10);
-			player.setJailed(true);
+			player.setJailCard(1);
 		}
 	}
 
