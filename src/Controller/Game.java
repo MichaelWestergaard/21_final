@@ -284,8 +284,9 @@ public class Game {
 										
 										((Street) chosenField).sellField(players[i]);
 										
-										// Skal have gjort, så GUI'en viser feltet som ikke-ejet
-										// gui_controller.setOwner(players[i], chosenField.getFieldNo());
+										// GUI'en ændrer feltets border-farve til grå og opdaterer spillerens point
+										gui_controller.setOwner(null, chosenField.getFieldNo());
+										gui_controller.updateBalance(players);
 										
 										// Breaker for-loopet og sørger for, det bliver samme spillers tur igen 
 										if (i == 0) {

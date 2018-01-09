@@ -188,7 +188,12 @@ public class GUI_Controller {
 	}
 	
 	public void setOwner(Player player, int newFieldNo) {
-		Color primaryColor = player.getGUI_player().getPrimaryColor();
+		Color primaryColor;
+		if (player != null) {
+			primaryColor = player.getGUI_player().getPrimaryColor();
+		} else {
+			primaryColor = Color.GRAY;
+		}
 		GUI_Field field = getField(newFieldNo);
 		if (field instanceof GUI_Ownable) {
 			((GUI_Ownable) field).setBorder(primaryColor);
