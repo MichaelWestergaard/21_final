@@ -157,9 +157,10 @@ public class Game {
 								// Hvis spilleren har sl�et 2 ens for mange (3) gange
 								if (players[i].getHitDouble() == 3) {
 									gui_controller.showMessage("Du har sl�et 2 ens for mange gange og f�ngsles for at snyde med terningerne!");								
-									players[i].setFieldNo(6);
+									players[i].setFieldNo(10);
 									players[i].setJailed(true);
 									gui_controller.movePlayers(players);
+									break;
 								} else {
 									checkField(players[i]);
 								}
