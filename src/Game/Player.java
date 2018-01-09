@@ -86,6 +86,11 @@ public class Player {
 		this.isJailed = isJailed;
 	}
 	
+	public void releaseFromJail() {
+		isJailed = false;
+		jailCounter = 0;
+	}
+	
 	public void setJailCounter(int jailCounter) {
 		this.jailCounter = jailCounter;
 	}
