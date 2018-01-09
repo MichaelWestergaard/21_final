@@ -400,7 +400,7 @@ public class Game {
 					default: 
 						amountToPay = amountToPay*1;
 					}
-					
+					 
 					player.addPoints(amountToPay*-1);
 					((Ferry) board.getField(newFieldNo)).getOwner().addPoints(amountToPay);
 					
