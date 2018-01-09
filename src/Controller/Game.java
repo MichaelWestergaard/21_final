@@ -247,6 +247,7 @@ public class Game {
 				if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
 					gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet løsladt fra fængslet!");
 					player.releaseFromJail();
+					playerActions(player);
 				} else {
 					gui_controller.showMessage("Du slog ikke 2 ens. Bedre held næste gang! \n Du har nu " + (3 - player.getJailCounter()) + " forsøg tilbage, før du skal betale kaution");
 					player.increaseJailCounter();
@@ -257,12 +258,14 @@ public class Game {
 				gui_controller.showMessage("Du betaler nu 1000 kr i kaution.");
 				player.addPoints(-1000);
 				player.releaseFromJail();
+				playerActions(player);
 
 				// Hvis spilleren vælger at bruge sit fængselskort	
 			} else if (options[2].matches(optionsChoice)) {
 				gui_controller.showMessage("Du har brugt dit kort, og bliver hermed løsladt.");
 				player.setJailCard(-1);
 				player.releaseFromJail();
+				playerActions(player);
 			}
 
 		} else if (player.getJailCounter() < 3 && player.getPoints() >= 1000 && player.getJailCard() == 0) {
@@ -276,6 +279,7 @@ public class Game {
 				if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
 					gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet løsladt fra fængslet!");
 					player.releaseFromJail();
+					playerActions(player);
 				} else {
 					gui_controller.showMessage("Du slog ikke 2 ens. Bedre held næste gang! \n Du har nu " + (3 - player.getJailCounter()) + " forsøg tilbage, før du skal betale kaution");
 					player.increaseJailCounter();
@@ -286,6 +290,7 @@ public class Game {
 				gui_controller.showMessage("Du betaler nu 1000 kr. i kaution.");
 				player.addPoints(-1000);
 				player.releaseFromJail();
+				playerActions(player);
 			}
 
 			// Hvis spilleren er tvunget til at betale kaution	
@@ -293,6 +298,7 @@ public class Game {
 			gui_controller.showMessage("Du har opbrugt alle dine forsøg med terningerne, og er tvunget til at betale kaution. \n 1000 kr. vil blive trukket fra din konto.");
 			player.addPoints(-1000);
 			player.releaseFromJail();
+			playerActions(player);
 		}
 	}
 
@@ -348,7 +354,7 @@ public class Game {
 					((Street) board.getField(newFieldNo)).landOnField(player, true, false);
 					int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
 
-					if(((Street) board.getField(newFieldNo)).getHouse() == 0 && ((Street) board.getField(newFieldNo)).getHotel() == 0) {
+					if(((Street) board.getField(newFieldNo)).getHouse() == 0) {
 						if(checkMonopoly(newFieldNo)) {
 							((Street) board.getField(newFieldNo)).landOnField(player, true, false);
 							amountToPay = amountToPay * 2;
@@ -360,8 +366,6 @@ public class Game {
 			}
 		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
 			if (!player.equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
-
-
 
 				if(((Ferry) board.getField(newFieldNo)).getOwner() == null) { //Hvis der ikke findes en ejer.
 					String[] options = {"Køb felt", "Spring over"};
@@ -418,34 +422,35 @@ public class Game {
 				}
 
 			}
-		}else if (board.getField(newFieldNo).getFieldNo() == 38) {
+		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
 			System.out.println(((Parking) board.getField(20)).getAmount());
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
 			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
 			((Parking) board.getField(20)).increaseAmount(2000);
 			System.out.println(((Parking) board.getField(20)).getAmount());
 		} else if (board.getField(newFieldNo).getFieldNo() == 4) {
-			//incometax
-			//Hvis man lander på incometax, skal man betale 4000 eller 10%
-			//pengene skal blive ført over til parkeringen (kig på game, hvordan man har gjort det)
-
-			System.out.println(player.getPoints());
 			String[] options = {"Betal 4000", "Betal 10%"};
 			String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 4000 eller 10 %");
-			System.out.println(((Parking) board.getField(20)).getAmount());
 			if(options[0].matches(optionsChoice)){
 				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
 				((Parking) board.getField(20)).increaseAmount(4000);	
 				player.addPoints(-4000);
-				System.out.println(((Parking) board.getField(20)).getAmount());
 			}
 			if(options[1].matches(optionsChoice)){
-				System.out.println(((Parking) board.getField(20)).getAmount());
+				int playerTotalValue = player.getPoints();
+				int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
+
+				for (int j = 0; j < ownedFieldNumbers.length; j++) {
+					if(ownedFieldNumbers[j] != 0) {
+						playerTotalValue += ((Buyable) board.getField(ownedFieldNumbers[j])).getPrice();
+					}
+				}
+				
+				System.out.println(playerTotalValue);
+				
 				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
 				player.addPoints((player.getPoints()/100*10)*-1);
-				System.out.println(((Parking) board.getField(20)).getAmount());
-
 			}
 
 
@@ -455,7 +460,6 @@ public class Game {
 
 		}
 	}
-
 
 	public void getWinner() {
 		int highscore = 0;
