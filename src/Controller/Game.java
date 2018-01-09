@@ -156,6 +156,9 @@ public class Game {
 									//Tjek om spilleren har råd til huset.
 										//Træk penge fra spilleren.
 										//Øg houseCounter.
+								
+								
+									//Hej Tim. Jeg har ændret street, så et hotel er lig med (houseCounter = 5). Så der er ingen hotelCounter. Skulle gerne have rettet det i din kode - Michael
 	
 							}
 							else {

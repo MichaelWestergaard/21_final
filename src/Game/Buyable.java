@@ -35,6 +35,7 @@ public class Buyable extends Field {
 
 	public void setOwner(Player owner) {
 		this.owner = owner;
+		owner.setOwnedFieldNumber(super.fieldNo);
 	}
 
 	public int getPrice() {

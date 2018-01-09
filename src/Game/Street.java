@@ -40,11 +40,6 @@ public class Street extends Buyable {
 		return super.owner;
 	}
 
-	public void setOwner(Player owner) {
-		super.owner = owner;
-		owner.setOwnedFieldNumber(super.fieldNo);
-	}
-	
 	public void resetOwner(Player owner) {
 		super.owner = null;
 		owner.resetOwnedFieldNumber(super.fieldNo);
