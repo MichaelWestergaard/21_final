@@ -371,12 +371,42 @@ public class Game {
 			}
 		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
 			if (!player.equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
-				int ownerOwns = getSameGroupAmount(newFieldNo);
-				int amountToPay = ownerOwns * ((Ferry) board.getField(newFieldNo)).getRent();
+				
+			
 
-				gui_controller.showMessage(amountToPay + " Skal betales.");
+				if(((Ferry) board.getField(newFieldNo)).getOwner() == null) { //Hvis der ikke findes en ejer.
+					String[] options = {"Køb felt", "Spring over"};
+					String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
+					
+					if(options[0].matches(optionsChoice)) {
+						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
+							
+				}
+				}
+				}
+				else {
+					int ownerOwns = getOwnerGroupAmountFerry(newFieldNo);
+					int amountToPay = ((Ferry) board.getField(newFieldNo)).getRent();
+					switch (ownerOwns) {
+					case 2: amountToPay = amountToPay * 2;
+					break;
+					
+					case 3: amountToPay = amountToPay * 4;
+					break;
+					
+					case 4: amountToPay = amountToPay * 8;
+					break;
+					
+					default: 
+						amountToPay = amountToPay*1;
+					}
+					 
+					player.addPoints(amountToPay*-1);
+					((Ferry) board.getField(newFieldNo)).getOwner().addPoints(amountToPay);
+					
+				}
 			}
-			//government tax
+			
 		} else if (board.getField(newFieldNo).getType() == "Game.Beverage") {
 			if (!player.equals(((Beverage) board.getField(newFieldNo)).getOwner())) {
 
@@ -433,8 +463,10 @@ public class Game {
 		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
 			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(20)).getAmount() + " kr.");
 			((Parking) board.getField(20)).setAmount(0);
+	
 		}
 	}
+				
 
 	public void getWinner() {
 		int highscore = 0;
@@ -485,7 +517,25 @@ public class Game {
 		}
 		return ownerGroupAmount;
 	}
+	
 
+	public int getOwnerGroupAmountFerry(int fieldNo) {
+		int ownerGroupAmount = 0;
+
+		Field field = board.getField(fieldNo);
+		Field[] fields = board.getFields();
+
+		if(field.getType() == "Ferry") {
+			for (Field fieldN : fields) {
+				if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
+					ownerGroupAmount++;
+				}
+			}
+		}
+		return ownerGroupAmount;
+	}
+	
+	
 	public boolean checkMonopoly(int fieldNo) {
 		boolean monopoly = false;
 
