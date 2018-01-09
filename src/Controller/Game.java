@@ -70,8 +70,6 @@ public class Game {
 						playerActions(player);
 					}
 
-<<<<<<< HEAD
-
 					// Tjek om spilleren er bankerot
 					// Hvis der er en der er bankerot, så stoppes while loopet
 					if (players[i].isBankrupt()) {
@@ -218,8 +216,7 @@ public class Game {
 					}
 
 					gui_controller.updateBalance(players);
-=======
->>>>>>> branch 'master' of https://github.com/MichaelWestergaard/21_final
+
 				}
 			}
 			getWinner();
