@@ -5,14 +5,12 @@ public class Street extends Buyable {
 	private int[] rent;
 	private int housePrice;
 	private int houseCounter;
-	private int hotelCounter;
 	
 	public Street(int fieldNo, String name, Player owner, Group group, int price, int[] rent, int housePrice) {
 		super(fieldNo, name, owner, group, price);
 		this.rent = rent;
 		this.housePrice = housePrice;
 		this.houseCounter = 0;
-		this.hotelCounter = 0;
 	}
 
 	public void landOnField(Player player, boolean owned, boolean buy) {
@@ -53,18 +51,7 @@ public class Street extends Buyable {
 	}
 
 	public int getRent() {
-		if(hotelCounter == 1) {
-			return rent[5];
-		}
-	
-		if(houseCounter > 0) {
-			return rent[houseCounter];
-		}
-	
-		else {
-			return rent[0];
-		}
-	
+		return rent[houseCounter];	
 	}
 
 	public void buyHouse() {
@@ -72,8 +59,7 @@ public class Street extends Buyable {
 	}
 	
 	public void buyHotel() {
-		houseCounter = 0;
-		hotelCounter = 1;
+		houseCounter = 5;
 	}
 	
 	public void sellHouse() {
@@ -81,15 +67,11 @@ public class Street extends Buyable {
 	}
 	
 	public void sellHotel() {
-		hotelCounter = 0;
+		houseCounter = 0;
 	}
 	
 	public int getHouse() {
 		return houseCounter;
-	}
-	
-	public int getHotel() {
-		return hotelCounter;
 	}
 	
 }
