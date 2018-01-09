@@ -436,8 +436,6 @@ public class Game {
 		return ownerGroupAmount;
 	}
 
-
-
 	public boolean checkMonopoly(int fieldNo) {
 		boolean monopoly = false;
 
