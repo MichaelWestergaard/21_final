@@ -443,7 +443,8 @@ public class Game {
 
 					if(options[0].matches(optionsChoice)) {
 						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
-
+									((Buyable) board.getField(newFieldNo)).setOwner(player);
+									gui_controller.setOwner(player, newFieldNo);
 						}
 					}
 				}
@@ -515,7 +516,7 @@ public class Game {
 				for (int j = 0; j < ownedFieldNumbers.length; j++) {
 					if(ownedFieldNumbers[j] != 0) {
 						playerTotalValue += ((Buyable) board.getField(ownedFieldNumbers[j])).getPrice();
-						playerTotalValue += ((Street) board.getField(ownedFieldNumbers[j])).getHouse() * ((Street) board.getField(ownedFieldNumbers[j])).getHousePrice();
+//						playerTotalValue += ((Street) board.getField(ownedFieldNumbers[j])).getHouse() * ((Street) board.getField(ownedFieldNumbers[j])).getHousePrice();
 					}
 				}
 				
@@ -526,9 +527,9 @@ public class Game {
 
 
 		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
-			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
+			gui_controller.showMessage("Du har landet på parkeringsfeltet og modtager " + ((Parking) board.getField(20)).getAmount() + " kr."  );
 			((Parking) board.getField(20)).setAmount(0);
-
+			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 		}
 	}
 
