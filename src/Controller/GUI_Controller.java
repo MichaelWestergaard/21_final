@@ -103,6 +103,7 @@ public class GUI_Controller {
 			} else if (field.getType() == "Game.Parking") {
 
 				GUIFields[field.getFieldNo()] = new GUI_Refuge();
+				GUIFields[field.getFieldNo()].setSubText("0 kr.");
 				
 			} else if (field.getType() == "Game.Ferry") {
 
@@ -207,8 +208,16 @@ public class GUI_Controller {
 		return gui.getUserSelection(text, options);
 	}
 	
-	// Bruges til at stille et "multiple choice"-sp�rgsm�l 
 	public String multipleChoice(String message, String[] buttonNames) {
 		return gui.getUserButtonPressed(message, buttonNames);
+	}
+	
+	public void updateGUIField(int fieldNo, String method, String updatedValue) {
+		switch(method) {
+			case "subText":
+				getField(fieldNo).setSubText(updatedValue);
+				break;
+			//Tilføj flere hvis der skulle komme brug for det.
+		}
 	}
 }

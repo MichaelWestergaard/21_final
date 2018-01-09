@@ -122,4 +122,5 @@ public class Player {
 	public void resetHitDouble() {
 		this.hitDouble = 0;
 	}
+
 }

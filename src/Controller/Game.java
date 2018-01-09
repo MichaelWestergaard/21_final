@@ -574,15 +574,16 @@ public class Game {
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
 			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
 			((Parking) board.getField(20)).increaseAmount(2000);
+			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 			System.out.println(((Parking) board.getField(20)).getAmount());
 		} else if (board.getField(newFieldNo).getFieldNo() == 4) {
 			String[] options = {"Betal 4000", "Betal 10%"};
 			String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
-			gui_controller.showMessage("Ekstraordinær statsskat, betal 4000 eller 10 %");
 			if(options[0].matches(optionsChoice)){
 				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
 				((Parking) board.getField(20)).increaseAmount(4000);	
 				player.addPoints(-4000);
+				gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 			}
 			if(options[1].matches(optionsChoice)){
 				int playerTotalValue = player.getPoints();
@@ -591,18 +592,18 @@ public class Game {
 				for (int j = 0; j < ownedFieldNumbers.length; j++) {
 					if(ownedFieldNumbers[j] != 0) {
 						playerTotalValue += ((Buyable) board.getField(ownedFieldNumbers[j])).getPrice();
+						playerTotalValue += ((Street) board.getField(ownedFieldNumbers[j])).getHouse() * ((Street) board.getField(ownedFieldNumbers[j])).getHousePrice();
 					}
 				}
 				
-				System.out.println(playerTotalValue);
-				
-				((Parking) board.getField(20)).increaseAmount(player.getPoints()/100*10);
-				player.addPoints((player.getPoints()/100*10)*-1);
+				((Parking) board.getField(20)).increaseAmount(playerTotalValue/100*10);
+				player.addPoints((playerTotalValue/100*10)*-1);
+				gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 			}
 
 
 		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
-			gui_controller.showMessage("Du landede på parkeringsfeltet, og modtager derfor: " + ((Parking) board.getField(20)).getAmount() + " kr.");
+			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 			((Parking) board.getField(20)).setAmount(0);
 
 		}

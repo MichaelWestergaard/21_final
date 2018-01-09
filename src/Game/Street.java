@@ -74,4 +74,8 @@ public class Street extends Buyable {
 		return houseCounter;
 	}
 	
+	public int getHousePrice() {
+		return housePrice;
+	}
+	
 }
