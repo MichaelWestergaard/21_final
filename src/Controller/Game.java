@@ -163,7 +163,7 @@ public class Game {
 										sameGroupHouses[groupHousesIndex] = ((Street) board.getField(ownedStreetNumbers[j])).getHouse();
 										groupHousesIndex++;
 									}
-									
+									 
 								}
 								
 								if(groupAmount == 2) {
