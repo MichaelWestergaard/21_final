@@ -45,7 +45,7 @@ public class GUI_Controller {
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
 				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Street) field).getPrice() + ",- ");
 				GUIFields[field.getFieldNo()].setDescription("Leje: " + ((Street) field).getRent());
-
+				
 				switch(((Street) field).getGroup().toString()) {
 					case "LIGHTBLUE":
 						GUIFields[field.getFieldNo()].setBackGroundColor(Color.BLUE);
@@ -79,7 +79,7 @@ public class GUI_Controller {
 						GUIFields[field.getFieldNo()].setBackGroundColor(Color.MAGENTA);
 						break;
 				}
-				
+						
 				
 			} else if (field.getType() == "Game.Jail") {
 
@@ -129,7 +129,7 @@ public class GUI_Controller {
 			}
 			
 		}
-
+		
 		this.fields = GUIFields;
 	}
 
@@ -213,6 +213,7 @@ public class GUI_Controller {
 	}
 	
 	public void updateGUIField(int fieldNo, String method, String updatedValue) {
+
 		switch(method) {
 			case "subText":
 				getField(fieldNo).setSubText(updatedValue);
@@ -220,4 +221,17 @@ public class GUI_Controller {
 			//Tilføj flere hvis der skulle komme brug for det.
 		}
 	}
+
+	public void setHouses(int fieldNo, int houses) {
+		if(getField(fieldNo) instanceof GUI_Street) {
+			((GUI_Street) getField(fieldNo)).setHouses(houses);
+		}
+	}
+	
+	public void setHotel(int fieldNo, boolean hotel) {
+		if(getField(fieldNo) instanceof GUI_Street) {
+			((GUI_Street) getField(fieldNo)).setHotel(hotel);
+		}
+	}
+	
 }
