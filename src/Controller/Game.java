@@ -378,7 +378,7 @@ public class Game {
 	}
 
 	public void checkField(Player player) {
-		int field = player.getFieldNo();
+		/*int field = player.getFieldNo();
 
 		int newFieldNo = field + diceCup.getDiceSum();
 
@@ -394,6 +394,32 @@ public class Game {
 				player.addPoints(4000);
 			}
 		}
+
+		board.getField(newFieldNo).landOnField(player);*/
+		//Gammel kode til at flytte bilen "teleporting"
+		
+		int field = player.getFieldNo();
+
+		int newFieldNo = field + diceCup.getDiceSum();
+
+		for (int i = 0; i < diceCup.getDiceSum(); i++) {
+			if(player.getFieldNo() + 1 < 40) {
+				player.setFieldNo(player.getFieldNo() + 1);
+			} else {
+				newFieldNo -= 40;
+				player.setFieldNo(40 - player.getFieldNo() + 1);
+				gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
+				if (newFieldNo != 0) {
+					player.addPoints(4000);
+				}
+			}
+			gui_controller.movePlayers(players);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}		
 
 		board.getField(newFieldNo).landOnField(player);
 
