@@ -70,6 +70,11 @@ public class Game {
 						playerActions(player);
 					}
 					
+					checkBankrupt(player);
+					
+					if(players.length == 1) {
+						runGame = false;
+					}
 				}
 			}
 			getWinner();
@@ -313,123 +318,15 @@ public class Game {
 				
 			} else if(propertyAction == "Pantsæt Ejendom") {
 
-				int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
-
-				int ownedStreets = 0;
-
-				for (int j = 0; j < ownedFieldNumbers.length; j++) {
-					if(ownedFieldNumbers[j] != 0) {
-						ownedStreets++;
-					}
-				}
-
-				if(ownedStreets > 0 ) {
-
-					String[] ownedStreetOptions = new String [ownedStreets];
-
-					for (int j = 0; j < ownedFieldNumbers.length; j++) {
-						if(ownedFieldNumbers[j] != 0) {
-							ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j]).getName();	
-						}					
-					}
-
-					String chosenStreet = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
-					for (int j = 0; j < ownedFieldNumbers.length; j++) {
-						if(ownedFieldNumbers[j] != 0) {
-							if (board.getField(ownedFieldNumbers[j]).getName() == chosenStreet) {
-								if (((Buyable) board.getField(ownedFieldNumbers[j])).isPledged()) {
-									String[] options = {"Køb tilbage", "Gå tilbage"};
-									String optionsChoice = gui_controller.multipleChoice("Vil du forsætte?", options);
-									if (options[0].matches(optionsChoice)) {
-										if (player.getPoints() >= ((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ) { //tjekker om han råd
-											((Buyable) board.getField(ownedFieldNumbers[j])).setPledged(false); //sat til at være ikke pansat
-											player.addPoints(-1 * ((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ); // betaler prisen
-										} else {
-											gui_controller.showMessage("Du har ikke råd til at købe grunden tilbage");
-											// gør noget så man ikke msiter turen
-										}
-
-									}
-
-								} else {
-									String[] options = {"Pansæt", "Gå tilbage"};
-									String optionsChoice = gui_controller.multipleChoice("Vil du forsætte?", options);
-									if (options[0].matches(optionsChoice)) {
-										((Buyable) board.getField(ownedFieldNumbers[j])).setPledged(true); //sat til at være pansat
-										player.addPoints(((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ); // modtager beløb prisen
-									} 
-								}								
-							} 
-						}
-
-
-
-					}
-					//Kald metode til at pantsætte chosenStreet
-				} else {
-					gui_controller.showMessage("Du ejer ingen ejendomme");
-
-					//Man skal ikke kunne miste din tur her...
-				}
-
+				pledgeSequence(player);
+				
 				//Stadig spillerens tur
-				gui_controller.updateBalance(players);
 				playerActions(player);
 
 			} else if(propertyAction == "Sælg Ejendom") {
-				int[] ownedFieldNumbers = player.getOwnedFieldNumbers();							
-				int ownedStreetsCounter = 0;
-
-				for (int j = 0; j < ownedFieldNumbers.length; j++) {
-					if(ownedFieldNumbers[j] != 0) {
-						ownedStreetsCounter++;
-					}
-				}
-
-				if(ownedStreetsCounter > 0 ) {
-
-					String[] ownedStreetOptions = new String [ownedStreetsCounter + 1];
-					ownedStreetOptions[0] = "Ingen";
-
-					for (int j = 1; j <= ownedStreetsCounter; j++) {
-						ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j - 1]).getName();
-					}
-
-					String chosenStreetName = gui_controller.multipleChoice("Hvilken ejendom vil du sælge?", ownedStreetOptions);
-
-					// Hvis spilleren vælger at lade være med at sælge noget alligevel
-					if (chosenStreetName.matches(ownedStreetOptions[0])) {
-						// Hvis spilleren vælger en ejendom, der skal sælges	
-					} else {
-						if (board.getFieldFromName(chosenStreetName) != null) {
-							Field chosenField = board.getFieldFromName(chosenStreetName);
-							if ( ((Buyable) chosenField).isPledged()) {
-								player.addPoints(((Buyable) chosenField).getPledgePrice());
-								gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Ejendommen er pantsat, så du modtager den halve købspris " + ((Buyable) chosenField).getPledgePrice() + " kr.");
-							} else {
-								player.addPoints(((Buyable) chosenField).getPrice());
-								gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Du modtager nu " + ((Buyable) chosenField).getPrice() + " kr.");
-							}
-							
-
-							((Buyable) chosenField).resetOwner(player);
-
-							// GUI'en ændrer feltets border-farve til grå og opdaterer spillerens point
-							gui_controller.setOwner(null, chosenField.getFieldNo());
-							gui_controller.updateBalance(players);
-						
-							
-							
-						} else {
-							gui_controller.showMessage("Fejl: spillet kunne ikke finde den ønskede ejendom.");
-						}
-					}								
-				} else {
-					gui_controller.showMessage("Du ejer ingen ejendomme.");
-				}
-
+				sellSequence(player);
+				
 				//Stadig spillerens tur
-				gui_controller.updateBalance(players);
 				playerActions(player);
 			}
 		}
@@ -509,6 +406,125 @@ public class Game {
 		}
 	}
 
+	public void pledgeSequence(Player player) {
+		int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
+
+		int ownedStreets = 0;
+
+		for (int j = 0; j < ownedFieldNumbers.length; j++) {
+			if(ownedFieldNumbers[j] != 0) {
+				ownedStreets++;
+			}
+		}
+
+		if(ownedStreets > 0 ) {
+
+			String[] ownedStreetOptions = new String [ownedStreets];
+
+			for (int j = 0; j < ownedFieldNumbers.length; j++) {
+				if(ownedFieldNumbers[j] != 0) {
+					ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j]).getName();	
+				}					
+			}
+
+			String chosenStreet = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
+			for (int j = 0; j < ownedFieldNumbers.length; j++) {
+				if(ownedFieldNumbers[j] != 0) {
+					if (board.getField(ownedFieldNumbers[j]).getName() == chosenStreet) {
+						if (((Buyable) board.getField(ownedFieldNumbers[j])).isPledged()) {
+							String[] options = {"Køb tilbage", "Gå tilbage"};
+							String optionsChoice = gui_controller.multipleChoice("Vil du forsætte?", options);
+							if (options[0].matches(optionsChoice)) {
+								if (player.getPoints() >= ((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ) { //tjekker om han råd
+									((Buyable) board.getField(ownedFieldNumbers[j])).setPledged(false); //sat til at være ikke pansat
+									player.addPoints(-1 * ((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ); // betaler prisen
+								} else {
+									gui_controller.showMessage("Du har ikke råd til at købe grunden tilbage");
+									// gør noget så man ikke msiter turen
+								}
+
+							}
+
+						} else {
+							String[] options = {"Pansæt", "Gå tilbage"};
+							String optionsChoice = gui_controller.multipleChoice("Vil du forsætte?", options);
+							if (options[0].matches(optionsChoice)) {
+								((Buyable) board.getField(ownedFieldNumbers[j])).setPledged(true); //sat til at være pansat
+								player.addPoints(((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ); // modtager beløb prisen
+							} 
+						}								
+					} 
+				}
+
+
+
+			}
+			//Kald metode til at pantsætte chosenStreet
+		} else {
+			gui_controller.showMessage("Du ejer ingen ejendomme");
+
+			//Man skal ikke kunne miste din tur her...
+		}
+
+		gui_controller.updateBalance(players);
+	}
+	
+	public void sellSequence(Player player) {
+		int[] ownedFieldNumbers = player.getOwnedFieldNumbers();							
+		int ownedStreetsCounter = 0;
+
+		for (int j = 0; j < ownedFieldNumbers.length; j++) {
+			if(ownedFieldNumbers[j] != 0) {
+				ownedStreetsCounter++;
+			}
+		}
+
+		if(ownedStreetsCounter > 0 ) {
+
+			String[] ownedStreetOptions = new String [ownedStreetsCounter + 1];
+			ownedStreetOptions[0] = "Ingen";
+
+			for (int j = 1; j <= ownedStreetsCounter; j++) {
+				ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j - 1]).getName();
+			}
+
+			String chosenStreetName = gui_controller.multipleChoice("Hvilken ejendom vil du sælge?", ownedStreetOptions);
+
+			// Hvis spilleren vælger at lade være med at sælge noget alligevel
+			if (chosenStreetName.matches(ownedStreetOptions[0])) {
+			
+			// Hvis spilleren vælger en ejendom, der skal sælges	
+			} else {
+				if (board.getFieldFromName(chosenStreetName) != null) {
+					Field chosenField = board.getFieldFromName(chosenStreetName);
+					if ( ((Buyable) chosenField).isPledged()) {
+						player.addPoints(((Buyable) chosenField).getPledgePrice());
+						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Ejendommen er pantsat, så du modtager den halve købspris " + ((Buyable) chosenField).getPledgePrice() + " kr.");
+					} else {
+						player.addPoints(((Buyable) chosenField).getPrice());
+						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Du modtager nu " + ((Buyable) chosenField).getPrice() + " kr.");
+					}
+					
+
+					((Buyable) chosenField).resetOwner(player);
+
+					// GUI'en ændrer feltets border-farve til grå og opdaterer spillerens point
+					gui_controller.setOwner(null, chosenField.getFieldNo());
+					gui_controller.updateBalance(players);
+				
+					
+					
+				} else {
+					gui_controller.showMessage("Fejl: spillet kunne ikke finde den ønskede ejendom.");
+				}
+			}								
+		} else {
+			gui_controller.showMessage("Du ejer ingen ejendomme.");
+		}
+
+		gui_controller.updateBalance(players);
+	}
+	
 	public void rollDice() {
 		diceCup.rollDices();
 		gui_controller.setDice(diceCup.getDiceValue(0),diceCup.getDiceValue(1));
@@ -731,6 +747,53 @@ public class Game {
 		gui_controller.showMessage(winner.getName() + " har vundet med " + winner.getPoints() + ",-");
 	}
 
+	public void checkBankrupt(Player player) {
+		if(player.getPoints() <= 0) {
+			player.setBankrupt(true);			
+			String[] options = {"Forlad Spillet", "Pantsæt ejendomme", "Sælg Ejendomme"};
+			String choice = gui_controller.multipleChoice("Du er gået løbet tør for penge!! \n Du har nu følgende muligheder:", options);
+			
+			// Hvis spilleren vælger at forlade spillet
+			if(choice.matches(options[0])) {
+				// Frigør alle spillerens ejendomme
+				int[] ownedFields = player.getOwnedFieldNumbers();
+				
+				for(int i = 0; i < ownedFields.length; i++) {
+					Field currentField = board.getField(ownedFields[i]);					
+					((Buyable) currentField).resetOwner(player);
+
+					// GUI'en fjerner spilleren som owner af feltet
+					gui_controller.setOwner(null, currentField.getFieldNo());
+				}
+				
+				// Fjerner spilleren fra spillet
+				Player[] newPlayers = new Player[players.length - 1];
+				int addCounter = 0;
+				
+				for(int i = 0; i < players.length; i++) {					
+					if(players[i] != player) {
+						newPlayers[addCounter] = players[i];
+						addCounter++;
+					}
+				}
+				
+				players = new Player[newPlayers.length];
+				players = newPlayers;
+			
+			// Hvis spilleren vælger at pantsætte en ejendom	
+			} else if(choice.matches(options[1])) {
+				pledgeSequence(player);
+				checkBankrupt(player);
+				
+			// Hvis spilleren vælger at sælge en ejendom	
+			} else if(choice.matches(options[2])) {
+				sellSequence(player);
+				checkBankrupt(player);
+			}
+			
+		}
+	}
+	
 	public int getSameGroupAmount(int fieldNo) {
 		int sameGroupAmount = 0;
 
