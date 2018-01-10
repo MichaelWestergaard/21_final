@@ -151,38 +151,47 @@ public class Game {
 					if(optionsHouseHotel[0].matches(houseHotelChoice)) {
 						if(checkMonopoly(chosenStreetNumber)) {
 							if(((Street) board.getField(chosenStreetNumber)).getHouse() < 4) {
+								boolean evenlyDistributed = false;
+								int houseDifference = 0;
 								int groupAmount = getOwnerGroupAmount(chosenStreetNumber);
-								int[] sameGroupHouses = new int[groupAmount];
+								int[] sameGroupHouses = new int[groupAmount - 1];
+								int groupHousesIndex = 0;
+								int chosenStreetHouse = ((Street) board.getField(chosenStreetNumber)).getHouse();
 								
 								for(int j = 0; j < ownedStreetNumbers.length; j++) {
-									if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup()) {
-										
+									if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup() && board.getField(chosenStreetNumber).getFieldNo() != board.getField(ownedStreetNumbers[j]).getFieldNo()) {
+										sameGroupHouses[groupHousesIndex] = ((Street) board.getField(ownedStreetNumbers[j])).getHouse();
+										groupHousesIndex++;
 									}
-									
+									 
 								}
-								
-								
 								
 								if(groupAmount == 2) {
+									houseDifference = Math.abs(sameGroupHouses[0] - chosenStreetHouse);
+									if(houseDifference < 2) {
+										if(chosenStreetHouse <= sameGroupHouses[0]) {
+											evenlyDistributed = true;
+										}
+									}								
+								}
+								
+								else if(groupAmount == 3) {
+									int maxNumberHouse = Math.max(chosenStreetHouse, Math.max(sameGroupHouses[0], sameGroupHouses[1]));
+									int minNumberHouse = Math.min(chosenStreetHouse, Math.min(sameGroupHouses[0], sameGroupHouses[1]));
+									houseDifference = maxNumberHouse - minNumberHouse;
 									
-									
-									
-									
-									
-									
-									
-									
+									if(houseDifference < 2) {
+										if(chosenStreetHouse == minNumberHouse) {
+											evenlyDistributed = true;
+										}	
+									}
 								}
 								
 								
+								//FFS virk nu lorte git...
 								
-								
-								
-								if(true) {
-								
-								
-								
-								
+								if(evenlyDistributed) {
+
 								//Tjek om de huse der eventuelt må være på gruppen er fordelt ligelidt, og tag højde for eventuelle hoteller.
 								
 									//Tjek om spilleren har råd til huset.
@@ -193,13 +202,11 @@ public class Game {
 									//Hej Aktøren Timmy Turner. Jeg har ændret street, så et hotel er lig med (houseCounter = 5). Så der er ingen hotelCounter. Skulle gerne have rettet det i din kode - Michael
 	
 							
-							
-							
-							
-							
 								}
 							
-							
+								else {
+									gui_controller.showMessage("Du skal fordele husene ligeligt mellem grundene af samme farve");
+								}
 							
 							
 							
