@@ -653,8 +653,6 @@ public class Game {
 		gui_controller.showMessage(winner.getName() + " har vundet med " + winner.getPoints() + ",-");
 	}
 
-
-
 	public int getSameGroupAmount(int fieldNo) {
 		int sameGroupAmount = 0;
 
