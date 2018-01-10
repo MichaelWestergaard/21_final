@@ -28,7 +28,7 @@ public class DiceCup {
 		for (int i = 0; i < dices.length; i++) {
 			diceSum += dices[i].getFaceValue();
 		}
-		return diceSum = 5;
+		return diceSum;
 	}
 	
 }

@@ -19,7 +19,7 @@ public class Chance extends Field {
 
 	public void createCardList() {
 
-		Card[] cardList = new Card[27];
+		Card[] cardList = new Card[25];
 
 		cardList[0] 	= new MoneyCard("Money", "Du har solgt dit gamle udstyr i garagen. Modtag kr. 500,-", 500);
 		cardList[1] 	= new MoneyCard("Money", "Du har vasket din bil. Betal kr. 150,-", -150);
@@ -42,12 +42,12 @@ public class Chance extends Field {
 		cardList[18]	= new MoveCard("Move", "Gå i fængsel. Ryk direkte til fængslet. Selv om De passerer >>Start<<, indkasserer De ikke 4000 kr.", 10);
 		cardList[18]	= new MoveCard("Move", "Gå i fængsel. Ryk direkte til fængslet. Selv om De passerer >>Start<<, indkasserer De ikke 4000 kr.", 10);
 		cardList[18]	= new MoveCard("Move", "Gå i fængsel. Ryk direkte til fængslet. Selv om De passerer >>Start<<, indkasserer De ikke 4000 kr.", 10);
-		cardList[21]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
-		cardList[22]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
-		cardList[23]	= new MoveCard("Move", "Ryk frem til >>Start<<.", 0);
+		cardList[19]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
+		cardList[20]	= new MoveCard("Move", "Ryk tre felter tilbage.", -3);
+		cardList[21]	= new MoveCard("Move", "Ryk frem til >>Start<<.", 0);
+		cardList[22]	= new JailCard("Move", "Fængselskort: Du kan bruge dette kort til at købe dig fri fra fængslet!");
+		cardList[23]	= new JailCard("Move", "Fængselskort: Du kan bruge dette kort til at købe dig fri fra fængslet!");
 		cardList[24]	= new JailCard("Move", "Fængselskort: Du kan bruge dette kort til at købe dig fri fra fængslet!");
-		cardList[25]	= new JailCard("Move", "Fængselskort: Du kan bruge dette kort til at købe dig fri fra fængslet!");
-		cardList[26]	= new JailCard("Move", "Fængselskort: Du kan bruge dette kort til at købe dig fri fra fængslet!");
 		
 		this.cardList = cardList;
 	}
