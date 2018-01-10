@@ -411,17 +411,15 @@ public class Game {
 		int field = player.getFieldNo();
 
 		int newFieldNo = field + diceCup.getDiceSum();
-
+		if (newFieldNo > 39) {
+			newFieldNo -= 40;
+		}
+		
 		for (int i = 0; i < diceCup.getDiceSum(); i++) {
-			if(player.getFieldNo() + 1 < 40) {
-				player.setFieldNo(player.getFieldNo() + 1);
+			if(player.getFieldNo() + 1 > 39) {
+				player.setFieldNo(39 - player.getFieldNo());
 			} else {
-				newFieldNo -= 40;
-				player.setFieldNo(40 - player.getFieldNo() + 1);
-				gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
-				if (newFieldNo != 0) {
-					player.addPoints(4000);
-				}
+				player.setFieldNo(player.getFieldNo() + 1);
 			}
 			gui_controller.movePlayers(players);
 			try {
