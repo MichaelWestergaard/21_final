@@ -96,7 +96,7 @@ public class Game {
 				} else {
 					checkField(player);
 				}
-
+ 
 				//Giver spilleren en eksta tur
 				playerActions(player);
 
@@ -187,35 +187,21 @@ public class Game {
 									}
 								}
 								
-								
-								//FFS virk nu lorte git...
-								
 								if(evenlyDistributed) {
-
-								//Tjek om de huse der eventuelt må være på gruppen er fordelt ligelidt, og tag højde for eventuelle hoteller.
-								
-									//Tjek om spilleren har råd til huset.
-										//Træk penge fra spilleren.
-										//Øg houseCounter.
-								
-								
-									//Hej Aktøren Timmy Turner. Jeg har ændret street, så et hotel er lig med (houseCounter = 5). Så der er ingen hotelCounter. Skulle gerne have rettet det i din kode - Michael
-	
-							
+									if(player.getPoints() >= ((Street) board.getField(chosenStreetNumber)).getHousePrice()) {
+										player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice() * -1);
+										((Street) board.getField(chosenStreetNumber)).buyHouse();
+										//Tilføj hus til GUI
+									}
+									
+									else {
+										gui_controller.showMessage("Du har ikke råd til at købe et hus");
+									}
 								}
 							
 								else {
 									gui_controller.showMessage("Du skal fordele husene ligeligt mellem grundene af samme farve");
 								}
-							
-							
-							
-							
-							
-							
-							
-							
-							
 							}
 							else {
 								gui_controller.showMessage("Du kan maksimalt have 4 huse på én grund.");
