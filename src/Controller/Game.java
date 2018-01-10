@@ -188,6 +188,8 @@ public class Game {
 								}
 								
 								
+								//FFS virk nu lorte git...
+								
 								if(evenlyDistributed) {
 
 								//Tjek om de huse der eventuelt må være på gruppen er fordelt ligelidt, og tag højde for eventuelle hoteller.
