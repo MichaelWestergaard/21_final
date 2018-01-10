@@ -151,6 +151,38 @@ public class Game {
 					if(optionsHouseHotel[0].matches(houseHotelChoice)) {
 						if(checkMonopoly(chosenStreetNumber)) {
 							if(((Street) board.getField(chosenStreetNumber)).getHouse() < 4) {
+								int groupAmount = getOwnerGroupAmount(chosenStreetNumber);
+								int[] sameGroupHouses = new int[groupAmount];
+								
+								for(int j = 0; j < ownedStreetNumbers.length; j++) {
+									if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup()) {
+										
+									}
+									
+								}
+								
+								
+								
+								if(groupAmount == 2) {
+									
+									
+									
+									
+									
+									
+									
+									
+								}
+								
+								
+								
+								
+								
+								if(true) {
+								
+								
+								
+								
 								//Tjek om de huse der eventuelt må være på gruppen er fordelt ligelidt, og tag højde for eventuelle hoteller.
 								
 									//Tjek om spilleren har råd til huset.
@@ -160,6 +192,23 @@ public class Game {
 								
 									//Hej Aktøren Timmy Turner. Jeg har ændret street, så et hotel er lig med (houseCounter = 5). Så der er ingen hotelCounter. Skulle gerne have rettet det i din kode - Michael
 	
+							
+							
+							
+							
+							
+								}
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
 							}
 							else {
 								gui_controller.showMessage("Du kan maksimalt have 4 huse på én grund.");
@@ -469,7 +518,6 @@ public class Game {
 
 			}
 		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
-			if (!player.equals(((Ferry) board.getField(newFieldNo)).getOwner())) {
 
 				if(((Ferry) board.getField(newFieldNo)).getOwner() == null) { //Hvis der ikke findes en ejer.
 					String[] options = {"Køb felt", "Spring over"};
@@ -477,7 +525,8 @@ public class Game {
 
 					if(options[0].matches(optionsChoice)) {
 						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
-									((Buyable) board.getField(newFieldNo)).setOwner(player);
+							player.addPoints(-1 * ((Buyable) board.getField(newFieldNo)).getPrice());
+							((Buyable) board.getField(newFieldNo)).setOwner(player);
 									gui_controller.setOwner(player, newFieldNo);
 						}
 					}
@@ -486,24 +535,24 @@ public class Game {
 					int ownerOwns = getOwnerGroupAmountFerry(newFieldNo);
 					int amountToPay = ((Ferry) board.getField(newFieldNo)).getRent();
 					switch (ownerOwns) {
+					
 					case 2: amountToPay = amountToPay * 2;
 					break;
-
+					
 					case 3: amountToPay = amountToPay * 4;
 					break;
-
+					
 					case 4: amountToPay = amountToPay * 8;
 					break;
 
 					default: 
-						amountToPay = amountToPay*1;
 					}
 
 					player.addPoints(amountToPay*-1);
 					((Ferry) board.getField(newFieldNo)).getOwner().addPoints(amountToPay);
 
 				}
-			}
+			
 
 		} else if (board.getField(newFieldNo).getType() == "Game.Beverage") {
 			int beverageRent =  ((Beverage) board.getField(newFieldNo)).getRent();
@@ -607,7 +656,7 @@ public class Game {
 		Field field = board.getField(fieldNo);
 		Field[] fields = board.getFields();
 
-		if(field.getType() == "Street") {
+		if(field.getType() == "Game.Street") {
 			for (Field fieldN : fields) {
 				if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
 					ownerGroupAmount++;
