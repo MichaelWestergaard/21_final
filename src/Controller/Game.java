@@ -151,6 +151,38 @@ public class Game {
 					if(optionsHouseHotel[0].matches(houseHotelChoice)) {
 						if(checkMonopoly(chosenStreetNumber)) {
 							if(((Street) board.getField(chosenStreetNumber)).getHouse() < 4) {
+								int groupAmount = getOwnerGroupAmount(chosenStreetNumber);
+								int[] sameGroupHouses = new int[groupAmount];
+								
+								for(int j = 0; j < ownedStreetNumbers.length; j++) {
+									if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup()) {
+										
+									}
+									
+								}
+								
+								
+								
+								if(groupAmount == 2) {
+									
+									
+									
+									
+									
+									
+									
+									
+								}
+								
+								
+								
+								
+								
+								if(true) {
+								
+								
+								
+								
 								//Tjek om de huse der eventuelt må være på gruppen er fordelt ligelidt, og tag højde for eventuelle hoteller.
 								
 									//Tjek om spilleren har råd til huset.
@@ -160,6 +192,23 @@ public class Game {
 								
 									//Hej Aktøren Timmy Turner. Jeg har ændret street, så et hotel er lig med (houseCounter = 5). Så der er ingen hotelCounter. Skulle gerne have rettet det i din kode - Michael
 	
+							
+							
+							
+							
+							
+								}
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
 							}
 							else {
 								gui_controller.showMessage("Du kan maksimalt have 4 huse på én grund.");
