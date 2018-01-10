@@ -71,6 +71,10 @@ public class Game {
 					}
 					
 					checkBankrupt(player);
+					
+					if(players.length == 1) {
+						runGame = false;
+					}
 				}
 			}
 			getWinner();
