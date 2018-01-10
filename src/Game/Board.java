@@ -14,9 +14,9 @@ public class Board {
 		Street[] streets = new Street[] {
 			new Street(1, "Rødovrevej", null, Group.LIGHTBLUE, 1200, new int[] {50, 250, 750, 2250, 4000, 6000}, 1000),
 			new Street(3, "Hvidovrevej", null, Group.LIGHTBLUE, 1200, new int[] {50, 250, 750, 2250, 4000, 6000}, 1000),
-			new Street(6, "Roskildevej", null, Group.ORANGE, 2000, new int[] {100, 600, 1800, 5400, 8000, 11000}, 1000),
-			new Street(8, "Valby Langgade", null, Group.ORANGE, 2000, new int[] {100, 600, 1800, 5400, 8000, 11000}, 1000),
-			new Street(9, "Allégade", null, Group.ORANGE, 2400, new int[] {150, 800, 2000, 6000, 9000, 12000}, 1000),
+			new Street(6, "Roskildevej", null, Group.PINK, 2000, new int[] {100, 600, 1800, 5400, 8000, 11000}, 1000),
+			new Street(8, "Valby Langgade", null, Group.PINK, 2000, new int[] {100, 600, 1800, 5400, 8000, 11000}, 1000),
+			new Street(9, "Allégade", null, Group.PINK, 2400, new int[] {150, 800, 2000, 6000, 9000, 12000}, 1000),
 			new Street(11, "Frederiksberg Allé", null, Group.LIGHTGREEN, 2800, new int[] {200, 1000, 3000, 9000, 12500, 15000}, 2000),
 			new Street(13, "Bülowsvej", null, Group.LIGHTGREEN, 2800, new int[] {200, 1000, 3000, 9000, 12500, 15000}, 2000),
 			new Street(14, "Gl. Kongevej", null, Group.LIGHTGREEN, 3200, new int[] {250, 1250, 3750, 10000, 14000, 18000}, 2000),
@@ -98,6 +98,15 @@ public class Board {
 
 	public Field[] getFields() {
 		return fields;
+	}
+	
+	public Field getFieldFromName(String name) {
+		for (int i = 0; i < fields.length; i++) {
+			if (fields[i].getName().matches(name)) {
+				return fields[i];
+			}
+		}		
+		return null;
 	}
 
 }

@@ -2,13 +2,13 @@ package Game;
 
 public class Beverage extends Buyable {
 
-	int rent;
+	private int rent;
 
 	public Beverage(int fieldNo, String name, Player owner, Group group, int price, int rent) {
 		super(fieldNo, name, owner, group, price);
 		this.rent = rent; 
 	}
-	public void landOnField(Player player,int diceSum, int rent) {
+	public void landOnField(Player player,int diceSum, int rent, boolean owned, boolean buy) {
 		int amountToPay = diceSum*rent; //renten der skal betales
 
 		Player owner = super.getOwner();
@@ -27,14 +27,15 @@ public class Beverage extends Buyable {
 				owner.addPoints(amountToPay);
 			} else {
 				player.setBankrupt(true); //ændre til pantsat
-				
-			}
+			}	
 		}
-		
-		
-		
 	}
+	
+	public int getRent() {
+		return rent;
+	}
+	public void setRent(int rent) {
+		this.rent = rent;
+	}
+	
 }
-
-
-

@@ -44,6 +44,42 @@ public class GUI_Controller {
 				
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
 				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Street) field).getPrice() + ",- ");
+				GUIFields[field.getFieldNo()].setDescription("Leje: " + ((Street) field).getRent());
+
+				switch(((Street) field).getGroup().toString()) {
+					case "LIGHTBLUE":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.BLUE);
+						break;
+					case "PINK":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.PINK);
+						break;
+					case "LIGHTGREEN":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.GREEN);
+						break;
+					case "LIGHTGREY":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.GRAY);
+						break;
+					case "RED":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.RED);
+						break;
+					case "WHITE":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.WHITE);
+						break;
+					case "YELLOW":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.YELLOW);
+						break;
+					case "PURPLE":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.decode("#551A8B"));
+						break;
+					case "BLACK":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.BLACK);
+						GUIFields[field.getFieldNo()].setForeGroundColor(Color.WHITE);
+						break;
+					case "BROWN":
+						GUIFields[field.getFieldNo()].setBackGroundColor(Color.MAGENTA);
+						break;
+				}
+				
 				
 			} else if (field.getType() == "Game.Jail") {
 
@@ -67,6 +103,7 @@ public class GUI_Controller {
 			} else if (field.getType() == "Game.Parking") {
 
 				GUIFields[field.getFieldNo()] = new GUI_Refuge();
+				GUIFields[field.getFieldNo()].setSubText("0 kr.");
 				
 			} else if (field.getType() == "Game.Ferry") {
 
@@ -147,8 +184,17 @@ public class GUI_Controller {
 		gui.showMessage(msg);
 	}
 	
+	public void displayChanceCard(String msg) {
+		gui.displayChanceCard(msg);
+	}
+	
 	public void setOwner(Player player, int newFieldNo) {
-		Color primaryColor = player.getGUI_player().getPrimaryColor();
+		Color primaryColor;
+		if (player != null) {
+			primaryColor = player.getGUI_player().getPrimaryColor();
+		} else {
+			primaryColor = Color.GRAY;
+		}
 		GUI_Field field = getField(newFieldNo);
 		if (field instanceof GUI_Ownable) {
 			((GUI_Ownable) field).setBorder(primaryColor);
@@ -162,8 +208,16 @@ public class GUI_Controller {
 		return gui.getUserSelection(text, options);
 	}
 	
-	// Bruges til at stille et "multiple choice"-sp�rgsm�l 
 	public String multipleChoice(String message, String[] buttonNames) {
 		return gui.getUserButtonPressed(message, buttonNames);
+	}
+	
+	public void updateGUIField(int fieldNo, String method, String updatedValue) {
+		switch(method) {
+			case "subText":
+				getField(fieldNo).setSubText(updatedValue);
+				break;
+			//Tilføj flere hvis der skulle komme brug for det.
+		}
 	}
 }

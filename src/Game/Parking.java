@@ -22,7 +22,6 @@ public class Parking extends Field {
 
 	public void landOnField(Player player) {
 		player.addPoints(this.amount);	
-		setAmount(0);
 	}
 	
 
