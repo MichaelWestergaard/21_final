@@ -48,7 +48,7 @@ public class Street extends Buyable {
 	}
 	
 	public void sellHotel() {
-		houseCounter = 0;
+		houseCounter = 4;
 	}
 	
 	public int getHouse() {
