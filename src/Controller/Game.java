@@ -403,7 +403,8 @@ public class Game {
 
 			// Hvis spilleren vælger at lade være med at sælge noget alligevel
 			if (chosenStreetName.matches(ownedStreetOptions[0])) {
-				// Hvis spilleren vælger en ejendom, der skal sælges	
+			
+			// Hvis spilleren vælger en ejendom, der skal sælges	
 			} else {
 				if (board.getFieldFromName(chosenStreetName) != null) {
 					Field chosenField = board.getFieldFromName(chosenStreetName);
@@ -660,7 +661,7 @@ public class Game {
 	public void checkBankrupt(Player player) {
 		if(player.getPoints() <= 0) {
 			player.setBankrupt(true);			
-			String[] options = {"Forlad Spillet", "Sælg Ejendomme"};
+			String[] options = {"Forlad Spillet", "Pantsæt ejendomme", "Sælg Ejendomme"};
 			String choice = gui_controller.multipleChoice("Du er gået løbet tør for penge!! \n Du har nu følgende muligheder:", options);
 			
 			// Hvis spilleren vælger at forlade spillet
@@ -690,8 +691,13 @@ public class Game {
 				players = new Player[newPlayers.length];
 				players = newPlayers;
 			
-			// Hvis spilleren vælger at sælge en ejendom	
+			// Hvis spilleren vælger at pantsætte en ejendom	
 			} else if(choice.matches(options[1])) {
+				pledgeSequence(player);
+				checkBankrupt(player);
+				
+			// Hvis spilleren vælger at sælge en ejendom	
+			} else if(choice.matches(options[2])) {
 				sellSequence(player);
 				checkBankrupt(player);
 			}
