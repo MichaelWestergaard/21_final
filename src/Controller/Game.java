@@ -655,21 +655,40 @@ public class Game {
 	public void checkBankrupt(Player player) {
 		if(player.getPoints() <= 0) {
 			player.setBankrupt(true);			
-			String[] options = {"Forlad Spillet"};
+			String[] options = {"Forlad Spillet", "Sælg Ejendomme"};
 			String choice = gui_controller.multipleChoice("Du er gået løbet tør for penge!! \n Du har nu følgende muligheder:", options);
 			
+			// Hvis spilleren vælger at forlade spillet
 			if(choice.matches(options[0])) {
+				// Frigør alle spillerens ejendomme
 				int[] ownedFields = player.getOwnedFieldNumbers();
 				
 				for(int i = 0; i < ownedFields.length; i++) {
-					Field currentField = board.getField(ownedFields[i]);
-					
+					Field currentField = board.getField(ownedFields[i]);					
 					((Buyable) currentField).resetOwner(player);
 
-					// GUI'en ændrer feltets border-farve til grå og opdaterer spillerens point
+					// GUI'en fjerner spilleren som owner af feltet
 					gui_controller.setOwner(null, currentField.getFieldNo());
-					gui_controller.updateBalance(players);
 				}
+				
+				// Fjerner spilleren fra spillet
+				Player[] newPlayers = new Player[players.length - 1];
+				int addCounter = 0;
+				
+				for(int i = 0; i < players.length; i++) {					
+					if(players[i] != player) {
+						newPlayers[addCounter] = players[i];
+						addCounter++;
+					}
+				}
+				
+				players = new Player[newPlayers.length];
+				players = newPlayers;
+			
+			// Hvis spilleren vælger at sælge en ejendom	
+			} else if(choice.matches(options[1])) {
+				sellSequence(player);
+				checkBankrupt(player);
 			}
 			
 		}
