@@ -500,11 +500,11 @@ public class Game {
 				if (board.getFieldFromName(chosenStreetName) != null) {
 					Field chosenField = board.getFieldFromName(chosenStreetName);
 					if ( ((Buyable) chosenField).isPledged()) {
-						player.addPoints(((Buyable) chosenField).getPledgePrice());
 						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Ejendommen er pantsat, så du modtager den halve købspris " + ((Buyable) chosenField).getPledgePrice() + " kr.");
+						player.addPoints(((Buyable) chosenField).getPledgePrice());
 					} else {
-						player.addPoints(((Buyable) chosenField).getPrice());
 						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Du modtager nu " + ((Buyable) chosenField).getPrice() + " kr.");
+						player.addPoints(((Buyable) chosenField).getPrice());
 					}
 					
 
