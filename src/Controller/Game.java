@@ -44,6 +44,9 @@ public class Game {
 		}
 
 		gui_controller.addPlayers(players);
+		
+//		((Buyable) board.getField(1)).setOwner(players[0]);
+//		((Buyable) board.getField(3)).setOwner(players[0]);
 
 		gameStarted = true;
 	}
@@ -94,7 +97,7 @@ public class Game {
 
 				// Hvis spilleren har sl�et 2 ens for mange (3) gange
 				if (player.getHitDouble() == 3) {
-					gui_controller.showMessage("Du har sl�et 2 ens for mange gange og f�ngsles for at snyde med terningerne!");								
+					gui_controller.showMessage("Du har sl�et 2 ens for mange gange og fængsles for at snyde med terningerne!");								
 					player.setFieldNo(10);
 					player.setJailed(true);
 					gui_controller.movePlayers(players);
@@ -155,13 +158,12 @@ public class Game {
 				int[] sameGroupHouses = new int[groupAmount - 1];
 				int groupHousesIndex = 0;
 				int chosenStreetHouse = ((Street) board.getField(chosenStreetNumber)).getHouse();
-				
-				for(int j = 0; j < ownedStreetNumbers.length; j++) {
-					if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup() && board.getField(chosenStreetNumber).getFieldNo() != board.getField(ownedStreetNumbers[j]).getFieldNo()) {
+								
+				for(int j = 0; j < groupAmount - 1; j++) {
+					if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup()) {
 						sameGroupHouses[groupHousesIndex] = ((Street) board.getField(ownedStreetNumbers[j])).getHouse();
 						groupHousesIndex++;
 					}
-					 
 				}
 				
 				if(optionsBuySell[0].matches(buySellChoice)) {
@@ -222,7 +224,7 @@ public class Game {
 						
 
 					//Køb hotel
-					} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {	
+					} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {
 						if(groupAmount == 2) {
 							houseDifference = sameGroupHouses[0] - chosenStreetHouse;
 						}
@@ -237,8 +239,8 @@ public class Game {
 							if(player.getPoints() >= ((Street) board.getField(chosenStreetNumber)).getHousePrice()) {
 								player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice() * -1);
 								((Street) board.getField(chosenStreetNumber)).buyHotel();
+								gui_controller.setHouses(chosenStreetNumber, 0);
 								gui_controller.setHotel(chosenStreetNumber, true);
-								gui_controller.setHouses(chosenStreetNumber, 0);	
 							}
 							
 							else {
