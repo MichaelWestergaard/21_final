@@ -115,7 +115,7 @@ public class Game {
 			}
 		} else if (nextAction == "Administrer Ejendomme") {
 
-			String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Sælg Ejendom"});
+			String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Auktionér Ejendom"});
 
 			if(propertyAction == "Huse/Hoteller") {
 
