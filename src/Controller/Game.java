@@ -323,8 +323,8 @@ public class Game {
 				//Stadig spillerens tur
 				playerActions(player);
 
-			} else if(propertyAction == "Sælg Ejendom") {
-				sellSequence(player);
+			} else if(propertyAction == "Auktionér Ejendom") {
+				auctionSequence(player);
 				
 				//Stadig spillerens tur
 				playerActions(player);
@@ -469,7 +469,7 @@ public class Game {
 		gui_controller.updateBalance(players);
 	}
 	
-	public void sellSequence(Player player) {
+	public void auctionSequence(Player player) {
 		int[] ownedFieldNumbers = player.getOwnedFieldNumbers();							
 		int ownedStreetsCounter = 0;
 
@@ -495,25 +495,108 @@ public class Game {
 			
 			// Hvis spilleren vælger en ejendom, der skal sælges	
 			} else {
-				if (board.getFieldFromName(chosenStreetName) != null) {
+				if (board.getFieldFromName(chosenStreetName) != null) {					
 					Field chosenField = board.getFieldFromName(chosenStreetName);
-					if ( ((Buyable) chosenField).isPledged()) {
-						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Ejendommen er pantsat, så du modtager den halve købspris " + ((Buyable) chosenField).getPledgePrice() + " kr.");
-						player.addPoints(((Buyable) chosenField).getPledgePrice());
-					} else {
-						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Du modtager nu " + ((Buyable) chosenField).getPrice() + " kr.");
-						player.addPoints(((Buyable) chosenField).getPrice());
+//					if ( ((Buyable) chosenField).isPledged()) {
+//						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Ejendommen er pantsat, så du modtager den halve købspris " + ((Buyable) chosenField).getPledgePrice() + " kr.");
+//						player.addPoints(((Buyable) chosenField).getPledgePrice());
+//					} else {
+//						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Du modtager nu " + ((Buyable) chosenField).getPrice() + " kr.");
+//						player.addPoints(((Buyable) chosenField).getPrice());
+//					}
+					
+					
+					Player[] biddingPlayers = new Player[players.length - 1];
+					int addCounter = 0;
+					
+					for(int i = 0; i < players.length; i++) {					
+						if(players[i] != player) {
+							biddingPlayers[addCounter] = players[i];
+							addCounter++;
+						}
 					}
 					
-
-					((Buyable) chosenField).resetOwner(player);
-
-					// GUI'en ændrer feltets border-farve til grå og opdaterer spillerens point
-					gui_controller.setOwner(null, chosenField.getFieldNo());
-					gui_controller.updateBalance(players);
-				
+					Player highestBidder = null;
+					boolean auctioning = true;
+					int highestBid = 0;
+					
+					if(((Buyable) chosenField).isPledged()) {
+						highestBid = ((Buyable) chosenField).getPledgePrice();
+					} else {
+						highestBid = ((Buyable) chosenField).getPrice();
+					}
 					
 					
+					while(auctioning == true) {
+						for(int i = 0; i < biddingPlayers.length; i++) {
+							int currentBid = 0;
+							
+							try {
+								currentBid = Integer.parseInt(gui_controller.getUserInput(biddingPlayers[i].getName() + ", hvor meget vil du byde på " + chosenStreetName + "?"
+																							+ "\n Mindst mulige bud = " + highestBid + "kr."
+																							+ "\n Indtast en lavere værdi, for at forlade auktionen."));
+							} catch (Exception e) {
+								gui_controller.showMessage("Fejl: Du skal indtaste et helt, positivt tal, når du byder.");
+								break;
+							}
+							
+							if(highestBid < currentBid) {
+								highestBid = currentBid;
+								highestBidder = biddingPlayers[i];
+							} else {
+								// Fjerner spilleren fra auktionen
+								Player[] newBiddingPlayers = new Player[biddingPlayers.length - 1];
+								int addCounter2 = 0;
+								
+								for(int j = 0; j < biddingPlayers.length; j++) {					
+									if(biddingPlayers[j] != biddingPlayers[i]) {
+										newBiddingPlayers[addCounter2] = biddingPlayers[j];
+										addCounter2++;
+									}
+								}
+								
+								biddingPlayers = new Player[newBiddingPlayers.length];
+								biddingPlayers = newBiddingPlayers;
+							}
+							
+							if(biddingPlayers.length == 1) {
+								highestBidder = biddingPlayers[0];
+								auctioning = false;
+								break;
+							}
+						}
+					}
+					
+					String[] finalAuctionOptions = {"Ja", "Nej"};
+					String finalAuctionChoice = gui_controller.multipleChoice(highestBidder.getName() + ", vil du købe " + chosenStreetName + " for: " + highestBid + "kr.?", finalAuctionOptions);
+					
+					// Hvis køberen vælger at fuldføre auktionen
+					if(finalAuctionChoice.matches(finalAuctionOptions[0])) {
+						if ( ((Buyable) chosenField).isPledged()) {
+							gui_controller.showMessage(highestBidder.getName() + " har valgt at købe den pantsatte ejendom: " + chosenStreetName + 
+														".\n" + player.getName() + " modtager nu " + highestBid + "kr. fra " + highestBidder.getName());						
+						} else {
+							gui_controller.showMessage(highestBidder.getName() + " har valgt at købe ejendommen: " + chosenStreetName + 
+														".\n" + player.getName() + " modtager nu " + highestBid + "kr. fra " + highestBidder.getName());							
+		
+						}
+						
+						player.addPoints(highestBid);
+						((Buyable) chosenField).resetOwner(player);
+	
+						for(int i = 0; i < players.length; i++) {
+							if(players[i] == highestBidder) {
+								players[i].addPoints(highestBid * -1);
+			
+								((Buyable) chosenField).setOwner(players[i]);
+								gui_controller.setOwner(players[i], chosenField.getFieldNo());
+							}
+						}
+						
+					// Hvis køberen vælger at annullere auktionen	
+					} else if(finalAuctionChoice.matches(finalAuctionOptions[1])) {
+						
+					}					
 				} else {
 					gui_controller.showMessage("Fejl: spillet kunne ikke finde den ønskede ejendom.");
 				}
@@ -750,7 +833,7 @@ public class Game {
 	public void checkBankrupt(Player player) {
 		if(player.getPoints() <= 0) {
 			player.setBankrupt(true);			
-			String[] options = {"Forlad Spillet", "Pantsæt ejendomme", "Sælg Ejendomme"};
+			String[] options = {"Forlad Spillet", "Pantsæt ejendomme", "Auktionér Ejendomme"};
 			String choice = gui_controller.multipleChoice("Du er gået løbet tør for penge!! \n Du har nu følgende muligheder:", options);
 			
 			// Hvis spilleren vælger at forlade spillet
@@ -785,9 +868,9 @@ public class Game {
 				pledgeSequence(player);
 				checkBankrupt(player);
 				
-			// Hvis spilleren vælger at sælge en ejendom	
+			// Hvis spilleren vælger at auktionere en ejendom	
 			} else if(choice.matches(options[2])) {
-				sellSequence(player);
+				auctionSequence(player);
 				checkBankrupt(player);
 			}
 			
