@@ -85,7 +85,8 @@ public class Game {
 	}
 
 	public void playerActions(Player player) {
-
+		gui_controller.updateBalance(players);
+		
 		String nextAction = gui_controller.getPlayerAmount(player.getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
 
 		if(nextAction == "Kast terning") {
@@ -230,11 +231,12 @@ public class Game {
 					//Køb hotel
 					} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {
 						if(groupAmount == 2) {
-							houseDifference = sameGroupHouses[0] - chosenStreetHouse;
+							int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+							houseDifference = minNumberHouse - chosenStreetHouse;
 						}
 						
 						if(groupAmount == 3) {
-							int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+							int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
 							houseDifference = minNumberHouse - chosenStreetHouse;
 							
 						}
@@ -269,17 +271,20 @@ public class Game {
 					if(optionsHouseHotel[0].matches(choiceHouseHotel)) {
 						if(((Street) board.getField(chosenStreetNumber)).getHouse() > 0 && ((Street) board.getField(chosenStreetNumber)).getHouse() < 5) {
 							if(groupAmount == 2) {
-								houseDifference = Math.abs(sameGroupHouses[0] - chosenStreetHouse);
+								int maxNumberHouse = Math.max(sameGroupHouses[0], sameGroupHouses[1]);
+								int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+								houseDifference = maxNumberHouse - minNumberHouse;
+								
 								if(houseDifference < 2) {
-									if(chosenStreetHouse >= sameGroupHouses[0]) {
+									if(chosenStreetHouse == maxNumberHouse) {
 										evenlyDistributed = true;
 									}
 								}								
 							}
 							
 							else if(groupAmount == 3) {
-								int maxNumberHouse = Math.max(chosenStreetHouse, Math.max(sameGroupHouses[0], sameGroupHouses[1]));
-								int minNumberHouse = Math.min(chosenStreetHouse, Math.min(sameGroupHouses[0], sameGroupHouses[1]));
+								int maxNumberHouse = Math.max(sameGroupHouses[0], Math.max(sameGroupHouses[1], sameGroupHouses[2]));
+								int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
 								houseDifference = maxNumberHouse - minNumberHouse;
 								
 								if(houseDifference < 2) {
