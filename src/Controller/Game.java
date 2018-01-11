@@ -683,8 +683,10 @@ public class Game {
 
 		if(field.getType() == "Game.Street") {
 			for (Field fieldN : fields) {
-				if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
-					ownerGroupAmount++;
+				if(fieldN instanceof Buyable) {
+					if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
+						ownerGroupAmount++;
+					}
 				}
 			}
 		} else if(field.getType() == "Game.Ferry") {
