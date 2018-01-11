@@ -45,8 +45,8 @@ public class Game {
 
 		gui_controller.addPlayers(players);
 		
-//		((Buyable) board.getField(1)).setOwner(players[0]);
-//		((Buyable) board.getField(3)).setOwner(players[0]);
+		((Buyable) board.getField(1)).setOwner(players[0]);
+		((Buyable) board.getField(3)).setOwner(players[0]);
 
 		gameStarted = true;
 	}
@@ -155,11 +155,11 @@ public class Game {
 				boolean evenlyDistributed = false;
 				int houseDifference = 0;
 				int groupAmount = getOwnerGroupAmount(chosenStreetNumber);
-				int[] sameGroupHouses = new int[groupAmount - 1];
+				int[] sameGroupHouses = new int[groupAmount];
 				int groupHousesIndex = 0;
 				int chosenStreetHouse = ((Street) board.getField(chosenStreetNumber)).getHouse();
 								
-				for(int j = 0; j < groupAmount - 1; j++) {
+				for(int j = 0; j < groupAmount; j++) {
 					if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup()) {
 						sameGroupHouses[groupHousesIndex] = ((Street) board.getField(ownedStreetNumbers[j])).getHouse();
 						groupHousesIndex++;
@@ -177,9 +177,13 @@ public class Game {
 							if(((Street) board.getField(chosenStreetNumber)).getHouse() < 4) {
 								
 								if(groupAmount == 2) {
-									houseDifference = Math.abs(sameGroupHouses[0] - chosenStreetHouse);
+									int maxNumberHouse = Math.max(sameGroupHouses[0], sameGroupHouses[1]);
+									int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+									
+									houseDifference = maxNumberHouse - minNumberHouse;
+									
 									if(houseDifference < 2) {
-										if(chosenStreetHouse <= sameGroupHouses[0]) {
+										if(chosenStreetHouse == minNumberHouse) {
 											evenlyDistributed = true;
 										}
 									}								
