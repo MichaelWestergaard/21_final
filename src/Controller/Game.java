@@ -579,7 +579,7 @@ public class Game {
 					}
 					
 					String[] finalAuctionOptions = {"Ja", "Nej"};
-					String finalAuctionChoice = gui_controller.multipleChoice(highestBidder.getName() + ", vil du købe " + chosenStreetName + " for: " + highestBid + "kr.?", finalAuctionOptions);
+					String finalAuctionChoice = gui_controller.multipleChoice(player.getName() + ", vil du sælge " + chosenStreetName + " for: " + highestBid + ",-.?", finalAuctionOptions);
 					
 					// Hvis køberen vælger at fuldføre auktionen
 					if(finalAuctionChoice.matches(finalAuctionOptions[0])) {
