@@ -44,6 +44,9 @@ public class Game {
 		}
 
 		gui_controller.addPlayers(players);
+		
+		((Buyable) board.getField(1)).setOwner(players[0]);
+		((Buyable) board.getField(3)).setOwner(players[0]);
 
 		gameStarted = true;
 	}
@@ -82,7 +85,8 @@ public class Game {
 	}
 
 	public void playerActions(Player player) {
-
+		gui_controller.updateBalance(players);
+		
 		String nextAction = gui_controller.getPlayerAmount(player.getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
 
 		if(nextAction == "Kast terning") {
@@ -94,7 +98,7 @@ public class Game {
 
 				// Hvis spilleren har sl�et 2 ens for mange (3) gange
 				if (player.getHitDouble() == 3) {
-					gui_controller.showMessage("Du har sl�et 2 ens for mange gange og f�ngsles for at snyde med terningerne!");								
+					gui_controller.showMessage("Du har sl�et 2 ens for mange gange og fængsles for at snyde med terningerne!");								
 					player.setFieldNo(10);
 					player.setJailed(true);
 					gui_controller.movePlayers(players);
@@ -152,16 +156,15 @@ public class Game {
 				boolean evenlyDistributed = false;
 				int houseDifference = 0;
 				int groupAmount = getOwnerGroupAmount(chosenStreetNumber);
-				int[] sameGroupHouses = new int[groupAmount - 1];
+				int[] sameGroupHouses = new int[groupAmount];
 				int groupHousesIndex = 0;
 				int chosenStreetHouse = ((Street) board.getField(chosenStreetNumber)).getHouse();
-				
-				for(int j = 0; j < ownedStreetNumbers.length; j++) {
-					if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup() && board.getField(chosenStreetNumber).getFieldNo() != board.getField(ownedStreetNumbers[j]).getFieldNo()) {
+								
+				for(int j = 0; j < groupAmount; j++) {
+					if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup()) {
 						sameGroupHouses[groupHousesIndex] = ((Street) board.getField(ownedStreetNumbers[j])).getHouse();
 						groupHousesIndex++;
 					}
-					 
 				}
 				
 				if(optionsBuySell[0].matches(buySellChoice)) {
@@ -175,9 +178,13 @@ public class Game {
 							if(((Street) board.getField(chosenStreetNumber)).getHouse() < 4) {
 								
 								if(groupAmount == 2) {
-									houseDifference = Math.abs(sameGroupHouses[0] - chosenStreetHouse);
+									int maxNumberHouse = Math.max(sameGroupHouses[0], sameGroupHouses[1]);
+									int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+									
+									houseDifference = maxNumberHouse - minNumberHouse;
+									
 									if(houseDifference < 2) {
-										if(chosenStreetHouse <= sameGroupHouses[0]) {
+										if(chosenStreetHouse == minNumberHouse) {
 											evenlyDistributed = true;
 										}
 									}								
@@ -222,13 +229,14 @@ public class Game {
 						
 
 					//Køb hotel
-					} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {	
+					} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {
 						if(groupAmount == 2) {
-							houseDifference = sameGroupHouses[0] - chosenStreetHouse;
+							int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+							houseDifference = minNumberHouse - chosenStreetHouse;
 						}
 						
 						if(groupAmount == 3) {
-							int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+							int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
 							houseDifference = minNumberHouse - chosenStreetHouse;
 							
 						}
@@ -237,8 +245,8 @@ public class Game {
 							if(player.getPoints() >= ((Street) board.getField(chosenStreetNumber)).getHousePrice()) {
 								player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice() * -1);
 								((Street) board.getField(chosenStreetNumber)).buyHotel();
+								gui_controller.setHouses(chosenStreetNumber, 0);
 								gui_controller.setHotel(chosenStreetNumber, true);
-								gui_controller.setHouses(chosenStreetNumber, 0);	
 							}
 							
 							else {
@@ -263,17 +271,20 @@ public class Game {
 					if(optionsHouseHotel[0].matches(choiceHouseHotel)) {
 						if(((Street) board.getField(chosenStreetNumber)).getHouse() > 0 && ((Street) board.getField(chosenStreetNumber)).getHouse() < 5) {
 							if(groupAmount == 2) {
-								houseDifference = Math.abs(sameGroupHouses[0] - chosenStreetHouse);
+								int maxNumberHouse = Math.max(sameGroupHouses[0], sameGroupHouses[1]);
+								int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+								houseDifference = maxNumberHouse - minNumberHouse;
+								
 								if(houseDifference < 2) {
-									if(chosenStreetHouse >= sameGroupHouses[0]) {
+									if(chosenStreetHouse == maxNumberHouse) {
 										evenlyDistributed = true;
 									}
 								}								
 							}
-							
+							 
 							else if(groupAmount == 3) {
-								int maxNumberHouse = Math.max(chosenStreetHouse, Math.max(sameGroupHouses[0], sameGroupHouses[1]));
-								int minNumberHouse = Math.min(chosenStreetHouse, Math.min(sameGroupHouses[0], sameGroupHouses[1]));
+								int maxNumberHouse = Math.max(sameGroupHouses[0], Math.max(sameGroupHouses[1], sameGroupHouses[2]));
+								int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
 								houseDifference = maxNumberHouse - minNumberHouse;
 								
 								if(houseDifference < 2) {
@@ -614,26 +625,6 @@ public class Game {
 	}
 
 	public void checkField(Player player) {
-		/*int field = player.getFieldNo();
-
-		int newFieldNo = field + diceCup.getDiceSum();
-
-		if (newFieldNo < 40) {
-			player.setFieldNo(newFieldNo);
-			gui_controller.movePlayers(players);
-		} else {
-			newFieldNo -= 40;
-			player.setFieldNo(newFieldNo);
-			gui_controller.movePlayers(players);
-			gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
-			if (newFieldNo != 0) {
-				player.addPoints(4000);
-			}
-		}
-
-		board.getField(newFieldNo).landOnField(player);*/
-		//Gammel kode til at flytte bilen "teleporting"
-		
 		int field = player.getFieldNo();
 
 		int newFieldNo = field + diceCup.getDiceSum();
@@ -644,10 +635,12 @@ public class Game {
 		for (int i = 0; i < diceCup.getDiceSum(); i++) {
 			if(player.getFieldNo() + 1 > 39) {
 				player.setFieldNo(39 - player.getFieldNo());
-
-				gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
-				if (newFieldNo != 0) {
-					player.addPoints(4000);
+				if(player.getFieldNo() == 0) {
+					if (newFieldNo != 0) {
+						gui_controller.movePlayers(players);
+						player.addPoints(4000);
+						gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
+					}
 				}
 			} else {
 				player.setFieldNo(player.getFieldNo() + 1);
