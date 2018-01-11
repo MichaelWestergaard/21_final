@@ -448,7 +448,7 @@ public class Game {
 							if (options[0].matches(optionsChoice)) {
 								if (player.getPoints() >= ((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ) { //tjekker om han råd
 									((Buyable) board.getField(ownedFieldNumbers[j])).setPledged(false); //sat til at være ikke pansat
-									player.addPoints(-1 * ((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ); // betaler prisen
+									player.addPoints(-1 * (((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() + (((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() / 100 * 10))  ); // betaler prisen
 								} else {
 									gui_controller.showMessage("Du har ikke råd til at købe grunden tilbage");
 									// gør noget så man ikke msiter turen
