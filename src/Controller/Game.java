@@ -281,7 +281,7 @@ public class Game {
 									}
 								}								
 							}
-							
+							 
 							else if(groupAmount == 3) {
 								int maxNumberHouse = Math.max(sameGroupHouses[0], Math.max(sameGroupHouses[1], sameGroupHouses[2]));
 								int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
