@@ -101,8 +101,8 @@ public class Game {
 						gui_controller.showMessage("Du har sl�et 2 ens for mange gange og fængsles for at snyde med terningerne!");								
 						player.setFieldNo(10);
 						player.setJailed(true);
-						player.resetHitDouble();
 						gui_controller.movePlayers(players);
+						player.resetHitDouble();
 					} else {
 						checkField(player);
 						//Giver spilleren en eksta tur
