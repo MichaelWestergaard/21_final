@@ -26,7 +26,7 @@ public class Chance extends Field {
 		cardList[2] 	= new MoneyCard("Money", "Du har været i udlandet og blev taget i tolden og skal betale en bøde. Betal kr. 1500,-", -1500);
 		cardList[3] 	= new MoneyCard("Money", "Du har modtaget en parkeringsbøde. Betal kr. 800,-", -800);
 		cardList[4] 	= new MoneyCard("Money", "Værdien af din egen avl fra nyttehaven udgør kr. 2000,-, som du modtager af banken.", 2000);
-		cardList[0] 	= new MoneyCard("Money", "Modtag udbytte af Deres aktier. Modtag kr. 1500,-", 1500);
+		cardList[5] 	= new MoneyCard("Money", "Modtag udbytte af Deres aktier. Modtag kr. 1500,-", 1500);
 		cardList[6] 	= new MoneyCard("Money", "Du har anskaffet et nyt dæk til din bil. Betal kr. 2000,-", -2000);
 		cardList[7] 	= new MoneyCard("Money", "Du har kørt frem for et Fuld Stop skilt. Betal 1000 i bøde", -1000);
 		cardList[8]		= new MoneyCard("Money","Betal for vognvask og smøring. betal kr. 100,00",-100);
@@ -76,7 +76,6 @@ public class Chance extends Field {
 		} else if(drawncard instanceof JailCard) {
 			player.setJailCard(1);
 		}
-		
 	}
 
 	public String getCardDescription() {
