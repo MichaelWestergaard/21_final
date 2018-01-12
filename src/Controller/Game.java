@@ -90,7 +90,6 @@ public class Game {
 			String nextAction = gui_controller.getPlayerAmount(player.getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
 
 			if(nextAction == "Kast terning") {
-				player.resetHitDouble();
 				rollDice();
 
 				// Hvis spillerens sl�r 2 ens
@@ -102,6 +101,7 @@ public class Game {
 						gui_controller.showMessage("Du har sl�et 2 ens for mange gange og fængsles for at snyde med terningerne!");								
 						player.setFieldNo(10);
 						player.setJailed(true);
+						player.resetHitDouble();
 						gui_controller.movePlayers(players);
 					} else {
 						checkField(player);
