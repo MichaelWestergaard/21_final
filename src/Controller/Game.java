@@ -681,16 +681,19 @@ public class Game {
 					}
 
 				} else {
-					((Street) board.getField(newFieldNo)).landOnField(player, true, false);
-					int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
+					Player owner = ((Ferry) board.getField(newFieldNo)).getOwner();
+					if(!player.equals(owner)) {
+						((Street) board.getField(newFieldNo)).landOnField(player, true, false);
+						int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
 
-					if(((Street) board.getField(newFieldNo)).getHouse() == 0) {
-						if(checkMonopoly(newFieldNo)) {
-							((Street) board.getField(newFieldNo)).landOnField(player, true, false);
-							amountToPay = amountToPay * 2;
+						if(((Street) board.getField(newFieldNo)).getHouse() == 0) {
+							if(checkMonopoly(newFieldNo)) {
+								((Street) board.getField(newFieldNo)).landOnField(player, true, false);
+								amountToPay = amountToPay * 2;
+							}
 						}
+						gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 					}
-					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 				}
 
 			}
@@ -710,41 +713,43 @@ public class Game {
 				}
 				else {
 					Player owner = ((Ferry) board.getField(newFieldNo)).getOwner();
-					int ownerOwns = getOwnerGroupAmount(newFieldNo);
-					int amountToPay = ((Ferry) board.getField(newFieldNo)).getRent();
-					
-					String ending;
-					
-					switch (ownerOwns) {
+					if(!player.equals(owner)) {
+						int ownerOwns = getOwnerGroupAmount(newFieldNo);
+						int amountToPay = ((Ferry) board.getField(newFieldNo)).getRent();
 						
-						case 2:
-							amountToPay = amountToPay * 2;
-							break;
+						String ending;
 						
-						case 3:
-							amountToPay = amountToPay * 4;
-							break;
-						
-						case 4:
-							amountToPay = amountToPay * 8;
-							break;
-	
-						default:
+						switch (ownerOwns) {
 							
-							break;
+							case 2:
+								amountToPay = amountToPay * 2;
+								break;
+							
+							case 3:
+								amountToPay = amountToPay * 4;
+								break;
+							
+							case 4:
+								amountToPay = amountToPay * 8;
+								break;
+		
+							default:
+								
+								break;
+						}
+						
+						if(ownerOwns == 1) {
+							ending = "færge";
+						} else {
+							ending = "færger";
+						}
+						
+						gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
+						
+						player.addPoints(amountToPay*-1);
+						owner.addPoints(amountToPay);
+	
 					}
-					
-					if(ownerOwns == 1) {
-						ending = "færge";
-					} else {
-						ending = "færger";
-					}
-					
-					gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
-					
-					player.addPoints(amountToPay*-1);
-					owner.addPoints(amountToPay);
-
 				}
 			
 
@@ -762,11 +767,13 @@ public class Game {
 					}
 				}
 			} else {
-
-				if( ((Buyable) board.getField(12)).getOwner() == ((Buyable) board.getField(28)).getOwner() ) {
-					beverageRent = beverageRent * 2;	
+				Player owner = ((Ferry) board.getField(newFieldNo)).getOwner();
+				if(!player.equals(owner)) {
+					if( ((Buyable) board.getField(12)).getOwner() == ((Buyable) board.getField(28)).getOwner() ) {
+						beverageRent = beverageRent * 2;	
+					}
+					((Beverage) board.getField(newFieldNo)).landOnField(player, diceCup.getDiceSum(), beverageRent, true, false);
 				}
-				((Beverage) board.getField(newFieldNo)).landOnField(player, diceCup.getDiceSum(), beverageRent, true, false);
 			}
 
 			
