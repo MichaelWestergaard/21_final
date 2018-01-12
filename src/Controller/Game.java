@@ -104,10 +104,9 @@ public class Game {
 					gui_controller.movePlayers(players);
 				} else {
 					checkField(player);
+					//Giver spilleren en eksta tur
+					playerActions(player);
 				}
- 
-				//Giver spilleren en eksta tur
-				playerActions(player);
 
 			} else {
 				player.resetHitDouble();
