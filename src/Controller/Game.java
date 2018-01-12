@@ -681,24 +681,22 @@ public class Game {
 					}
 
 				} else {
-					Player owner = ((Ferry) board.getField(newFieldNo)).getOwner();
-					if(!player.equals(owner)) {
-						((Street) board.getField(newFieldNo)).landOnField(player, true, false);
-						int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
+					((Street) board.getField(newFieldNo)).landOnField(player, true, false);
+					int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
 
-						if(((Street) board.getField(newFieldNo)).getHouse() == 0) {
-							if(checkMonopoly(newFieldNo)) {
-								((Street) board.getField(newFieldNo)).landOnField(player, true, false);
-								amountToPay = amountToPay * 2;
-							}
+					if(((Street) board.getField(newFieldNo)).getHouse() == 0) {
+						if(checkMonopoly(newFieldNo)) {
+							((Street) board.getField(newFieldNo)).landOnField(player, true, false);
+							amountToPay = amountToPay * 2;
 						}
-						gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 					}
+					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 				}
 
 			}
 		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
-
+			Player owner = ((Buyable) board.getField(newFieldNo)).getOwner();
+			if(!player.equals(owner)) {
 				if(((Ferry) board.getField(newFieldNo)).getOwner() == null) { //Hvis der ikke findes en ejer.
 					String[] options = {"Køb felt", "Spring over"};
 					String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
@@ -712,70 +710,69 @@ public class Game {
 					}
 				}
 				else {
-					Player owner = ((Ferry) board.getField(newFieldNo)).getOwner();
-					if(!player.equals(owner)) {
-						int ownerOwns = getOwnerGroupAmount(newFieldNo);
-						int amountToPay = ((Ferry) board.getField(newFieldNo)).getRent();
+					
+					int ownerOwns = getOwnerGroupAmount(newFieldNo);
+					int amountToPay = ((Ferry) board.getField(newFieldNo)).getRent();
+					
+					String ending;
+					
+					switch (ownerOwns) {
 						
-						String ending;
+						case 2:
+							amountToPay = amountToPay * 2;
+							break;
 						
-						switch (ownerOwns) {
-							
-							case 2:
-								amountToPay = amountToPay * 2;
-								break;
-							
-							case 3:
-								amountToPay = amountToPay * 4;
-								break;
-							
-							case 4:
-								amountToPay = amountToPay * 8;
-								break;
-		
-							default:
-								
-								break;
-						}
+						case 3:
+							amountToPay = amountToPay * 4;
+							break;
 						
-						if(ownerOwns == 1) {
-							ending = "færge";
-						} else {
-							ending = "færger";
-						}
-						
-						gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
-						
-						player.addPoints(amountToPay*-1);
-						owner.addPoints(amountToPay);
+						case 4:
+							amountToPay = amountToPay * 8;
+							break;
 	
+						default:
+							
+							break;
 					}
+					
+					if(ownerOwns == 1) {
+						ending = "færge";
+					} else {
+						ending = "færger";
+					}
+					
+					gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
+					
+					player.addPoints(amountToPay*-1);
+					owner.addPoints(amountToPay);
+	
 				}
-			
+			}
 
 		} else if (board.getField(newFieldNo).getType() == "Game.Beverage") {
 			int beverageRent =  ((Beverage) board.getField(newFieldNo)).getRent();
-			//Hvis feltet ikke ejes af nogle kan det købes
-			if(((Beverage) board.getField(newFieldNo)).getOwner() == null) {
-				String[] options = {"Køb felt", "Spring over"};
-				String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
-
-				if(options[0].matches(optionsChoice)) {
-					if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
-						((Beverage) board.getField(newFieldNo)).landOnField(player,diceCup.getDiceSum(), beverageRent, false, true);
-						gui_controller.setOwner(player, newFieldNo);
+			
+			Player owner = ((Buyable) board.getField(newFieldNo)).getOwner();
+			if(!player.equals(owner)) {
+				
+				if(((Beverage) board.getField(newFieldNo)).getOwner() == null) {
+					String[] options = {"Køb felt", "Spring over"};
+					String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
+	
+					if(options[0].matches(optionsChoice)) {
+						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
+							((Beverage) board.getField(newFieldNo)).landOnField(player,diceCup.getDiceSum(), beverageRent, false, true);
+							gui_controller.setOwner(player, newFieldNo);
+						}
 					}
-				}
-			} else {
-				Player owner = ((Ferry) board.getField(newFieldNo)).getOwner();
-				if(!player.equals(owner)) {
+					
+				} else {
 					if( ((Buyable) board.getField(12)).getOwner() == ((Buyable) board.getField(28)).getOwner() ) {
 						beverageRent = beverageRent * 2;	
 					}
 					((Beverage) board.getField(newFieldNo)).landOnField(player, diceCup.getDiceSum(), beverageRent, true, false);
 				}
 			}
-
 			
 		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
 
