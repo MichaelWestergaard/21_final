@@ -773,7 +773,6 @@ public class Game {
 		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
 
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
-			((GovernmentTax) board.getField(newFieldNo)).landOnField(player);
 			((Parking) board.getField(20)).increaseAmount(2000);
 			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 
