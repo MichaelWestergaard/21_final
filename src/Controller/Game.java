@@ -67,11 +67,7 @@ public class Game {
 				for (int i = 0; i < players.length; i++) {
 					Player player = players[i];
 
-					if (player.isJailed()) {
-						playerJailed(player);
-					} else {
-						playerActions(player);
-					}
+					playerActions(player);
 					
 					checkBankrupt(player);
 					
@@ -85,263 +81,270 @@ public class Game {
 	}
 
 	public void playerActions(Player player) {
-		gui_controller.updateBalance(players);
 		
-		String nextAction = gui_controller.getPlayerAmount(player.getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
+		if (player.isJailed()) {
+			playerJailed(player);
+		} else {
+			gui_controller.updateBalance(players);
+			
+			String nextAction = gui_controller.getPlayerAmount(player.getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
 
-		if(nextAction == "Kast terning") {
-			rollDice();
-
-			// Hvis spillerens sl�r 2 ens
-			if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
-				player.increaseHitDouble();
-
-				// Hvis spilleren har sl�et 2 ens for mange (3) gange
-				if (player.getHitDouble() == 3) {
-					gui_controller.showMessage("Du har sl�et 2 ens for mange gange og fængsles for at snyde med terningerne!");								
-					player.setFieldNo(10);
-					player.setJailed(true);
-					gui_controller.movePlayers(players);
-				} else {
-					checkField(player);
-					//Giver spilleren en eksta tur
-					playerActions(player);
-				}
-
-			} else {
+			if(nextAction == "Kast terning") {
 				player.resetHitDouble();
-				checkField(player);
-			}
-		} else if (nextAction == "Administrer Ejendomme") {
+				rollDice();
 
-			String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Auktionér Ejendom"});
+				// Hvis spillerens sl�r 2 ens
+				if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
+					player.increaseHitDouble();
 
-			if(propertyAction == "Huse/Hoteller") {
+					// Hvis spilleren har sl�et 2 ens for mange (3) gange
+					if (player.getHitDouble() == 3) {
+						gui_controller.showMessage("Du har sl�et 2 ens for mange gange og fængsles for at snyde med terningerne!");								
+						player.setFieldNo(10);
+						player.setJailed(true);
+						gui_controller.movePlayers(players);
+					} else {
+						checkField(player);
+						//Giver spilleren en eksta tur
+						playerActions(player);
+					}
 
-				String[] optionsBuySell = {"Køb", "Sælg"};
-				String buySellChoice = gui_controller.multipleChoice("Vil du købe eller sælge?", optionsBuySell);
-				
-				int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
-				int[] ownedStreetNumbers = new int[ownedFieldNumbers.length];
-				int numberOfStreets = 0;
-				
-				//Sorter alle "Street" i et nyt array
-				for(int j = 0; j < ownedFieldNumbers.length; j++) {
-					if(board.getField(ownedFieldNumbers[j]).getType() == "Game.Street") {
-						ownedStreetNumbers[numberOfStreets] = ownedFieldNumbers[j];
-						numberOfStreets++;
-					}
+				} else {
+					player.resetHitDouble();
+					checkField(player);
 				}
-				
-				String[] ownedStreetNames = new String[numberOfStreets];
-				
-				for(int j = 0; j < numberOfStreets; j++) {
-					ownedStreetNames[j] = board.getField(ownedStreetNumbers[j]).getName();
-				}
-				
-				String chosenStreetName = gui_controller.getPlayerAmount("Hvilket felt vil du administrere?", ownedStreetNames);
-				
-				//Bestem det tilhørende fieldNo
-				Field[] fields = board.getFields();
-				int chosenStreetNumber = 0;
-				
-				for(int j = 0; j < fields.length; j++) {
-					if(fields[j].getName() == chosenStreetName) {
-						chosenStreetNumber = fields[j].getFieldNo();
-						break;
-					}
-				}
-				
-				boolean evenlyDistributed = false;
-				int houseDifference = 0;
-				int groupAmount = getOwnerGroupAmount(chosenStreetNumber);
-				int[] sameGroupHouses = new int[groupAmount];
-				int groupHousesIndex = 0;
-				int chosenStreetHouse = ((Street) board.getField(chosenStreetNumber)).getHouse();
-								
-				for(int j = 0; j < groupAmount; j++) {
-					if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup()) {
-						sameGroupHouses[groupHousesIndex] = ((Street) board.getField(ownedStreetNumbers[j])).getHouse();
-						groupHousesIndex++;
-					}
-				}
-				
-				if(optionsBuySell[0].matches(buySellChoice)) {
+			} else if (nextAction == "Administrer Ejendomme") {
+
+				String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Auktionér Ejendom"});
+
+				if(propertyAction == "Huse/Hoteller") {
+
+					String[] optionsBuySell = {"Køb", "Sælg"};
+					String buySellChoice = gui_controller.multipleChoice("Vil du købe eller sælge?", optionsBuySell);
 					
-					String[] optionsHouseHotel = {"Hus", "Hotel"};
-					String houseHotelChoice = gui_controller.multipleChoice("Hvad vil du bygge?", optionsHouseHotel);
+					int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
+					int[] ownedStreetNumbers = new int[ownedFieldNumbers.length];
+					int numberOfStreets = 0;
 					
-					//Køb hus
-					if(optionsHouseHotel[0].matches(houseHotelChoice)) {
-						if(checkMonopoly(chosenStreetNumber)) {
-							if(((Street) board.getField(chosenStreetNumber)).getHouse() < 4) {
+					//Sorter alle "Street" i et nyt array
+					for(int j = 0; j < ownedFieldNumbers.length; j++) {
+						if(board.getField(ownedFieldNumbers[j]).getType() == "Game.Street") {
+							ownedStreetNumbers[numberOfStreets] = ownedFieldNumbers[j];
+							numberOfStreets++;
+						}
+					}
+					
+					String[] ownedStreetNames = new String[numberOfStreets];
+					
+					for(int j = 0; j < numberOfStreets; j++) {
+						ownedStreetNames[j] = board.getField(ownedStreetNumbers[j]).getName();
+					}
+					
+					String chosenStreetName = gui_controller.getPlayerAmount("Hvilket felt vil du administrere?", ownedStreetNames);
+					
+					//Bestem det tilhørende fieldNo
+					Field[] fields = board.getFields();
+					int chosenStreetNumber = 0;
+					
+					for(int j = 0; j < fields.length; j++) {
+						if(fields[j].getName() == chosenStreetName) {
+							chosenStreetNumber = fields[j].getFieldNo();
+							break;
+						}
+					}
+					
+					boolean evenlyDistributed = false;
+					int houseDifference = 0;
+					int groupAmount = getOwnerGroupAmount(chosenStreetNumber);
+					int[] sameGroupHouses = new int[groupAmount];
+					int groupHousesIndex = 0;
+					int chosenStreetHouse = ((Street) board.getField(chosenStreetNumber)).getHouse();
+									
+					for(int j = 0; j < groupAmount; j++) {
+						if(((Street) board.getField(chosenStreetNumber)).getGroup() == ((Street) board.getField(ownedStreetNumbers[j])).getGroup()) {
+							sameGroupHouses[groupHousesIndex] = ((Street) board.getField(ownedStreetNumbers[j])).getHouse();
+							groupHousesIndex++;
+						}
+					}
+					
+					if(optionsBuySell[0].matches(buySellChoice)) {
+						
+						String[] optionsHouseHotel = {"Hus", "Hotel"};
+						String houseHotelChoice = gui_controller.multipleChoice("Hvad vil du bygge?", optionsHouseHotel);
+						
+						//Køb hus
+						if(optionsHouseHotel[0].matches(houseHotelChoice)) {
+							if(checkMonopoly(chosenStreetNumber)) {
+								if(((Street) board.getField(chosenStreetNumber)).getHouse() < 4) {
+									
+									if(groupAmount == 2) {
+										int maxNumberHouse = Math.max(sameGroupHouses[0], sameGroupHouses[1]);
+										int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+										
+										houseDifference = maxNumberHouse - minNumberHouse;
+										
+										if(houseDifference < 2) {
+											if(chosenStreetHouse == minNumberHouse) {
+												evenlyDistributed = true;
+											}
+										}								
+									}
+									
+									else if(groupAmount == 3) {
+										int maxNumberHouse = Math.max(chosenStreetHouse, Math.max(sameGroupHouses[0], sameGroupHouses[1]));
+										int minNumberHouse = Math.min(chosenStreetHouse, Math.min(sameGroupHouses[0], sameGroupHouses[1]));
+										houseDifference = maxNumberHouse - minNumberHouse;
+										
+										if(houseDifference < 2) {
+											if(chosenStreetHouse == minNumberHouse) {
+												evenlyDistributed = true;
+											}	
+										}
+									}
+									
+									if(evenlyDistributed) {
+										if(player.getPoints() >= ((Street) board.getField(chosenStreetNumber)).getHousePrice()) {
+											player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice() * -1);
+											((Street) board.getField(chosenStreetNumber)).buyHouse();
+											gui_controller.setHouses(chosenStreetNumber, chosenStreetHouse + 1);
+										}
+										
+										else {
+											gui_controller.showMessage("Du har ikke råd til at købe et hus");
+										}
+									}
 								
+									else {
+										gui_controller.showMessage("Du skal fordele husene ligeligt mellem grundene af samme farve");
+									}
+								}
+								else {
+									gui_controller.showMessage("Du kan maksimalt have 4 huse på én grund.");
+								}
+							}
+							
+							else {
+								gui_controller.showMessage("Du skal eje alle felter af samme farve for at kunne bygge huse på et af dem.");
+							}
+							
+
+						//Køb hotel
+						} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {
+							if(groupAmount == 2) {
+								int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
+								houseDifference = minNumberHouse - chosenStreetHouse;
+							}
+							
+							if(groupAmount == 3) {
+								int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
+								houseDifference = minNumberHouse - chosenStreetHouse;
+								
+							}
+							
+							if(chosenStreetHouse == 4 && houseDifference >= 0) {
+								if(player.getPoints() >= ((Street) board.getField(chosenStreetNumber)).getHousePrice()) {
+									player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice() * -1);
+									((Street) board.getField(chosenStreetNumber)).buyHotel();
+									gui_controller.setHouses(chosenStreetNumber, 0);
+									gui_controller.setHotel(chosenStreetNumber, true);
+								}
+								
+								else {
+									gui_controller.showMessage("Du har ikke råd til at købe et hotel.");
+								}
+												
+							}
+							
+							else {
+								gui_controller.showMessage("Du skal have 4 huse på en grund for at kunne bygge et hotel.");
+							}
+							
+						}
+			
+						
+					} else if (optionsBuySell[1].matches(buySellChoice)) {
+			
+						String[] optionsHouseHotel = {"Hus", "Hotel"};
+						String choiceHouseHotel = gui_controller.multipleChoice("Hvad vil du sælge", optionsHouseHotel);
+						
+						//Sælg Hus
+						if(optionsHouseHotel[0].matches(choiceHouseHotel)) {
+							if(((Street) board.getField(chosenStreetNumber)).getHouse() > 0 && ((Street) board.getField(chosenStreetNumber)).getHouse() < 5) {
 								if(groupAmount == 2) {
 									int maxNumberHouse = Math.max(sameGroupHouses[0], sameGroupHouses[1]);
 									int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
-									
 									houseDifference = maxNumberHouse - minNumberHouse;
 									
 									if(houseDifference < 2) {
-										if(chosenStreetHouse == minNumberHouse) {
+										if(chosenStreetHouse == maxNumberHouse) {
 											evenlyDistributed = true;
 										}
 									}								
 								}
-								
+								 
 								else if(groupAmount == 3) {
-									int maxNumberHouse = Math.max(chosenStreetHouse, Math.max(sameGroupHouses[0], sameGroupHouses[1]));
-									int minNumberHouse = Math.min(chosenStreetHouse, Math.min(sameGroupHouses[0], sameGroupHouses[1]));
+									int maxNumberHouse = Math.max(sameGroupHouses[0], Math.max(sameGroupHouses[1], sameGroupHouses[2]));
+									int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
 									houseDifference = maxNumberHouse - minNumberHouse;
 									
 									if(houseDifference < 2) {
-										if(chosenStreetHouse == minNumberHouse) {
+										if(chosenStreetHouse == maxNumberHouse) {
 											evenlyDistributed = true;
 										}	
 									}
 								}
-								
+							
 								if(evenlyDistributed) {
-									if(player.getPoints() >= ((Street) board.getField(chosenStreetNumber)).getHousePrice()) {
-										player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice() * -1);
-										((Street) board.getField(chosenStreetNumber)).buyHouse();
-										gui_controller.setHouses(chosenStreetNumber, chosenStreetHouse + 1);
-									}
-									
-									else {
-										gui_controller.showMessage("Du har ikke råd til at købe et hus");
-									}
+									player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice());
+									((Street) board.getField(chosenStreetNumber)).sellHouse();
+									gui_controller.setHouses(chosenStreetNumber, chosenStreetHouse - 1);	
 								}
-							
+								
 								else {
-									gui_controller.showMessage("Du skal fordele husene ligeligt mellem grundene af samme farve");
-								}
-							}
-							else {
-								gui_controller.showMessage("Du kan maksimalt have 4 huse på én grund.");
-							}
-						}
-						
-						else {
-							gui_controller.showMessage("Du skal eje alle felter af samme farve for at kunne bygge huse på et af dem.");
-						}
-						
-
-					//Køb hotel
-					} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {
-						if(groupAmount == 2) {
-							int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
-							houseDifference = minNumberHouse - chosenStreetHouse;
-						}
-						
-						if(groupAmount == 3) {
-							int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
-							houseDifference = minNumberHouse - chosenStreetHouse;
-							
-						}
-						
-						if(chosenStreetHouse == 4 && houseDifference >= 0) {
-							if(player.getPoints() >= ((Street) board.getField(chosenStreetNumber)).getHousePrice()) {
-								player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice() * -1);
-								((Street) board.getField(chosenStreetNumber)).buyHotel();
-								gui_controller.setHouses(chosenStreetNumber, 0);
-								gui_controller.setHotel(chosenStreetNumber, true);
+									gui_controller.showMessage("Du kan ikke sælge huse på denne grund, da de skal være fordelt ligeligt mellem grundene af samme farve. Sælg fra en anden grund.");
+								}	
 							}
 							
 							else {
-								gui_controller.showMessage("Du har ikke råd til at købe et hotel.");
+								gui_controller.showMessage("Du ejer ikke nogen huse på denne grund.");
 							}
-											
-						}
-						
-						else {
-							gui_controller.showMessage("Du skal have 4 huse på en grund for at kunne bygge et hotel.");
-						}
-						
-					}
-		
-					
-				} else if (optionsBuySell[1].matches(buySellChoice)) {
-		
-					String[] optionsHouseHotel = {"Hus", "Hotel"};
-					String choiceHouseHotel = gui_controller.multipleChoice("Hvad vil du sælge", optionsHouseHotel);
-					
-					//Sælg Hus
-					if(optionsHouseHotel[0].matches(choiceHouseHotel)) {
-						if(((Street) board.getField(chosenStreetNumber)).getHouse() > 0 && ((Street) board.getField(chosenStreetNumber)).getHouse() < 5) {
-							if(groupAmount == 2) {
-								int maxNumberHouse = Math.max(sameGroupHouses[0], sameGroupHouses[1]);
-								int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
-								houseDifference = maxNumberHouse - minNumberHouse;
-								
-								if(houseDifference < 2) {
-									if(chosenStreetHouse == maxNumberHouse) {
-										evenlyDistributed = true;
-									}
-								}								
-							}
-							 
-							else if(groupAmount == 3) {
-								int maxNumberHouse = Math.max(sameGroupHouses[0], Math.max(sameGroupHouses[1], sameGroupHouses[2]));
-								int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
-								houseDifference = maxNumberHouse - minNumberHouse;
-								
-								if(houseDifference < 2) {
-									if(chosenStreetHouse == maxNumberHouse) {
-										evenlyDistributed = true;
-									}	
-								}
-							}
-						
-							if(evenlyDistributed) {
+							
+						//Sælg Hotel	
+						} else if(optionsHouseHotel[1].matches(choiceHouseHotel)) {
+							if(((Street) board.getField(chosenStreetNumber)).getHouse() == 5) {
 								player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice());
-								((Street) board.getField(chosenStreetNumber)).sellHouse();
-								gui_controller.setHouses(chosenStreetNumber, chosenStreetHouse - 1);	
+								((Street) board.getField(chosenStreetNumber)).sellHotel();
+								gui_controller.setHotel(chosenStreetNumber, false);
+								gui_controller.setHouses(chosenStreetNumber, 4);	
 							}
 							
 							else {
-								gui_controller.showMessage("Du kan ikke sælge huse på denne grund, da de skal være fordelt ligeligt mellem grundene af samme farve. Sælg fra en anden grund.");
-							}	
-						}
-						
-						else {
-							gui_controller.showMessage("Du ejer ikke nogen huse på denne grund.");
-						}
-						
-					//Sælg Hotel	
-					} else if(optionsHouseHotel[1].matches(choiceHouseHotel)) {
-						if(((Street) board.getField(chosenStreetNumber)).getHouse() == 5) {
-							player.addPoints(((Street) board.getField(chosenStreetNumber)).getHousePrice());
-							((Street) board.getField(chosenStreetNumber)).sellHotel();
-							gui_controller.setHotel(chosenStreetNumber, false);
-							gui_controller.setHouses(chosenStreetNumber, 4);	
-						}
-						
-						else {
-							gui_controller.showMessage("Du ejer intet hotel på denne grund.");
+								gui_controller.showMessage("Du ejer intet hotel på denne grund.");
+							}
 						}
 					}
+					
+					//Stadig spillerens tur
+					playerActions(player);
+					
+				} else if(propertyAction == "Pantsæt Ejendom") {
+
+					pledgeSequence(player);
+					
+					//Stadig spillerens tur
+					playerActions(player);
+
+				} else if(propertyAction == "Auktionér Ejendom") {
+					auctionSequence(player);
+					
+					//Stadig spillerens tur
+					playerActions(player);
 				}
-				
-				//Stadig spillerens tur
-				playerActions(player);
-				
-			} else if(propertyAction == "Pantsæt Ejendom") {
-
-				pledgeSequence(player);
-				
-				//Stadig spillerens tur
-				playerActions(player);
-
-			} else if(propertyAction == "Auktionér Ejendom") {
-				auctionSequence(player);
-				
-				//Stadig spillerens tur
-				playerActions(player);
 			}
-		}
 
-		gui_controller.updateBalance(players);
+			gui_controller.updateBalance(players);
+		}
+		
 	}
 
 	public void playerJailed(Player player) {

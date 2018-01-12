@@ -66,6 +66,9 @@ public class Chance extends Field {
 				} else {
 					player.setFieldNo(player.getFieldNo() + ((MoveCard) drawncard).getField());
 				}
+			} else if(((MoveCard) drawncard).getField() == 10) {
+				player.setJailed(true);
+				player.setFieldNo(((MoveCard) drawncard).getField());
 			} else {
 				player.setFieldNo(((MoveCard) drawncard).getField());
 			}
