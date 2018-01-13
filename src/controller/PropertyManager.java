@@ -153,8 +153,7 @@ public class PropertyManager {
 		}
 	}
 
-	private void buyHotel(Player player, int chosenStreetNumber, int houseDifference, int groupAmount,
-			int[] sameGroupHouses, int chosenStreetHouse) {
+	private void buyHotel(Player player, int chosenStreetNumber, int houseDifference, int groupAmount, int[] sameGroupHouses, int chosenStreetHouse) {
 		if(groupAmount == 2) {
 			int minNumberHouse = Math.min(sameGroupHouses[0], sameGroupHouses[1]);
 			houseDifference = minNumberHouse - chosenStreetHouse;
