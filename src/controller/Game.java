@@ -279,7 +279,6 @@ public class Game {
 									player.addPoints(-1 * (((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() + (((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() / 100 * 10))  ); // betaler prisen
 								} else {
 									gui_controller.showMessage("Du har ikke råd til at købe grunden tilbage");
-									// gør noget så man ikke msiter turen
 								}
 
 							}
@@ -294,15 +293,9 @@ public class Game {
 						}								
 					} 
 				}
-
-
-
 			}
-			//Kald metode til at pantsætte chosenStreet
 		} else {
 			gui_controller.showMessage("Du ejer ingen ejendomme");
-
-			//Man skal ikke kunne miste din tur her...
 		}
 
 		gui_controller.updateBalance(players);
