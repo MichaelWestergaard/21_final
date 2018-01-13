@@ -480,11 +480,14 @@ public class Game {
 				int[] ownedFields = player.getOwnedFieldNumbers();
 				
 				for(int i = 0; i < ownedFields.length; i++) {
-					Field currentField = board.getField(ownedFields[i]);					
-					((Buyable) currentField).resetOwner(player);
+					Field currentField = board.getField(ownedFields[i]);
+					
+					if(currentField != board.getField(0)) {
+						((Buyable) currentField).resetOwner(player);
 
 					// GUI'en fjerner spilleren som owner af feltet
 					gui_controller.setOwner(null, currentField.getFieldNo());
+					}					
 				}
 				
 				// Fjerner spilleren fra spillet
