@@ -79,7 +79,7 @@ public class Board {
 		
 		Jail jail1 = new Jail(10, "På besøg", "I fængsel");
 		fields[10] = jail1;
-		Jail jail2 = new Jail(30, "De fængsles", "Fængsel");
+		Jail jail2 = new Jail(30, "Gå i fængsel", "Fængsel");
 		fields[30] = jail2;	
 		
 		Beverage beverage1 = new Beverage(12, "Squash", null, Group.BROWN, 3000, 100);
