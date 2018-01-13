@@ -17,8 +17,8 @@ public class PropertyManager {
 	}
 
 	public void manageHousesAndHotels(Player player) {
-		String[] optionsBuySell = {"KÃ¸b", "SÃ¦lg"};
-		String buySellChoice = gui_controller.multipleChoice("Vil du kÃ¸be eller sÃ¦lge?", optionsBuySell);
+		String[] optionsBuySell = {"Køb", "Sælg"};
+		String buySellChoice = gui_controller.multipleChoice("Vil du købe eller sælge?", optionsBuySell);
 		
 		int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
 		int[] ownedStreetNumbers = new int[ownedFieldNumbers.length];
@@ -41,7 +41,7 @@ public class PropertyManager {
 		if(ownedStreetNames.length > 0) {
 			String chosenStreetName = gui_controller.getPlayerAmount("Hvilket felt vil du administrere?", ownedStreetNames);
 			
-			//Bestem det tilhÃ¸rende fieldNo
+			//Bestem det tilhørende fieldNo
 			Field[] fields = board.getFields();
 			int chosenStreetNumber = 0;
 			
@@ -71,7 +71,7 @@ public class PropertyManager {
 				String[] optionsHouseHotel = {"Hus", "Hotel"};
 				String houseHotelChoice = gui_controller.multipleChoice("Hvad vil du bygge?", optionsHouseHotel);
 				
-				//KÃ¸b hus eller hotel
+				//Køb hus eller hotel
 				if(optionsHouseHotel[0].matches(houseHotelChoice)) {
 					buyHouse(player, chosenStreetNumber, evenlyDistributed, groupAmount, sameGroupHouses, chosenStreetHouse);
 				} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {
@@ -82,9 +82,9 @@ public class PropertyManager {
 			} else if (optionsBuySell[1].matches(buySellChoice)) {
 
 				String[] optionsHouseHotel = {"Hus", "Hotel"};
-				String choiceHouseHotel = gui_controller.multipleChoice("Hvad vil du sÃ¦lge", optionsHouseHotel);
+				String choiceHouseHotel = gui_controller.multipleChoice("Hvad vil du sælge", optionsHouseHotel);
 				
-				//SÃ¦lg hus og hotel
+				//Sælg hus og hotel
 				if(optionsHouseHotel[0].matches(choiceHouseHotel)) {
 					sellHouse(player, chosenStreetNumber, evenlyDistributed, groupAmount, sameGroupHouses, chosenStreetHouse);
 				} else if(optionsHouseHotel[1].matches(choiceHouseHotel)) {
@@ -106,7 +106,7 @@ public class PropertyManager {
 		}
 		
 		else {
-			gui_controller.showMessage("Du ejer intet hotel pÃ¥ denne grund.");
+			gui_controller.showMessage("Du ejer intet hotel på denne grund.");
 		}
 	}
 
@@ -144,12 +144,12 @@ public class PropertyManager {
 			}
 			
 			else {
-				gui_controller.showMessage("Du kan ikke sÃ¦lge huse pÃ¥ denne grund, da de skal vÃ¦re fordelt ligeligt mellem grundene af samme farve. SÃ¦lg fra en anden grund.");
+				gui_controller.showMessage("Du kan ikke sælge huse på denne grund, da de skal være fordelt ligeligt mellem grundene af samme farve. Sælg fra en anden grund.");
 			}	
 		}
 		
 		else {
-			gui_controller.showMessage("Du ejer ikke nogen huse pÃ¥ denne grund.");
+			gui_controller.showMessage("Du ejer ikke nogen huse på denne grund.");
 		}
 	}
 
@@ -174,13 +174,13 @@ public class PropertyManager {
 			}
 			
 			else {
-				gui_controller.showMessage("Du har ikke rÃ¥d til at kÃ¸be et hotel.");
+				gui_controller.showMessage("Du har ikke råd til at købe et hotel.");
 			}
 							
 		}
 		
 		else {
-			gui_controller.showMessage("Du skal have 4 huse pÃ¥ en grund for at kunne bygge et hotel.");
+			gui_controller.showMessage("Du skal have 4 huse på en grund for at kunne bygge et hotel.");
 		}
 	}
 
@@ -222,7 +222,7 @@ public class PropertyManager {
 					}
 					
 					else {
-						gui_controller.showMessage("Du har ikke rÃ¥d til at kÃ¸be et hus");
+						gui_controller.showMessage("Du har ikke råd til at købe et hus");
 					}
 				}
 			
@@ -231,12 +231,12 @@ public class PropertyManager {
 				}
 			}
 			else {
-				gui_controller.showMessage("Du kan maksimalt have 4 huse pÃ¥ Ã©n grund.");
+				gui_controller.showMessage("Du kan maksimalt have 4 huse på Ã©n grund.");
 			}
 		}
 		
 		else {
-			gui_controller.showMessage("Du skal eje alle felter af samme farve for at kunne bygge huse pÃ¥ et af dem.");
+			gui_controller.showMessage("Du skal eje alle felter af samme farve for at kunne bygge huse på et af dem.");
 		}
 	}
 	
