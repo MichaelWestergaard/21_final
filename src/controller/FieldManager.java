@@ -60,21 +60,29 @@ public class FieldManager {
 			
 		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
 						
-			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
-			player.addPoints(((Taxation) board.getField(newFieldNo)).getTax() * -1);
-			((Parking) board.getField(20)).increaseAmount(2000);
-			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
+			landedOnTax(player, newFieldNo);
 			
 		} else if (board.getField(newFieldNo).getFieldNo() == 4) {
 			
 			landedOnIncomeTax(player, newFieldNo);
 
 		} else if (board.getField(newFieldNo).getType() == "entities.Parking") {
-			gui_controller.showMessage("Du har landet på parkeringsfeltet og modtager " + ((Parking) board.getField(20)).getAmount() + " kr."  );
-			player.addPoints(((Parking) board.getField(20)).getAmount());
-			((Parking) board.getField(20)).setAmount(0);
-			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
+			landedOnParking(player);
 		}
+	}
+
+	private void landedOnTax(Player player, int newFieldNo) {
+		gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
+		player.addPoints(((Taxation) board.getField(newFieldNo)).getTax() * -1);
+		((Parking) board.getField(20)).increaseAmount(2000);
+		gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
+	}
+
+	private void landedOnParking(Player player) {
+		gui_controller.showMessage("Du har landet på parkeringsfeltet og modtager " + ((Parking) board.getField(20)).getAmount() + " kr."  );
+		player.addPoints(((Parking) board.getField(20)).getAmount());
+		((Parking) board.getField(20)).setAmount(0);
+		gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 	}
 
 	private void landedOnChance(Player player, int newFieldNo) {
