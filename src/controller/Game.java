@@ -316,11 +316,16 @@ public class Game {
 			String[] ownedStreetOptions = new String [ownedStreetsCounter + 1];
 			ownedStreetOptions[0] = "Ingen";
 
-			for (int j = 1; j <= ownedStreetsCounter; j++) {
+			int skipCounter = 0;
+			
+			for (int j = 1; j <= ownedFieldNumbers.length; j++) {
 				if(board.getField(ownedFieldNumbers[j - 1]) != board.getField(0)) {
-					ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j - 1]).getName();
-				}				
+					ownedStreetOptions[j - skipCounter] = board.getField(ownedFieldNumbers[j - 1]).getName();
+				} else {
+					skipCounter++;
+				}
 			}
+
 
 			String chosenStreetName = gui_controller.multipleChoice("Hvilken ejendom vil du sælge?", ownedStreetOptions);
 
