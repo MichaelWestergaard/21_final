@@ -34,23 +34,29 @@ public class Game {
 		for (int i = 0; i < playerAmount; i++) {
 			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vælger sit navn:");
 			
+			// Hvis det er spiller nummer 2 (eller derover), der skal tilføjes
 			if(addCounter != 0) {
 				boolean nameTaken = false;
 				
+				// Tjekker om det indtastede navn er optaget
 				for(int j = 0; j < addCounter; j++) {
 					if(players[j].getName().matches(name) == true) {
 						nameTaken = true;
 					}
 				}
 				
+				// Hvis navnet ikke er optaget
 				if(nameTaken == false) {
 					players[i] = new Player(name, 30000);
 					addCounter++;
+					
+				// Hvis navnet er optaget
 				} else {
 					gui_controller.showMessage("Navnet: " + name + " er allerede taget. Prøv igen!");
 					i--;
 				}
-				
+			
+			//Hvis det er første spiller, der skal tilføjes	
 			} else {
 				players[i] = new Player(name, 30000);
 				addCounter++;
