@@ -2,7 +2,7 @@ package entities;
 
 public class Ferry extends Buyable {
 
-	int rent;
+	private int rent;
 
 	public Ferry(int fieldNo, String name, Player owner, Group group, int price, int rent) {
 		super(fieldNo, name, owner, group, price);
@@ -17,8 +17,4 @@ public class Ferry extends Buyable {
 		this.rent = rent;
 	}
 
-	public Player getOwner() {
-		return super.getOwner();
-	}	
-	
 }
