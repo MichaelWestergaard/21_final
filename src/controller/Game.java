@@ -1,27 +1,21 @@
 package controller;
 
-import entities.Beverage;
-import entities.Board;
 import entities.Buyable;
-import entities.Chance;
 import entities.DiceCup;
-import entities.Ferry;
 import entities.Field;
-import entities.IncomeTax;
-import entities.Parking;
 import entities.Player;
-import entities.Street;
 
 public class Game {
 
 	private boolean gameStarted = false;
-	private PropertyManager propertyManager = new PropertyManager();
+		
 	private DiceCup diceCup = new DiceCup();
 	private Player[] players;
+	private GUI_Controller gui_controller = new GUI_Controller();
+	private Board board = new Board();
+	private PropertyManager propertyManager = new PropertyManager(gui_controller, board);
+	private FieldManager fieldManager = new FieldManager(diceCup, gui_controller, board, propertyManager, this);
 	
-	protected GUI_Controller gui_controller = new GUI_Controller();
-	protected Board board = new Board();
-
 	public void gameSetup() {
 
 		// Create fields + board
@@ -43,6 +37,7 @@ public class Game {
 		gui_controller.addPlayers(players);
 		
 		gameStarted = true;
+		play();
 	}
 
 	public void play() {
@@ -86,6 +81,8 @@ public class Game {
 			if(nextAction == "Kast terning") {
 				rollDice();
 
+				moveAnimation(player);
+				
 				//Hvis spillerens slår 2 ens
 				checkEqualDice(player);
 			
@@ -96,6 +93,9 @@ public class Game {
 				if(propertyAction == "Huse/Hoteller") {
 
 					propertyManager.manageHousesAndHotels(player);
+					
+					//Stadig spillerens tur
+					playerActions(player);
 					
 				} else if(propertyAction == "Pantsæt Ejendom") {
 
@@ -117,6 +117,40 @@ public class Game {
 		
 	}
 
+	public void moveAnimation(Player player) {
+		int field = player.getFieldNo();
+
+		int newFieldNo = field + diceCup.getDiceSum();
+		if (newFieldNo > 39) {
+			newFieldNo -= 40;
+		}
+		
+		for (int i = 0; i < diceCup.getDiceSum(); i++) {
+			if(player.getFieldNo() + 1 > 39) {
+				player.setFieldNo(39 - player.getFieldNo());
+				if(player.getFieldNo() == 0) {
+					if (newFieldNo != 0) {
+						movePlayers();
+						player.addPoints(4000);
+						gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
+					}
+				}
+			} else {
+				player.setFieldNo(player.getFieldNo() + 1);
+			}
+			movePlayers();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void movePlayers() {
+		gui_controller.movePlayers(players);
+	}
+	
 	private void checkEqualDice(Player player) {
 		if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
 			player.increaseHitDouble();
@@ -129,14 +163,14 @@ public class Game {
 				gui_controller.movePlayers(players);
 				player.resetHitDouble();
 			} else {
-				checkField(player);
+				fieldManager.checkField(player);
 				//Giver spilleren en eksta tur
 				playerActions(player);
 			}
 
 		} else {
 			player.resetHitDouble();
-			checkField(player);
+			fieldManager.checkField(player);
 		}
 	}
 
@@ -417,193 +451,6 @@ public class Game {
 	public void rollDice() {
 		diceCup.rollDices();
 		gui_controller.setDice(diceCup.getDiceValue(0),diceCup.getDiceValue(1));
-	}
-
-	public void checkField(Player player) {
-		int field = player.getFieldNo();
-
-		int newFieldNo = field + diceCup.getDiceSum();
-		if (newFieldNo > 39) {
-			newFieldNo -= 40;
-		}
-		
-		for (int i = 0; i < diceCup.getDiceSum(); i++) {
-			if(player.getFieldNo() + 1 > 39) {
-				player.setFieldNo(39 - player.getFieldNo());
-				if(player.getFieldNo() == 0) {
-					if (newFieldNo != 0) {
-						gui_controller.movePlayers(players);
-						player.addPoints(4000);
-						gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
-					}
-				}
-			} else {
-				player.setFieldNo(player.getFieldNo() + 1);
-			}
-			gui_controller.movePlayers(players);
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}		
-
-		board.getField(newFieldNo).landOnField(player);
-
-		if (board.getField(newFieldNo).getType() == "Game.Chance") {
-			gui_controller.showMessage("Tryk [OK] for at trække et chancekort.");
-			gui_controller.displayChanceCard(((Chance) board.getField(newFieldNo)).getCardDescription());
-			gui_controller.movePlayers(players);
-		} else if (board.getField(newFieldNo).getFieldNo() == 30) {
-			gui_controller.showMessage("Gå i fængsel");
-			gui_controller.movePlayers(players);
-		} else if (board.getField(newFieldNo).getType() == "Game.Street") {
-			if (!player.equals(((Street) board.getField(newFieldNo)).getOwner())) {
-
-				//Hvis feltet ikke ejes af nogle kan det købes
-				if(((Street) board.getField(newFieldNo)).getOwner() == null) {
-
-					String[] options = {"Køb felt", "Spring over"};
-					String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
-
-					if(options[0].matches(optionsChoice)) {
-						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
-							((Street) board.getField(newFieldNo)).landOnField(player, false, true);
-							gui_controller.setOwner(player, newFieldNo);
-						}
-					}
-
-				} else {
-					((Street) board.getField(newFieldNo)).landOnField(player, true, false);
-					int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
-
-					if(((Street) board.getField(newFieldNo)).getHouse() == 0) {
-						if(propertyManager.checkMonopoly(newFieldNo)) {
-							((Street) board.getField(newFieldNo)).landOnField(player, true, false);
-							amountToPay = amountToPay * 2;
-						}
-					}
-					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
-				}
-
-			}
-		} else if (board.getField(newFieldNo).getType() == "Game.Ferry") {
-			Player owner = ((Buyable) board.getField(newFieldNo)).getOwner();
-			if(!player.equals(owner)) {
-				if(((Ferry) board.getField(newFieldNo)).getOwner() == null) { //Hvis der ikke findes en ejer.
-					String[] options = {"Køb felt", "Spring over"};
-					String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
-
-					if(options[0].matches(optionsChoice)) {
-						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
-							player.addPoints(-1 * ((Buyable) board.getField(newFieldNo)).getPrice());
-							((Buyable) board.getField(newFieldNo)).setOwner(player);
-									gui_controller.setOwner(player, newFieldNo);
-						}
-					}
-				}
-				else {
-					
-					int ownerOwns = propertyManager.getOwnerGroupAmount(newFieldNo);
-					int amountToPay = ((Ferry) board.getField(newFieldNo)).getRent();
-					
-					String ending;
-					
-					switch (ownerOwns) {
-						
-						case 2:
-							amountToPay = amountToPay * 2;
-							break;
-						
-						case 3:
-							amountToPay = amountToPay * 4;
-							break;
-						
-						case 4:
-							amountToPay = amountToPay * 8;
-							break;
-	
-						default:
-							
-							break;
-					}
-					
-					if(ownerOwns == 1) {
-						ending = "færge";
-					} else {
-						ending = "færger";
-					}
-					
-					gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
-					
-					player.addPoints(amountToPay*-1);
-					owner.addPoints(amountToPay);
-	
-				}
-			}
-
-		} else if (board.getField(newFieldNo).getType() == "Game.Beverage") {
-			int beverageRent =  ((Beverage) board.getField(newFieldNo)).getRent();
-			
-			Player owner = ((Buyable) board.getField(newFieldNo)).getOwner();
-			if(!player.equals(owner)) {
-				
-				if(((Beverage) board.getField(newFieldNo)).getOwner() == null) {
-					String[] options = {"Køb felt", "Spring over"};
-					String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
-	
-					if(options[0].matches(optionsChoice)) {
-						if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
-							((Beverage) board.getField(newFieldNo)).landOnField(player,diceCup.getDiceSum(), beverageRent, false, true);
-							gui_controller.setOwner(player, newFieldNo);
-						}
-					}
-					
-				} else {
-					if( ((Buyable) board.getField(12)).getOwner() == ((Buyable) board.getField(28)).getOwner() ) {
-						beverageRent = beverageRent * 2;	
-					}
-					((Beverage) board.getField(newFieldNo)).landOnField(player, diceCup.getDiceSum(), beverageRent, true, false);
-				}
-			}
-			
-		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
-
-			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
-			((Parking) board.getField(20)).increaseAmount(2000);
-			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
-
-		} else if (board.getField(newFieldNo).getFieldNo() == 4) {
-			String[] options = {"Betal 4000", "Betal 10%"};
-			String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
-			if(options[0].matches(optionsChoice)){
-				((IncomeTax) board.getField(newFieldNo)).landOnField(player);
-				((Parking) board.getField(20)).increaseAmount(4000);	
-				player.addPoints(-4000);
-				gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
-			}
-			if(options[1].matches(optionsChoice)){
-				int playerTotalValue = player.getPoints();
-				int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
-
-				for (int j = 0; j < ownedFieldNumbers.length; j++) {
-					if(ownedFieldNumbers[j] != 0) {
-						playerTotalValue += ((Buyable) board.getField(ownedFieldNumbers[j])).getPrice();
-//						playerTotalValue += ((Street) board.getField(ownedFieldNumbers[j])).getHouse() * ((Street) board.getField(ownedFieldNumbers[j])).getHousePrice();
-					}
-				}
-				
-				((Parking) board.getField(20)).increaseAmount(playerTotalValue/100*10);
-				player.addPoints((playerTotalValue/100*10)*-1);
-				gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
-			}
-
-
-		} else if (board.getField(newFieldNo).getType() == "Game.Parking") {
-			gui_controller.showMessage("Du har landet på parkeringsfeltet og modtager " + ((Parking) board.getField(20)).getAmount() + " kr."  );
-			((Parking) board.getField(20)).setAmount(0);
-			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
-		}
 	}
 
 	public void getWinner() {

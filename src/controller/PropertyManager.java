@@ -1,13 +1,21 @@
 package controller;
 
-import entities.Board;
 import entities.Buyable;
 import entities.Field;
 import entities.Player;
 import entities.Street;
 
-public class PropertyManager extends Game {
+public class PropertyManager {
 	
+	private GUI_Controller gui_controller;
+	private Board board;
+	
+	public PropertyManager(GUI_Controller gui_controller, Board board) {
+		super();
+		this.gui_controller = gui_controller;
+		this.board = board;
+	}
+
 	public void manageHousesAndHotels(Player player) {
 		String[] optionsBuySell = {"Køb", "Sælg"};
 		String buySellChoice = gui_controller.multipleChoice("Vil du købe eller sælge?", optionsBuySell);
@@ -87,8 +95,6 @@ public class PropertyManager extends Game {
 			gui_controller.showMessage("Du ejer ingen ejendomme.");
 		}
 		
-		//Stadig spillerens tur
-		playerActions(player);
 	}
 
 	private void sellHotel(Player player, int chosenStreetNumber) {

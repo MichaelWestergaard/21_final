@@ -1,6 +1,17 @@
-package entities;
+package controller;
 
-import java.util.*;
+import entities.Beverage;
+import entities.Chance;
+import entities.Ferry;
+import entities.Field;
+import entities.GovernmentTax;
+import entities.Group;
+import entities.IncomeTax;
+import entities.Jail;
+import entities.Parking;
+import entities.Start;
+import entities.Street;
+import entities.Taxation;
 
 public class Board {
 	
