@@ -325,7 +325,9 @@ public class Game {
 			ownedStreetOptions[0] = "Ingen";
 
 			for (int j = 1; j <= ownedStreetsCounter; j++) {
-				ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j - 1]).getName();
+				if(board.getField(ownedFieldNumbers[j - 1]) != board.getField(0)) {
+					ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j - 1]).getName();
+				}				
 			}
 
 			String chosenStreetName = gui_controller.multipleChoice("Hvilken ejendom vil du sælge?", ownedStreetOptions);
