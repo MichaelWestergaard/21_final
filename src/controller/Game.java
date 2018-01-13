@@ -25,16 +25,16 @@ public class Game {
 		
 		String[] playerAmountOptions = {"3", "4", "5", "6"};
 		
-		int playerAmount = Integer.parseInt(gui_controller.getPlayerAmount("Vælg antallet af spillere", playerAmountOptions));
+		int playerAmount = Integer.parseInt(gui_controller.getPlayerAmount("Vï¿½lg antallet af spillere", playerAmountOptions));
 
 		players = new Player[playerAmount];
 		
 		int addCounter = 0;
 
 		for (int i = 0; i < playerAmount; i++) {
-			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vælger sit navn:");
+			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vï¿½lger sit navn:");
 			
-			// Hvis det er spiller nummer 2 (eller derover), der skal tilføjes
+			// Hvis det er spiller nummer 2 (eller derover), der skal tilfï¿½jes
 			if(addCounter != 0) {
 				boolean nameTaken = false;
 				
@@ -52,11 +52,11 @@ public class Game {
 					
 				// Hvis navnet er optaget
 				} else {
-					gui_controller.showMessage("Navnet: " + name + " er allerede taget. Prøv igen!");
+					gui_controller.showMessage("Navnet: " + name + " er allerede taget. Prï¿½v igen!");
 					i--;
 				}
 			
-			//Hvis det er første spiller, der skal tilføjes	
+			//Hvis det er fï¿½rste spiller, der skal tilfï¿½jes	
 			} else {
 				players[i] = new Player(name, 30000);
 				addCounter++;
@@ -179,7 +179,7 @@ public class Game {
 		gui_controller.movePlayers(players);
 	}
 	
-	private void checkEqualDice(Player player) {
+	public void checkEqualDice(Player player) {
 		if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
 			player.increaseHitDouble();
 
