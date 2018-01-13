@@ -79,14 +79,18 @@ public class FieldManager {
 
 	private void landedOnChance(Player player, int newFieldNo) {
 		Chance currentField = ((Chance) board.getField(newFieldNo));
-		
 		currentField.createCardList();
-		currentField.setDrawncard(currentField.getCard());
 		Card drawncard = currentField.getCard();
+		
+		System.out.println(((Chance) board.getField(newFieldNo)).getCardDescription());
 		
 		if(drawncard instanceof MoneyCard) {
 			player.addPoints(((MoneyCard) drawncard).getAmount());
+
+			System.out.println(((MoneyCard) drawncard).getAmount());
 		} else if(drawncard instanceof MoveCard) {
+
+			System.out.println(((MoveCard) drawncard).getField());
 			if (((MoveCard) drawncard).getField() < 0) {
 				if (player.getFieldNo() < 3) {
 					player.setFieldNo(player.getFieldNo() + 40 + ((MoveCard) drawncard).getField());

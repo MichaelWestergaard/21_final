@@ -10,6 +10,7 @@ public class Chance extends Field {
 
 	public Card getCard() {
 		int random = (int) (Math.random() * 25);
+		setDrawncard(cardList[random]);
 		return cardList[random];
 	}
 
