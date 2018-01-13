@@ -272,16 +272,14 @@ public class FieldManager {
 			} else {
 				int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
 				
-				if(((Street) board.getField(newFieldNo)).getHouse() == 0) {
-					if(propertyManager.checkMonopoly(newFieldNo)) {
-						amountToPay = amountToPay * 2;
-					}
-					
-					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
-					
-					player.addPoints(amountToPay * -1);
-					((Street) board.getField(newFieldNo)).getOwner().addPoints(amountToPay);
+				if(propertyManager.checkMonopoly(newFieldNo) == true && ((Street) board.getField(newFieldNo)).getHouse() == 0) {
+					amountToPay = amountToPay * 2;
 				}
+					
+				gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
+					
+				player.addPoints(amountToPay * -1);
+				((Street) board.getField(newFieldNo)).getOwner().addPoints(amountToPay);
 				
 				game.checkBankrupt(player);
 			}
