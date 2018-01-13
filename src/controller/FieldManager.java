@@ -90,6 +90,9 @@ public class FieldManager {
 		currentField.createCardList();
 		Card drawncard = currentField.getCard();
 		
+		gui_controller.showMessage("Tryk [OK] for at trække et chancekort.");
+		gui_controller.displayChanceCard(((Chance) board.getField(newFieldNo)).getCardDescription());
+		
 		System.out.println(((Chance) board.getField(newFieldNo)).getCardDescription());
 		
 		if(drawncard instanceof MoneyCard) {
@@ -102,19 +105,23 @@ public class FieldManager {
 			if (((MoveCard) drawncard).getField() < 0) {
 				if (player.getFieldNo() < 3) {
 					player.setFieldNo(player.getFieldNo() + 40 + ((MoveCard) drawncard).getField());
+					game.movePlayers();
+					checkField(player);
 				} else {
 					player.setFieldNo(player.getFieldNo() + ((MoveCard) drawncard).getField());
+					game.movePlayers();
+					checkField(player);
 				}
 			} else if(((MoveCard) drawncard).getField() == 10) {
 				player.setJailed(true);
 				player.setFieldNo(((MoveCard) drawncard).getField());
 			} else {
 				player.setFieldNo(((MoveCard) drawncard).getField());
+				game.movePlayers();
+				checkField(player);
 			}
 		}
 		
-		gui_controller.showMessage("Tryk [OK] for at trække et chancekort.");
-		gui_controller.displayChanceCard(((Chance) board.getField(newFieldNo)).getCardDescription());
 		game.movePlayers();
 	}
 
