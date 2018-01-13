@@ -26,7 +26,7 @@ public class PropertyManager {
 		
 		//Sorter alle "Street" i et nyt array
 		for(int j = 0; j < ownedFieldNumbers.length; j++) {
-			if(board.getField(ownedFieldNumbers[j]).getType() == "Game.Street") {
+			if(board.getField(ownedFieldNumbers[j]).getType() == "entities.Street") {
 				ownedStreetNumbers[numberOfStreets] = ownedFieldNumbers[j];
 				numberOfStreets++;
 			}
@@ -246,7 +246,7 @@ public class PropertyManager {
 		Field field = board.getField(fieldNo);
 		Field[] fields = board.getFields();
 
-		if(field.getType() == "Game.Street") {
+		if(field.getType() == "entities.Street") {
 			for (Field fieldN : fields) {
 				if(fieldN instanceof Buyable) {
 					if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
@@ -254,7 +254,8 @@ public class PropertyManager {
 					}
 				}
 			}
-		} else if(field.getType() == "Game.Ferry") {
+			System.out.println("owner " + ownerGroupAmount);
+		} else if(field.getType() == "entities.Ferry") {
 			for (Field fieldN : fields) {
 				if(fieldN instanceof Buyable) {
 					if(((Buyable) fieldN).getOwner() == ((Buyable) field).getOwner() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
@@ -283,6 +284,9 @@ public class PropertyManager {
 				monopoly = true;
 			}
 		}
+		
+		System.out.println(getOwnerGroupAmount(fieldNo));
+		System.out.println(monopoly);
 		return monopoly;
 	}
 	

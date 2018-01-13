@@ -60,10 +60,13 @@ public class Game {
 			} else {
 				players[i] = new Player(name, 30000);
 				addCounter++;
-			}			
+			}
 		}
 
 		gui_controller.addPlayers(players);
+
+		((Buyable) board.getField(1)).setOwner(players[0]);
+		((Buyable) board.getField(3)).setOwner(players[0]);
 		
 		gameStarted = true;
 		play();

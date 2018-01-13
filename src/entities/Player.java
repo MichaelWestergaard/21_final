@@ -27,7 +27,7 @@ public class Player {
 	public void setOwnedFieldNumber(int fieldNumber) {
 		for (int i = 0; i < ownedFieldNumbers.length; i++) {
 			if(ownedFieldNumbers[i] == 0) {
-				this.ownedFieldNumbers[i]= fieldNumber;
+				ownedFieldNumbers[i]= fieldNumber;
 				break;
 			}
 		}

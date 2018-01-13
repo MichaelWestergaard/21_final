@@ -93,15 +93,10 @@ public class FieldManager {
 		gui_controller.showMessage("Tryk [OK] for at trække et chancekort.");
 		gui_controller.displayChanceCard(((Chance) board.getField(newFieldNo)).getCardDescription());
 		
-		System.out.println(((Chance) board.getField(newFieldNo)).getCardDescription());
-		
 		if(drawncard instanceof MoneyCard) {
 			player.addPoints(((MoneyCard) drawncard).getAmount());
-
-			System.out.println(((MoneyCard) drawncard).getAmount());
 		} else if(drawncard instanceof MoveCard) {
 
-			System.out.println(((MoveCard) drawncard).getField());
 			if (((MoveCard) drawncard).getField() < 0) {
 				if (player.getFieldNo() < 3) {
 					player.setFieldNo(player.getFieldNo() + 40 + ((MoveCard) drawncard).getField());
