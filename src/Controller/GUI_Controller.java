@@ -85,7 +85,7 @@ public class GUI_Controller {
 
 				GUIFields[field.getFieldNo()] = new GUI_Jail();
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
-				GUIFields[field.getFieldNo()].setSubText("Fængsel");
+				GUIFields[field.getFieldNo()].setSubText(field.getName());
 
 			} else if (field.getType() == "Game.Chance") {
 
