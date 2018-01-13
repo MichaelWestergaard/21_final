@@ -76,6 +76,7 @@ public class FieldManager {
 		player.addPoints(((Taxation) board.getField(newFieldNo)).getTax() * -1);
 		((Parking) board.getField(20)).increaseAmount(2000);
 		gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
+		game.checkBankrupt(player);
 	}
 
 	private void landedOnParking(Player player) {
@@ -95,6 +96,10 @@ public class FieldManager {
 		
 		if(drawncard instanceof MoneyCard) {
 			player.addPoints(((MoneyCard) drawncard).getAmount());
+			
+			if(((MoneyCard) drawncard).getAmount() < 0) {
+				game.checkBankrupt(player);
+			}			
 		} else if(drawncard instanceof MoveCard) {
 
 			if (((MoveCard) drawncard).getField() < 0) {
@@ -133,12 +138,13 @@ public class FieldManager {
 	private void landedOnIncomeTax(Player player, int newFieldNo) {
 		String[] options = {"Betal 4000", "Betal 10%"};
 		String optionsChoice = gui_controller.multipleChoice("Vil du betale 4000 eller 10 %?", options);
+		
 		if(options[0].matches(optionsChoice)){
 			((Parking) board.getField(20)).increaseAmount(4000);	
 			player.addPoints(-4000);
 			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
-		}
-		if(options[1].matches(optionsChoice)){
+			
+		} else if(options[1].matches(optionsChoice)){
 			int playerTotalValue = player.getPoints();
 			int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
 
@@ -152,6 +158,8 @@ public class FieldManager {
 			player.addPoints((playerTotalValue/100*10)*-1);
 			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 		}
+		
+		game.checkBankrupt(player);
 	}
 
 	private void landedOnBeverage(Player player, int newFieldNo) {
@@ -177,9 +185,13 @@ public class FieldManager {
 				if( ((Buyable) board.getField(12)).getOwner() == ((Buyable) board.getField(28)).getOwner() ) {
 					beverageRent = beverageRent * 2;	
 				}
+				
+				gui_controller.showMessage("Du skal betale " + beverageRent + " kr.");
+				
 				player.addPoints(beverageRent * -1);
 				((Street) board.getField(newFieldNo)).getOwner().addPoints(beverageRent);
-				gui_controller.showMessage("Du skal betale " + beverageRent + " kr.");
+				
+				game.checkBankrupt(player);
 			}
 		}
 	}
@@ -231,11 +243,12 @@ public class FieldManager {
 					ending = "færger";
 				}
 				
+				gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
+				
 				player.addPoints(amountToPay*-1);
 				owner.addPoints(amountToPay);
 				
-				gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
-				
+				game.checkBankrupt(player);
 			}
 		}
 	}
@@ -256,22 +269,22 @@ public class FieldManager {
 						gui_controller.setOwner(player, newFieldNo);
 					}
 				}
-
 			} else {
 				int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
-
+				
 				if(((Street) board.getField(newFieldNo)).getHouse() == 0) {
 					if(propertyManager.checkMonopoly(newFieldNo)) {
 						amountToPay = amountToPay * 2;
 					}
+					
+					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
+					
 					player.addPoints(amountToPay * -1);
 					((Street) board.getField(newFieldNo)).getOwner().addPoints(amountToPay);
 				}
-				gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
 				
+				game.checkBankrupt(player);
 			}
-
 		}
-	}
-	
+	}	
 }
