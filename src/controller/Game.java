@@ -7,27 +7,20 @@ import entities.Chance;
 import entities.DiceCup;
 import entities.Ferry;
 import entities.Field;
-import entities.GovernmentTax;
 import entities.IncomeTax;
 import entities.Parking;
 import entities.Player;
 import entities.Street;
 
-//Vi mangler at lave delen, med at finde ud af hvem der er ejeren.
-//Hvis man ejer to felter, skal man betale dobbelt så meget.
-
 public class Game {
 
 	private boolean gameStarted = false;
 	private PropertyManager propertyManager = new PropertyManager();
-
-	protected DiceCup diceCup = new DiceCup();
-	protected Player[] players;
+	private DiceCup diceCup = new DiceCup();
+	private Player[] players;
+	
 	protected GUI_Controller gui_controller = new GUI_Controller();
 	protected Board board = new Board();
-	
-
-	private String[] playerAmountOptions = {"3", "4", "5", "6"};
 
 	public void gameSetup() {
 
@@ -35,7 +28,9 @@ public class Game {
 		board.createFields();
 
 		gui_controller.setupGUI(board.getFields());
-
+		
+		String[] playerAmountOptions = {"3", "4", "5", "6"};
+		
 		int playerAmount = Integer.parseInt(gui_controller.getPlayerAmount("Vælg antallet af spillere", playerAmountOptions));
 
 		players = new Player[playerAmount];
