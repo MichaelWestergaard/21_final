@@ -16,6 +16,4 @@ public class Taxation extends Field {
 		return tax;
 	}
 	
-	public void landOnField(Player player) {
-	}	
-	}
+}

@@ -14,7 +14,7 @@ public class Game {
 	private GUI_Controller gui_controller = new GUI_Controller();
 	private Board board = new Board();
 	private PropertyManager propertyManager = new PropertyManager(gui_controller, board);
-	private FieldManager fieldManager = new FieldManager(diceCup, gui_controller, board, propertyManager, this);
+	private FieldManager fieldManager = new FieldManager(gui_controller, board, propertyManager, this);
 	
 	public void gameSetup() {
 

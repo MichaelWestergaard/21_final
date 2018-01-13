@@ -4,25 +4,22 @@ import entities.Beverage;
 import entities.Buyable;
 import entities.Card;
 import entities.Chance;
-import entities.DiceCup;
 import entities.Ferry;
-import entities.IncomeTax;
 import entities.MoneyCard;
 import entities.MoveCard;
 import entities.Parking;
 import entities.Player;
 import entities.Street;
+import entities.Taxation;
 
 public class FieldManager {
 	
-	private DiceCup diceCup;
 	private GUI_Controller gui_controller;
 	private Board board;
 	private PropertyManager propertyManager;
 	private Game game;
 		
-	public FieldManager(DiceCup diceCup, GUI_Controller gui_controller, Board board, PropertyManager propertyManager, Game game) {
-		this.diceCup = diceCup;
+	public FieldManager(GUI_Controller gui_controller, Board board, PropertyManager propertyManager, Game game) {
 		this.gui_controller = gui_controller;
 		this.board = board;
 		this.propertyManager = propertyManager;
@@ -38,37 +35,16 @@ public class FieldManager {
 	private void getFieldLandedOn(Player player, int newFieldNo) {
 		
 		if (board.getField(newFieldNo).getType() == "entities.Chance") {
-			Chance currentField = ((Chance) board.getField(newFieldNo));
 			
-			currentField.createCardList();
-			currentField.setDrawncard(currentField.getCard());
-			Card drawncard = currentField.getCard();
-			
-			if(drawncard instanceof MoneyCard) {
-				player.addPoints(((MoneyCard) drawncard).getAmount());
-			} else if(drawncard instanceof MoveCard) {
-				if (((MoveCard) drawncard).getField() < 0) {
-					if (player.getFieldNo() < 3) {
-						player.setFieldNo(player.getFieldNo() + 40 + ((MoveCard) drawncard).getField());
-					} else {
-						player.setFieldNo(player.getFieldNo() + ((MoveCard) drawncard).getField());
-					}
-				} else if(((MoveCard) drawncard).getField() == 10) {
-					player.setJailed(true);
-					player.setFieldNo(((MoveCard) drawncard).getField());
-				} else {
-					player.setFieldNo(((MoveCard) drawncard).getField());
-				}
-			}
-			
-			gui_controller.showMessage("Tryk [OK] for at trække et chancekort.");
-			gui_controller.displayChanceCard(((Chance) board.getField(newFieldNo)).getCardDescription());
-			game.movePlayers();
+			landedOnChance(player, newFieldNo);
 			
 		} else if (board.getField(newFieldNo).getFieldNo() == 30) {
 			
-			gui_controller.showMessage("Gå i fængsel");
-			game.movePlayers();
+			landedOnJail(player);
+			
+		} else if (board.getField(newFieldNo).getFieldNo() == 0) {
+			
+			player.addPoints(4000);
 			
 		} else if (board.getField(newFieldNo).getType() == "entities.Street") {
 			
@@ -83,8 +59,9 @@ public class FieldManager {
 			landedOnBeverage(player, newFieldNo);
 			
 		} else if (board.getField(newFieldNo).getFieldNo() == 38) {
-			
+						
 			gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
+			player.addPoints(((Taxation) board.getField(newFieldNo)).getTax() * -1);
 			((Parking) board.getField(20)).increaseAmount(2000);
 			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 			
@@ -94,9 +71,49 @@ public class FieldManager {
 
 		} else if (board.getField(newFieldNo).getType() == "entities.Parking") {
 			gui_controller.showMessage("Du har landet på parkeringsfeltet og modtager " + ((Parking) board.getField(20)).getAmount() + " kr."  );
+			player.addPoints(((Parking) board.getField(20)).getAmount());
 			((Parking) board.getField(20)).setAmount(0);
 			gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
 		}
+	}
+
+	private void landedOnChance(Player player, int newFieldNo) {
+		Chance currentField = ((Chance) board.getField(newFieldNo));
+		
+		currentField.createCardList();
+		currentField.setDrawncard(currentField.getCard());
+		Card drawncard = currentField.getCard();
+		
+		if(drawncard instanceof MoneyCard) {
+			player.addPoints(((MoneyCard) drawncard).getAmount());
+		} else if(drawncard instanceof MoveCard) {
+			if (((MoveCard) drawncard).getField() < 0) {
+				if (player.getFieldNo() < 3) {
+					player.setFieldNo(player.getFieldNo() + 40 + ((MoveCard) drawncard).getField());
+				} else {
+					player.setFieldNo(player.getFieldNo() + ((MoveCard) drawncard).getField());
+				}
+			} else if(((MoveCard) drawncard).getField() == 10) {
+				player.setJailed(true);
+				player.setFieldNo(((MoveCard) drawncard).getField());
+			} else {
+				player.setFieldNo(((MoveCard) drawncard).getField());
+			}
+		}
+		
+		gui_controller.showMessage("Tryk [OK] for at trække et chancekort.");
+		gui_controller.displayChanceCard(((Chance) board.getField(newFieldNo)).getCardDescription());
+		game.movePlayers();
+	}
+
+	private void landedOnJail(Player player) {
+		if (player.getFieldNo() == 30) {
+			player.setFieldNo(10);
+			player.setJailed(true);
+		}
+		
+		gui_controller.showMessage("Gå i fængsel");
+		game.movePlayers();
 	}
 
 	private void landedOnIncomeTax(Player player, int newFieldNo) {

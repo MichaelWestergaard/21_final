@@ -52,32 +52,6 @@ public class Chance extends Field {
 		this.cardList = cardList;
 	}
 
-	@Override
-	public void landOnField(Player player) {
-		createCardList();
-		drawncard = getCard();
-		if(drawncard instanceof MoneyCard) {
-			player.addPoints(((MoneyCard) drawncard).getAmount());
-	
-		} else if(drawncard instanceof MoveCard) {
-			if (((MoveCard) drawncard).getField() < 0) {
-				if (player.getFieldNo() < 3) {
-					player.setFieldNo(player.getFieldNo() + 40 + ((MoveCard) drawncard).getField());
-				} else {
-					player.setFieldNo(player.getFieldNo() + ((MoveCard) drawncard).getField());
-				}
-			} else if(((MoveCard) drawncard).getField() == 10) {
-				player.setJailed(true);
-				player.setFieldNo(((MoveCard) drawncard).getField());
-			} else {
-				player.setFieldNo(((MoveCard) drawncard).getField());
-			}
-			
-		} else if(drawncard instanceof JailCard) {
-			player.setJailCard(1);
-		}
-	}
-
 	public String getCardDescription() {
 		return drawncard.description;
 	}

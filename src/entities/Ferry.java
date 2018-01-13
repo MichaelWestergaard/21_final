@@ -16,30 +16,6 @@ public class Ferry extends Buyable {
 	public void setRent(int rent) {
 		this.rent = rent;
 	}
-	
-	public void landOnField(Player player, int rent, boolean owned, boolean buy) {
-		int amountToPay = rent; //Lejen der skal betales
-		
-				
-		Player owner = super.getOwner();
-
-		if (owner == null) {// hvis der er ingen ejer, så køber man feltet
-			if (player.getPoints() >= super.getPrice()) {
-				player.addPoints(super.getPrice() * -1);
-				setOwner(player);
-			} 
-			else {
-				player.setBankrupt(true); //ændre til pantsat. Spørg om det skal fjernes!!.
-			}
-		} 
-		else { // Hvis der er en ejer, så betaler man
-
-			if (player.getPoints() >= amountToPay) {
-				player.addPoints(amountToPay * -1);
-				owner.addPoints(amountToPay);
-			}
-		}
-	}
 
 	public Player getOwner() {
 		return super.getOwner();

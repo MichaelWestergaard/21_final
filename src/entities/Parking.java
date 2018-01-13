@@ -19,10 +19,5 @@ public class Parking extends Field {
 	public int getAmount() {
 		return this.amount;
 	}
-
-	public void landOnField(Player player) {
-		player.addPoints(this.amount);	
-	}
 	
-
 }

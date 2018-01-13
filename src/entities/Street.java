@@ -13,24 +13,6 @@ public class Street extends Buyable {
 		this.houseCounter = 0;
 	}
 
-	public void landOnField(Player player, boolean owned, boolean buy) {
-		
-		//Hvis feltet ikke ejes af en anden spiller
-		if(!owned) {
-			//Hvis spilleren vælger at købe feltet
-			if(buy) {
-					player.addPoints((super.price * -1));
-					setOwner(player);
-			}	
-		}
-		
-		//Hvis feltet ejes af en anden spiller
-		if(owned) {
-			player.addPoints(getRent() * -1);
-			super.owner.addPoints(getRent());
-		}
-	}
-
 	public int getRent() {
 		return rent[houseCounter];	
 	}

@@ -10,8 +10,6 @@ public abstract class Field {
 		this.name = name;
 	}
 
-	public abstract void landOnField(Player player);
-	
 	public String getType() {
 		return this.getClass().getName();
 	}

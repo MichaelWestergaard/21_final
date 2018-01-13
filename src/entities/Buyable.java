@@ -16,11 +16,6 @@ public class Buyable extends Field {
 		this.pledgePrice = price/2;
 	}
 
-	@Override
-	public void landOnField(Player player) {
-		//Test af commit [Tim]		
-	}
-
 	public Group getGroup() {
 		return group;
 	}

@@ -8,11 +8,6 @@ public class Start extends Field {
 		super(fieldNo, name);
 		this.bonus = bonus;
 	}
-
-	@Override
-	public void landOnField(Player player) {
-		player.addPoints(bonus);
-	}
 	
 	public int getBonus() {
 		return bonus;
