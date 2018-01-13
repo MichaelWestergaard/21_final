@@ -368,16 +368,7 @@ public class Game {
 			// Hvis spilleren vælger en ejendom, der skal sælges	
 			} else {
 				if (board.getFieldFromName(chosenStreetName) != null) {					
-					Field chosenField = board.getFieldFromName(chosenStreetName);
-//					if ( ((Buyable) chosenField).isPledged()) {
-//						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Ejendommen er pantsat, så du modtager den halve købspris " + ((Buyable) chosenField).getPledgePrice() + " kr.");
-//						player.addPoints(((Buyable) chosenField).getPledgePrice());
-//					} else {
-//						gui_controller.showMessage("Du har valgt at sælge " + chosenStreetName + "." + "\n Du modtager nu " + ((Buyable) chosenField).getPrice() + " kr.");
-//						player.addPoints(((Buyable) chosenField).getPrice());
-//					}
-					
-					
+					Field chosenField = board.getFieldFromName(chosenStreetName);					
 					Player[] biddingPlayers = new Player[players.length - 1];
 					int addCounter = 0;
 					
@@ -403,13 +394,22 @@ public class Game {
 						for(int i = 0; i < biddingPlayers.length; i++) {
 							int currentBid = 0;
 							
-							try {
-								currentBid = Integer.parseInt(gui_controller.getUserInput(biddingPlayers[i].getName() + ", hvor meget vil du byde på " + chosenStreetName + "?"
+							if(biddingPlayers[i].getPoints() >= highestBid) {
+								try {
+									int proposedBid = Integer.parseInt(gui_controller.getUserInput(biddingPlayers[i].getName() + ", hvor meget vil du byde på " + chosenStreetName + "?"
 																							+ "\n Mindst mulige bud = " + highestBid + "kr."
 																							+ "\n Indtast en lavere værdi, for at forlade auktionen."));
-							} catch (Exception e) {
-								gui_controller.showMessage("Fejl: Du skal indtaste et helt, positivt tal, når du byder.");
-								break;
+									if(biddingPlayers[i].getPoints() >= proposedBid) {
+										currentBid = proposedBid;
+									} else {
+										gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at byde dette bel�b. \n Du fjernes nu fra auktionen");
+									}
+								} catch (Exception e) {
+									gui_controller.showMessage("Fejl: Du skal indtaste et helt, positivt tal, når du byder.");
+									break;
+								}
+							} else {
+								gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at deltage i auktionen og fjernes nu derfra.");
 							}
 							
 							if(highestBid < currentBid) {
