@@ -506,8 +506,8 @@ public class Game {
 	public void checkBankrupt(Player player) {
 		if(player.getPoints() <= 0) {
 			player.setBankrupt(true);			
-			String[] options = {"Forlad Spillet", "Pantsæt ejendomme", "Auktionér Ejendomme"};
-			String choice = gui_controller.multipleChoice("Du er gået løbet tør for penge!! \n Du har nu følgende muligheder:", options);
+			String[] options = {"Forlad Spillet", "Pantsæt ejendomme", "Auktion�r Ejendomme"};
+			String choice = gui_controller.multipleChoice("Du er l�bet t�r for penge!! \n Du har nu f�lgende muligheder:", options);
 			
 			// Hvis spilleren vælger at forlade spillet
 			if(choice.matches(options[0])) {
