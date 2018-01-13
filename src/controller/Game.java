@@ -25,16 +25,16 @@ public class Game {
 		
 		String[] playerAmountOptions = {"3", "4", "5", "6"};
 		
-		int playerAmount = Integer.parseInt(gui_controller.getPlayerAmount("Vï¿½lg antallet af spillere", playerAmountOptions));
+		int playerAmount = Integer.parseInt(gui_controller.getPlayerAmount("Vælg antallet af spillere", playerAmountOptions));
 
 		players = new Player[playerAmount];
 		
 		int addCounter = 0;
 
 		for (int i = 0; i < playerAmount; i++) {
-			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vï¿½lger sit navn:");
+			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vælger sit navn:");
 			
-			// Hvis det er spiller nummer 2 (eller derover), der skal tilfï¿½jes
+			// Hvis det er spiller nummer 2 (eller derover), der skal tilføjes
 			if(addCounter != 0) {
 				boolean nameTaken = false;
 				
@@ -52,11 +52,11 @@ public class Game {
 					
 				// Hvis navnet er optaget
 				} else {
-					gui_controller.showMessage("Navnet: " + name + " er allerede taget. Prï¿½v igen!");
+					gui_controller.showMessage("Navnet: " + name + " er allerede taget. Prøv igen!");
 					i--;
 				}
 			
-			//Hvis det er fï¿½rste spiller, der skal tilfï¿½jes	
+			//Hvis det er første spiller, der skal tilføjes	
 			} else {
 				players[i] = new Player(name, 30000);
 				addCounter++;
@@ -187,7 +187,7 @@ public class Game {
 		if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
 			player.increaseHitDouble();
 
-			// Hvis spilleren har slï¿½et 2 ens for mange (3) gange
+			// Hvis spilleren har slået 2 ens for mange (3) gange
 			if (player.getHitDouble() == 3) {
 				gui_controller.showMessage("Du har slået 2 ens for mange gange og fængsles for at snyde med terningerne!");								
 				player.setFieldNo(10);
@@ -211,7 +211,7 @@ public class Game {
 		gui_controller.showMessage(player.getName() + " sidder i fængsel. \n Tryk [OK] for at vælge, hvordan du vil fortsætte");
 		//board.getField(players[i].getFieldNo()).landOnField(players[i]);
 
-		// Tjekker om spilleren har mulighed for at vï¿½lge, hvordan han vil komme ud af fï¿½ngslet
+		// Tjekker om spilleren har mulighed for at vælge, hvordan han vil komme ud af fængslet
 		if (player.getJailCounter() < 3 && player.getPoints() >= 1000 && player.getJailCard() > 0) {
 			String[] options = {"Slå 2 ens", "Betal kaution", "Brug fængselskort"};
 			String optionsChoice = gui_controller.multipleChoice("Vil du prøve at slå 2 ens med terningerne eller betale din kaution på 1000 kr?", options);
@@ -229,7 +229,7 @@ public class Game {
 					player.increaseJailCounter();
 				}
 
-				// Hvis spilleren vï¿½lger at betale kaution
+				// Hvis spilleren vælger at betale kaution
 			} else if (options[1].matches(optionsChoice)) {
 				gui_controller.showMessage("Du betaler nu 1000 kr i kaution.");
 				player.addPoints(-1000);
@@ -248,7 +248,7 @@ public class Game {
 			String[] options = {"Slå 2 ens", "Betal kaution"};
 			String optionsChoice = gui_controller.multipleChoice("Vil du prøve at slå 2 ens med terningerne eller betale din kaution på 1000 kr?", options);
 
-			// Hvis spilleren vï¿½lger at prï¿½ve at slï¿½ 2 ens med terningerne
+			// Hvis spilleren vælger at prøve at slå 2 ens med terningerne
 			if (options[0].matches(optionsChoice)) {
 				rollDice();
 
@@ -261,7 +261,7 @@ public class Game {
 					player.increaseJailCounter();
 				}
 
-				// Hvis spilleren vï¿½lger at betale kaution
+				// Hvis spilleren vælger at betale kaution
 			} else if (options[1].matches(optionsChoice)) {
 				gui_controller.showMessage("Du betaler nu 1000 kr. i kaution.");
 				player.addPoints(-1000);
