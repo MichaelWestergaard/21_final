@@ -1,6 +1,6 @@
 package entities;
 
-public abstract class Field {
+public class Field {
 
 	protected int fieldNo;
 	protected String name;
