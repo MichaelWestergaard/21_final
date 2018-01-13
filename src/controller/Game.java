@@ -50,7 +50,6 @@ public class Game {
 		} else {
 
 			boolean runGame = true;
-
 			while (runGame) {
 
 				for (int i = 0; i < players.length; i++) {
