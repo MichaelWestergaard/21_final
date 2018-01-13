@@ -231,7 +231,7 @@ public class PropertyManager {
 				}
 			}
 			else {
-				gui_controller.showMessage("Du kan maksimalt have 4 huse på Ã©n grund.");
+				gui_controller.showMessage("Du kan maksimalt have 4 huse på én grund.");
 			}
 		}
 		
