@@ -1,4 +1,4 @@
-package Game;
+package entities;
 
 public class GovernmentTax extends Taxation {
 

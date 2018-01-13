@@ -1,6 +1,6 @@
-package Main;
+package main;
 
-import Controller.Game;
+import controller.Game;
 
 public class PlayGame {
 

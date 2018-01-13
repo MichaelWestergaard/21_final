@@ -1,4 +1,4 @@
-package Game;
+package entities;
 
 public class Chance extends Field {
 	protected Card drawncard;

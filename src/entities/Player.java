@@ -1,4 +1,4 @@
-package Game;
+package entities;
 
 import gui_fields.GUI_Player;
 

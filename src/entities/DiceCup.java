@@ -1,6 +1,6 @@
-package Game;
+package entities;
 
-import Game.Dice;
+import entities.Dice;
 
 public class DiceCup {
 	

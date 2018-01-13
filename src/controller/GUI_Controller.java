@@ -1,12 +1,12 @@
-package Controller;
+package controller;
 
 import java.awt.Color;
 
-import Game.Buyable;
-import Game.Field;
-import Game.Player;
-import Game.Start;
-import Game.Street;
+import entities.Buyable;
+import entities.Field;
+import entities.Player;
+import entities.Start;
+import entities.Street;
 import gui_fields.GUI_Brewery;
 import gui_fields.GUI_Chance;
 import gui_fields.GUI_Field;

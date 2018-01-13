@@ -1,17 +1,17 @@
-package Controller;
+package controller;
 
-import Game.Board;
-import Game.Chance;
-import Game.DiceCup;
-import Game.Field;
-import Game.GovernmentTax;
-import Game.IncomeTax;
-import Game.Parking;
-import Game.Player;
-import Game.Street;
-import Game.Ferry;
-import Game.Buyable;
-import Game.Beverage;
+import entities.Beverage;
+import entities.Board;
+import entities.Buyable;
+import entities.Chance;
+import entities.DiceCup;
+import entities.Ferry;
+import entities.Field;
+import entities.GovernmentTax;
+import entities.IncomeTax;
+import entities.Parking;
+import entities.Player;
+import entities.Street;
 
 //Vi mangler at lave delen, med at finde ud af hvem der er ejeren.
 //Hvis man ejer to felter, skal man betale dobbelt så meget.

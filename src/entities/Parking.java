@@ -1,4 +1,4 @@
-package Game;
+package entities;
 
 public class Parking extends Field {
 
