@@ -65,8 +65,9 @@ public class Game {
 
 		gui_controller.addPlayers(players);
 
-		((Buyable) board.getField(1)).setOwner(players[0]);
-		((Buyable) board.getField(3)).setOwner(players[0]);
+//		Test		
+//		((Buyable) board.getField(1)).setOwner(players[0]);
+//		((Buyable) board.getField(3)).setOwner(players[0]);
 		
 		gameStarted = true;
 		play();
@@ -518,7 +519,7 @@ public class Game {
 
 					// GUI'en fjerner spilleren som owner af feltet
 					gui_controller.setOwner(null, currentField.getFieldNo());
-					}					
+					}			
 				}
 				
 				// Fjerner spilleren fra spillet

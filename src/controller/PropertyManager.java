@@ -254,7 +254,6 @@ public class PropertyManager {
 					}
 				}
 			}
-			System.out.println("owner " + ownerGroupAmount);
 		} else if(field.getType() == "entities.Ferry") {
 			for (Field fieldN : fields) {
 				if(fieldN instanceof Buyable) {
@@ -284,9 +283,6 @@ public class PropertyManager {
 				monopoly = true;
 			}
 		}
-		
-		System.out.println(getOwnerGroupAmount(fieldNo));
-		System.out.println(monopoly);
 		return monopoly;
 	}
 	
