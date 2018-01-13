@@ -324,7 +324,9 @@ public class Game {
 			ownedStreetOptions[0] = "Ingen";
 
 			for (int j = 1; j <= ownedStreetsCounter; j++) {
-				ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j - 1]).getName();
+				if(board.getField(ownedFieldNumbers[j - 1]) != board.getField(0)) {
+					ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j - 1]).getName();
+				}				
 			}
 
 			String chosenStreetName = gui_controller.multipleChoice("Hvilken ejendom vil du sælge?", ownedStreetOptions);
@@ -479,11 +481,14 @@ public class Game {
 				int[] ownedFields = player.getOwnedFieldNumbers();
 				
 				for(int i = 0; i < ownedFields.length; i++) {
-					Field currentField = board.getField(ownedFields[i]);					
-					((Buyable) currentField).resetOwner(player);
+					Field currentField = board.getField(ownedFields[i]);
+					
+					if(currentField != board.getField(0)) {
+						((Buyable) currentField).resetOwner(player);
 
 					// GUI'en fjerner spilleren som owner af feltet
 					gui_controller.setOwner(null, currentField.getFieldNo());
+					}					
 				}
 				
 				// Fjerner spilleren fra spillet
