@@ -402,7 +402,10 @@ public class Game {
 									if(biddingPlayers[i].getPoints() >= proposedBid) {
 										currentBid = proposedBid;
 									} else {
-										gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at byde dette beløb. \n Du fjernes nu fra auktionen");
+										gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at byde dette beløb."
+																+ "\n Du byder nu automatisk alle dine kontanter - undtagen en 50'er."
+																+ "\n Hvis det automatiske bud ikke er højt nok, fjernes du fra auktionen.");
+										currentBid = biddingPlayers[i].getPoints() - 50;										
 									}
 								} catch (Exception e) {
 									gui_controller.showMessage("Fejl: Du skal indtaste et helt, positivt tal, nÃ¥r du byder.");
