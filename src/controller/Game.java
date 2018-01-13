@@ -25,13 +25,36 @@ public class Game {
 		
 		String[] playerAmountOptions = {"3", "4", "5", "6"};
 		
-		int playerAmount = Integer.parseInt(gui_controller.getPlayerAmount("VÃ¦lg antallet af spillere", playerAmountOptions));
+		int playerAmount = Integer.parseInt(gui_controller.getPlayerAmount("Vælg antallet af spillere", playerAmountOptions));
 
 		players = new Player[playerAmount];
+		
+		int addCounter = 0;
 
 		for (int i = 0; i < playerAmount; i++) {
-			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vÃ¦lger sit navn:");
-			players[i] = new Player(name, 30000);
+			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vælger sit navn:");
+			
+			if(addCounter != 0) {
+				boolean nameTaken = false;
+				
+				for(int j = 0; j < addCounter; j++) {
+					if(players[j].getName().matches(name) == true) {
+						nameTaken = true;
+					}
+				}
+				
+				if(nameTaken == false) {
+					players[i] = new Player(name, 30000);
+					addCounter++;
+				} else {
+					gui_controller.showMessage("Navnet: " + name + " er allerede taget. Prøv igen!");
+					i--;
+				}
+				
+			} else {
+				players[i] = new Player(name, 30000);
+				addCounter++;
+			}			
 		}
 
 		gui_controller.addPlayers(players);
