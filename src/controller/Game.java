@@ -120,7 +120,7 @@ public class Game {
 			
 			} else if (nextAction == "Administrer Ejendomme") {
 
-				String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "AuktionÃ©r Ejendom"});
+				String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Auktionér Ejendom"});
 
 				if(propertyAction == "Huse/Hoteller") {
 
@@ -136,7 +136,7 @@ public class Game {
 					//Stadig spillerens tur
 					playerActions(player);
 
-				} else if(propertyAction == "AuktionÃ©r Ejendom") {
+				} else if(propertyAction == "Auktionér Ejendom") {
 					auctionSequence(player);
 					
 					//Stadig spillerens tur
