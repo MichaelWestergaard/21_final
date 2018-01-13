@@ -16,6 +16,7 @@ public class Parking extends Field {
 	public void increaseAmount(int amount) {
 		this.amount += amount;
 	}
+	
 	public int getAmount() {
 		return this.amount;
 	}

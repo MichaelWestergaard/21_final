@@ -1,6 +1,7 @@
 package entities;
 
 public class Chance extends Field {
+	
 	protected Card drawncard;
 	private Card[] cardList;
 
@@ -60,4 +61,5 @@ public class Chance extends Field {
 	public void setDrawncard(Card drawncard) {
 		this.drawncard = drawncard;
 	}
+
 }

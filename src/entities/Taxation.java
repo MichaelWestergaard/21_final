@@ -12,6 +12,7 @@ public class Taxation extends Field {
 	public void setTax(int tax) {
 		this.tax = tax;
 	}
+	
 	public int getTax() {
 		return tax;
 	}

@@ -12,6 +12,7 @@ public class Beverage extends Buyable {
 	public int getRent() {
 		return rent;
 	}
+	
 	public void setRent(int rent) {
 		this.rent = rent;
 	}

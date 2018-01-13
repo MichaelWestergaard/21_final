@@ -241,21 +241,6 @@ public class PropertyManager {
 		}
 	}
 	
-	private int getSameGroupAmount(int fieldNo) {
-		int sameGroupAmount = 0;
-
-		Field field = board.getField(fieldNo);
-		Field[] fields = board.getFields();
-
-		for (Field fieldN : fields) {
-			if(fieldN.getType() == field.getType() && ((Buyable) fieldN).getGroup() == ((Buyable) field).getGroup()) {
-				sameGroupAmount++;
-			}
-		}
-
-		return sameGroupAmount;
-	}
-
 	public int getOwnerGroupAmount(int fieldNo) {
 		int ownerGroupAmount = 0;
 
