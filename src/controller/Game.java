@@ -389,9 +389,14 @@ public class Game {
 						highestBid = ((Buyable) chosenField).getPrice();
 					}
 					
+					int auctionTurn = 0;
 					
 					while(auctioning == true) {
-						for(int i = 0; i < biddingPlayers.length; i++) {
+						if(auctionTurn == biddingPlayers.length) {
+							auctionTurn = 0;
+						}
+						
+						for(int i = auctionTurn; i < biddingPlayers.length; i++) {
 							int currentBid = 0;
 							
 							if(biddingPlayers[i].getPoints() >= highestBid) {
@@ -439,6 +444,8 @@ public class Game {
 								auctioning = false;
 								break;
 							}
+							
+							auctionTurn++;
 						}
 					}
 					
