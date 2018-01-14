@@ -128,7 +128,9 @@ public class PropertyManager {
 					if(chosenStreetHouse == maxNumberHouse) {
 						evenlyDistributed = true;
 					}
-				}								
+				} else if(houseDifference == 0) {
+					evenlyDistributed = true;
+				}
 			}
 			 
 			else if(groupAmount == 3) {
@@ -140,6 +142,8 @@ public class PropertyManager {
 					if(chosenStreetHouse == maxNumberHouse) {
 						evenlyDistributed = true;
 					}	
+				} else if(houseDifference == 0) {
+					evenlyDistributed = true;
 				}
 			}
 		
@@ -205,7 +209,9 @@ public class PropertyManager {
 						if(chosenStreetHouse == minNumberHouse) {
 							evenlyDistributed = true;
 						}
-					}								
+					} else if(houseDifference == 0) {
+						evenlyDistributed = true;
+					}
 				}
 				
 				else if(groupAmount == 3) {
@@ -217,6 +223,8 @@ public class PropertyManager {
 						if(chosenStreetHouse == minNumberHouse) {
 							evenlyDistributed = true;
 						}	
+					} else if(houseDifference == 0) {
+						evenlyDistributed = true;
 					}
 				}
 				
