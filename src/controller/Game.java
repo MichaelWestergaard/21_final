@@ -120,7 +120,7 @@ public class Game {
 			
 			} else if (nextAction == "Administrer Ejendomme") {
 
-				String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Auktionær Ejendom"});
+				String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Auktionér Ejendom"});
 
 				if(propertyAction == "Huse/Hoteller") {
 
@@ -136,7 +136,7 @@ public class Game {
 					//Stadig spillerens tur
 					playerActions(player);
 
-				} else if(propertyAction == "Auktion�r Ejendom") {
+				} else if(propertyAction == "Auktionér Ejendom") {
 					auctionSequence(player);
 					
 					//Stadig spillerens tur
@@ -162,9 +162,9 @@ public class Game {
 				player.setFieldNo(39 - player.getFieldNo());
 				if(player.getFieldNo() == 0) {
 					if (newFieldNo != 0) {
-						movePlayers();
 						player.addPoints(4000);
-						gui_controller.showMessage("Du k�rte over start og modtog derfor 4000,-");
+						movePlayers();
+						gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
 					}
 				}
 			} else {
