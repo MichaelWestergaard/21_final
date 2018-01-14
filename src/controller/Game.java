@@ -25,14 +25,14 @@ public class Game {
 		
 		String[] playerAmountOptions = {"3", "4", "5", "6"};
 		
-		int playerAmount = Integer.parseInt(gui_controller.getPlayerAmount("V�lg antallet af spillere", playerAmountOptions));
+		int playerAmount = Integer.parseInt(gui_controller.getPlayerAmount("Vælg antallet af spillere", playerAmountOptions));
 
 		players = new Player[playerAmount];
 		
 		int addCounter = 0;
 
 		for (int i = 0; i < playerAmount; i++) {
-			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " v�lger sit navn:");
+			String name = gui_controller.getUserInput("Spiller " + (i + 1) + " vælger sit navn:");
 			
 			// Hvis det er spiller nummer 2 (eller derover), der skal tilf�jes
 			if(addCounter != 0) {
@@ -52,7 +52,7 @@ public class Game {
 					
 				// Hvis navnet er optaget
 				} else {
-					gui_controller.showMessage("Navnet: " + name + " er allerede taget. Pr�v igen!");
+					gui_controller.showMessage("Navnet: " + name + " er allerede taget. Prøv igen!");
 					i--;
 				}
 			
@@ -108,7 +108,7 @@ public class Game {
 		} else {
 			gui_controller.updateBalance(players);
 			
-			String nextAction = gui_controller.getPlayerAmount(player.getName() + "'s tur - V�lg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
+			String nextAction = gui_controller.getPlayerAmount(player.getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
 
 			if(nextAction == "Kast terning") {
 				rollDice();
@@ -120,7 +120,7 @@ public class Game {
 			
 			} else if (nextAction == "Administrer Ejendomme") {
 
-				String propertyAction = gui_controller.getPlayerAmount("V�lg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pants�t Ejendom", "Auktion�r Ejendom"});
+				String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Auktionær Ejendom"});
 
 				if(propertyAction == "Huse/Hoteller") {
 
@@ -129,7 +129,7 @@ public class Game {
 					//Stadig spillerens tur
 					playerActions(player);
 					
-				} else if(propertyAction == "Pants�t Ejendom") {
+				} else if(propertyAction == "Pantsæt Ejendom") {
 
 					pledgeSequence(player);
 					
@@ -189,7 +189,7 @@ public class Game {
 
 			// Hvis spilleren har sl�et 2 ens for mange (3) gange
 			if (player.getHitDouble() == 3) {
-				gui_controller.showMessage("Du har sl�et 2 ens for mange gange og f�ngsles for at snyde med terningerne!");								
+				gui_controller.showMessage("Du har slået 2 ens for mange gange og fængsles for at snyde med terningerne!");								
 				player.setFieldNo(10);
 				player.setJailed(true);
 				gui_controller.movePlayers(players);
@@ -208,24 +208,24 @@ public class Game {
 
 	public void playerJailed(Player player) {
 
-		gui_controller.showMessage(player.getName() + " sidder i f�ngsel. \n Tryk [OK] for at v�lge, hvordan du vil forts�tte");
+		gui_controller.showMessage(player.getName() + " sidder i fængsel. \n Tryk [OK] for at vælge, hvordan du vil fortsætte");
 		//board.getField(players[i].getFieldNo()).landOnField(players[i]);
 
 		// Tjekker om spilleren har mulighed for at v�lge, hvordan han vil komme ud af f�ngslet
 		if (player.getJailCounter() < 3 && player.getPoints() >= 1000 && player.getJailCard() > 0) {
-			String[] options = {"Sl� 2 ens", "Betal kaution", "Brug f�ngselskort"};
-			String optionsChoice = gui_controller.multipleChoice("Vil du pr�ve at sl� 2 ens med terningerne eller betale din kaution p� 1000 kr?", options);
+			String[] options = {"Slå 2 ens", "Betal kaution", "Brug fængselskort"};
+			String optionsChoice = gui_controller.multipleChoice("Vil du prøve at slå 2 ens med terningerne eller betale din kaution på 1000 kr?", options);
 
 			// Hvis spilleren v�lger at pr�ve at sl� 2 ens med terningerne
 			if (options[0].matches(optionsChoice)) {
 				rollDice();
 
 				if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
-					gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet l�sladt fra f�ngslet!");
+					gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet løsladt fra fængslet!");
 					player.releaseFromJail();
 					playerActions(player);
 				} else {
-					gui_controller.showMessage("Du slog ikke 2 ens. Bedre held n�ste gang! \n Du har nu " + (3 - player.getJailCounter()) + " fors�g tilbage, f�r du skal betale kaution");
+					gui_controller.showMessage("Du slog ikke 2 ens. Bedre held næste gang! \n Du har nu " + (3 - player.getJailCounter()) + " forsøg tilbage, før du skal betale kaution");
 					player.increaseJailCounter();
 				}
 
@@ -238,26 +238,26 @@ public class Game {
 
 				// Hvis spilleren v�lger at bruge sit f�ngselskort	
 			} else if (options[2].matches(optionsChoice)) {
-				gui_controller.showMessage("Du har brugt dit kort, og bliver hermed l�sladt.");
+				gui_controller.showMessage("Du har brugt dit kort, og bliver hermed løsladt.");
 				player.setJailCard(-1);
 				player.releaseFromJail();
 				playerActions(player);
 			}
 
 		} else if (player.getJailCounter() < 3 && player.getPoints() >= 1000 && player.getJailCard() == 0) {
-			String[] options = {"Sl� 2 ens", "Betal kaution"};
-			String optionsChoice = gui_controller.multipleChoice("Vil du pr�ve at sl� 2 ens med terningerne eller betale din kaution p� 1000 kr?", options);
+			String[] options = {"Slå 2 ens", "Betal kaution"};
+			String optionsChoice = gui_controller.multipleChoice("Vil du prøve at slå 2 ens med terningerne eller betale din kaution på 1000 kr?", options);
 
 			// Hvis spilleren v�lger at pr�ve at sl� 2 ens med terningerne
 			if (options[0].matches(optionsChoice)) {
 				rollDice();
 
 				if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
-					gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet l�sladt fra f�ngslet!");
+					gui_controller.showMessage("Tillykke! Du slog 2 ens, og er blevet løsladt fra føngslet!");
 					player.releaseFromJail();
 					playerActions(player);
 				} else {
-					gui_controller.showMessage("Du slog ikke 2 ens. Bedre held n�ste gang! \n Du har nu " + (3 - player.getJailCounter()) + " fors�g tilbage, f�r du skal betale kaution");
+					gui_controller.showMessage("Du slog ikke 2 ens. Bedre held næste gang! \n Du har nu " + (3 - player.getJailCounter()) + " forsøg tilbage, før du skal betale kaution");
 					player.increaseJailCounter();
 				}
 
@@ -271,7 +271,7 @@ public class Game {
 
 			// Hvis spilleren er tvunget til at betale kaution	
 		} else if (player.getJailCounter() == 3 && player.getPoints() >= 1000) {
-			gui_controller.showMessage("Du har opbrugt alle dine fors�g med terningerne, og er tvunget til at betale kaution. \n 1000 kr. vil blive trukket fra din konto.");
+			gui_controller.showMessage("Du har opbrugt alle dine forsøg med terningerne, og er tvunget til at betale kaution. \n 1000 kr. vil blive trukket fra din konto.");
 			player.addPoints(-1000);
 			player.releaseFromJail();
 			playerActions(player);
@@ -299,26 +299,26 @@ public class Game {
 				}					
 			}
 
-			String chosenStreet = gui_controller.getPlayerAmount("Hvad vil du pans�tte?", ownedStreetOptions);
+			String chosenStreet = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
 			for (int j = 0; j < ownedFieldNumbers.length; j++) {
 				if(ownedFieldNumbers[j] != 0) {
 					if (board.getField(ownedFieldNumbers[j]).getName() == chosenStreet) {
 						if (((Buyable) board.getField(ownedFieldNumbers[j])).isPledged()) {
-							String[] options = {"K�b tilbage", "G� tilbage"};
-							String optionsChoice = gui_controller.multipleChoice("Vil du fors�tte?", options);
+							String[] options = {"Køb tilbage", "Gå tilbage"};
+							String optionsChoice = gui_controller.multipleChoice("Vil du forsætte?", options);
 							if (options[0].matches(optionsChoice)) {
 								if (player.getPoints() >= ((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ) { //tjekker om han r�d
 									((Buyable) board.getField(ownedFieldNumbers[j])).setPledged(false); //sat til at v�re ikke pansat
 									player.addPoints(-1 * (((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() + (((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() / 100 * 10))  ); // betaler prisen
 								} else {
-									gui_controller.showMessage("Du har ikke r�d til at k�be grunden tilbage");
+									gui_controller.showMessage("Du har ikke råd til at købe grunden tilbage");
 								}
 
 							}
 
 						} else {
-							String[] options = {"Pans�t", "G� tilbage"};
-							String optionsChoice = gui_controller.multipleChoice("Vil du fors�tte?", options);
+							String[] options = {"Pansæt", "Gå tilbage"};
+							String optionsChoice = gui_controller.multipleChoice("Vil du forsætte?", options);
 							if (options[0].matches(optionsChoice)) {
 								((Buyable) board.getField(ownedFieldNumbers[j])).setPledged(true); //sat til at v�re pansat
 								player.addPoints(((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ); // modtager bel�b prisen
@@ -360,7 +360,7 @@ public class Game {
 			}
 
 
-			String chosenStreetName = gui_controller.multipleChoice("Hvilken ejendom vil du s�lge?", ownedStreetOptions);
+			String chosenStreetName = gui_controller.multipleChoice("Hvilken ejendom vil du sælge?", ownedStreetOptions);
 
 			// Hvis spilleren v�lger at lade v�re med at s�lge noget alligevel
 			if (chosenStreetName.matches(ownedStreetOptions[0])) {
@@ -401,19 +401,19 @@ public class Game {
 							
 							if(biddingPlayers[i].getPoints() >= highestBid) {
 								try {
-									int proposedBid = Integer.parseInt(gui_controller.getUserInput(biddingPlayers[i].getName() + ", hvor meget vil du byde p� " + chosenStreetName + "?"
+									int proposedBid = Integer.parseInt(gui_controller.getUserInput(biddingPlayers[i].getName() + ", hvor meget vil du byde på " + chosenStreetName + "?"
 																							+ "\n Mindst mulige bud = " + highestBid + "kr."
 																							+ "\n Indtast en lavere v�rdi, for at forlade auktionen."));
 									if(biddingPlayers[i].getPoints() >= proposedBid) {
 										currentBid = proposedBid;
 									} else {
-										gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at byde dette bel�b."
+										gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at byde dette beløb."
 																+ "\n Du byder nu automatisk alle dine kontanter - undtagen en 50'er."
 																+ "\n Hvis det automatiske bud ikke er h�jt nok, fjernes du fra auktionen.");
 										currentBid = biddingPlayers[i].getPoints() - 50;										
 									}
 								} catch (Exception e) {
-									gui_controller.showMessage("Fejl: Du skal indtaste et helt, positivt tal, n�r du byder.");
+									gui_controller.showMessage("Fejl: Du skal indtaste et helt, positivt tal, når du byder.");
 									break;
 								}
 							} else {
@@ -450,17 +450,17 @@ public class Game {
 					}
 					
 					String[] finalAuctionOptions = {"Ja", "Nej"};
-					String finalAuctionChoice = gui_controller.multipleChoice(player.getName() + ", vil du s�lge " + chosenStreetName 
+					String finalAuctionChoice = gui_controller.multipleChoice(player.getName() + ", vil du sælge " + chosenStreetName 
 																								+ " til " + highestBidder.getName() 
 																								+ " for: " + highestBid + ",-.?", finalAuctionOptions);
 					
 					// Hvis k�beren v�lger at fuldf�re auktionen
 					if(finalAuctionChoice.matches(finalAuctionOptions[0])) {
 						if ( ((Buyable) chosenField).isPledged()) {
-							gui_controller.showMessage(highestBidder.getName() + " har valgt at k�be den pantsatte ejendom: " + chosenStreetName + 
+							gui_controller.showMessage(highestBidder.getName() + " har valgt at købe den pantsatte ejendom: " + chosenStreetName + 
 														".\n" + player.getName() + " modtager nu " + highestBid + "kr. fra " + highestBidder.getName());						
 						} else {
-							gui_controller.showMessage(highestBidder.getName() + " har valgt at k�be ejendommen: " + chosenStreetName + 
+							gui_controller.showMessage(highestBidder.getName() + " har valgt at købe ejendommen: " + chosenStreetName + 
 														".\n" + player.getName() + " modtager nu " + highestBid + "kr. fra " + highestBidder.getName());							
 		
 						}
@@ -482,7 +482,7 @@ public class Game {
 						
 					}					
 				} else {
-					gui_controller.showMessage("Fejl: spillet kunne ikke finde den �nskede ejendom.");
+					gui_controller.showMessage("Fejl: spillet kunne ikke finde den ønskede ejendom.");
 				}
 			}								
 		} else {
@@ -515,8 +515,8 @@ public class Game {
 	public void checkBankrupt(Player player) {
 		if(player.getPoints() <= 0) {
 			player.setBankrupt(true);			
-			String[] options = {"Forlad Spillet", "Pants�t ejendomme", "Auktion�r Ejendomme"};
-			String choice = gui_controller.multipleChoice("Du er l�bet t�r for penge!! \n Du har nu f�lgende muligheder:", options);
+			String[] options = {"Forlad Spillet", "Pantsæt ejendomme", "Auktionær Ejendomme"};
+			String choice = gui_controller.multipleChoice("Du er løbet tør for penge!! \n Du har nu følgende muligheder:", options);
 			
 			// Hvis spilleren v�lger at forlade spillet
 			if(choice.matches(options[0])) {
