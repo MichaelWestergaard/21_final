@@ -142,12 +142,15 @@ public class GUI_Controller {
 		for (Player player : players) {
 
 			GUI_Player GUI_player = new GUI_Player(player.getName(), player.getPoints());
+			
 			gui.addPlayer(GUI_player);
 			player.setGUI_player(GUI_player);
 			player.getGUI_player().getCar().setPrimaryColor(colors[i]);
+			GUI_player = null;
 			
 			i++;
 		}
+		
 
 		movePlayers(players);
 		
