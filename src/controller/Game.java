@@ -1,9 +1,12 @@
 package controller;
 
+import entities.Beverage;
 import entities.Buyable;
 import entities.DiceCup;
+import entities.Ferry;
 import entities.Field;
 import entities.Player;
+import entities.Street;
 
 public class Game {
 
@@ -297,7 +300,7 @@ public class Game {
 			for (int j = 0; j < ownedFieldNumbers.length; j++) {
 				if(ownedFieldNumbers[j] != 0) {
 					ownedStreetOptions[j] = board.getField(ownedFieldNumbers[j]).getName();	
-				}					
+				}
 			}
 
 			String chosenStreet = gui_controller.getPlayerAmount("Hvad vil du pansætte?", ownedStreetOptions);
@@ -311,6 +314,8 @@ public class Game {
 								if (player.getPoints() >= ((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ) { //tjekker om han r�d
 									((Buyable) board.getField(ownedFieldNumbers[j])).setPledged(false); //sat til at v�re ikke pansat
 									player.addPoints(-1 * (((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() + (((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() / 100 * 10))  ); // betaler prisen
+									
+									gui_controller.updateGUIField(ownedFieldNumbers[j], "subText", "Pris: " + ((Buyable) board.getField(ownedFieldNumbers[j])).getPrice() + ",-");
 								} else {
 									gui_controller.showMessage("Du har ikke råd til at købe grunden tilbage");
 								}
@@ -323,6 +328,7 @@ public class Game {
 							if (options[0].matches(optionsChoice)) {
 								((Buyable) board.getField(ownedFieldNumbers[j])).setPledged(true); //sat til at v�re pansat
 								player.addPoints(((Buyable) board.getField(ownedFieldNumbers[j])).getPledgePrice() ); // modtager bel�b prisen
+								gui_controller.updateGUIField(ownedFieldNumbers[j], "subText", "Pantsat");
 							} 
 						}								
 					} 
@@ -404,7 +410,7 @@ public class Game {
 								try {
 									int proposedBid = Integer.parseInt(gui_controller.getUserInput(biddingPlayers[i].getName() + ", hvor meget vil du byde på " + chosenStreetName + "?"
 																							+ "\n Mindst mulige bud = " + highestBid + "kr."
-																							+ "\n Indtast en lavere v�rdi, for at forlade auktionen."));
+																							+ "\n Indtast en lavere værdi, for at forlade auktionen."));
 									if(biddingPlayers[i].getPoints() >= proposedBid) {
 										currentBid = proposedBid;
 									} else {

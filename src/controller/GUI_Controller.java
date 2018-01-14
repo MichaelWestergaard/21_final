@@ -99,7 +99,7 @@ public class GUI_Controller {
 				GUIFields[field.getFieldNo()].setTitle("Start");
 				GUIFields[field.getFieldNo()].setBackGroundColor(new Color(255, 0, 0));
 				GUIFields[field.getFieldNo()].setForeGroundColor(new Color(255, 255, 255));
-				GUIFields[field.getFieldNo()].setSubText(((Start) field).getBonus() + ",-");
+				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Start) field).getBonus() + ",-");
 				
 			} else if (field.getType() == "entities.Parking") {
 
@@ -112,14 +112,14 @@ public class GUI_Controller {
 				
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
 				GUIFields[field.getFieldNo()].setDescription(field.getName());
-				GUIFields[field.getFieldNo()].setSubText(((Buyable) field).getPrice() + " kr.");
+				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Buyable) field).getPrice() + ",-");
 				
 			} else if (field.getType() == "entities.Beverage") {
 
 				GUIFields[field.getFieldNo()] = new GUI_Brewery();
 				GUIFields[field.getFieldNo()].setDescription(field.getName());
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
-				GUIFields[field.getFieldNo()].setSubText(((Buyable) field).getPrice() + " kr.");
+				GUIFields[field.getFieldNo()].setSubText("Pris: " + ((Buyable) field).getPrice() + ",-");
 				
 			} else if (field.getType() == "entities.GovernmentTax" || field.getType() == "entities.IncomeTax") {
 
