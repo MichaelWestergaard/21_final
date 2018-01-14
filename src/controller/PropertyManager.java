@@ -17,7 +17,7 @@ public class PropertyManager {
 	}
 
 	public void manageHousesAndHotels(Player player) {
-		String[] optionsBuySell = {"Køb", "Sælg"};
+		String[] optionsBuySell = {"Tilbage", "Køb", "Sælg"};
 		String buySellChoice = gui_controller.multipleChoice("Vil du købe eller sælge?", optionsBuySell);
 		
 		int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
@@ -66,28 +66,34 @@ public class PropertyManager {
 				}
 			}
 			
-			if(optionsBuySell[0].matches(buySellChoice)) {
+			if (optionsBuySell[0].matches(buySellChoice)) {
 				
-				String[] optionsHouseHotel = {"Hus", "Hotel"};
+			} else if(optionsBuySell[1].matches(buySellChoice)) {
+				
+				String[] optionsHouseHotel = {"Tilbage", "Hus", "Hotel"};
 				String houseHotelChoice = gui_controller.multipleChoice("Hvad vil du bygge?", optionsHouseHotel);
 				
 				//K�b hus eller hotel
 				if(optionsHouseHotel[0].matches(houseHotelChoice)) {
-					buyHouse(player, chosenStreetNumber, evenlyDistributed, groupAmount, sameGroupHouses, chosenStreetHouse);
+					
 				} else if(optionsHouseHotel[1].matches(houseHotelChoice)) {
+					buyHouse(player, chosenStreetNumber, evenlyDistributed, groupAmount, sameGroupHouses, chosenStreetHouse);
+				} else if(optionsHouseHotel[2].matches(houseHotelChoice)) {
 					buyHotel(player, chosenStreetNumber, houseDifference, groupAmount, sameGroupHouses,	chosenStreetHouse);
 				}
 
 				
-			} else if (optionsBuySell[1].matches(buySellChoice)) {
+			} else if (optionsBuySell[2].matches(buySellChoice)) {
 
-				String[] optionsHouseHotel = {"Hus", "Hotel"};
+				String[] optionsHouseHotel = {"Tilbage", "Hus", "Hotel"};
 				String choiceHouseHotel = gui_controller.multipleChoice("Hvad vil du sælge", optionsHouseHotel);
 				
 				//S�lg hus og hotel
 				if(optionsHouseHotel[0].matches(choiceHouseHotel)) {
-					sellHouse(player, chosenStreetNumber, evenlyDistributed, groupAmount, sameGroupHouses, chosenStreetHouse);
+					
 				} else if(optionsHouseHotel[1].matches(choiceHouseHotel)) {
+					sellHouse(player, chosenStreetNumber, evenlyDistributed, groupAmount, sameGroupHouses, chosenStreetHouse);
+				} else if(optionsHouseHotel[2].matches(choiceHouseHotel)) {
 					sellHotel(player, chosenStreetNumber);
 				}
 			}
