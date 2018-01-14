@@ -150,6 +150,8 @@ public class GUI_Controller {
 		}
 
 		movePlayers(players);
+		
+		
 	}
 	
 	public GUI_Field getField(int fieldNo) {
