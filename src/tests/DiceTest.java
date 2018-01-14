@@ -22,6 +22,7 @@ public class DiceTest {
 			
 		}
 		
+		System.out.println("Værdierne nedenfor burde ligge på ca. 10.000 (+/- 500) for hver terning-værdi");
 		System.out.println("Antal 1'ere: " + values[0]);
 		System.out.println("Antal 2'ere: " + values[1]);
 		System.out.println("Antal 3'ere: " + values[2]);
