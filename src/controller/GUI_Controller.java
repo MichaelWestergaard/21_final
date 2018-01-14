@@ -29,7 +29,7 @@ public class GUI_Controller {
 		createGUIFields(fields);
 		this.gui = new GUI(this.fields);
 	}
-
+ 
 	public void createGUIFields(Field[] fields) {
 				
 		GUI_Field[] GUIFields = new GUI_Field[fields.length];

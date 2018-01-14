@@ -15,7 +15,7 @@ public class PropertyManager {
 		this.gui_controller = gui_controller;
 		this.board = board;
 	}
-
+ 
 	public void manageHousesAndHotels(Player player) {
 		String[] optionsBuySell = {"Tilbage", "Køb", "Sælg"};
 		String buySellChoice = gui_controller.multipleChoice("Vil du købe eller sælge?", optionsBuySell);
@@ -212,14 +212,12 @@ public class PropertyManager {
 					} else if(houseDifference == 0) {
 						evenlyDistributed = true;
 					}
-				}
-				
-				else if(groupAmount == 3) {
+				} else if(groupAmount == 3) {
 					int maxNumberHouse = Math.max(chosenStreetHouse, Math.max(sameGroupHouses[0], sameGroupHouses[1]));
 					int minNumberHouse = Math.min(chosenStreetHouse, Math.min(sameGroupHouses[0], sameGroupHouses[1]));
 					houseDifference = maxNumberHouse - minNumberHouse;
 					
-					if(houseDifference < 2) {
+					if(houseDifference < 2 && houseDifference > 0) {
 						if(chosenStreetHouse == minNumberHouse) {
 							evenlyDistributed = true;
 						}	
@@ -238,9 +236,7 @@ public class PropertyManager {
 					else {
 						gui_controller.showMessage("Du har ikke råd til at købe et hus");
 					}
-				}
-			
-				else {
+				} else {
 					gui_controller.showMessage("Du skal fordele husene ligeligt mellem grundene af samme farve");
 				}
 			}

@@ -66,8 +66,18 @@ public class Game {
 				addCounter++;
 			}
 		}
-
+ 
 		gui_controller.addPlayers(players);
+		((Buyable) board.getField(1)).setOwner(players[0]);
+		((Buyable) board.getField(3)).setOwner(players[0]);
+		((Buyable) board.getField(6)).setOwner(players[0]);
+		((Buyable) board.getField(8)).setOwner(players[0]);
+		((Buyable) board.getField(9)).setOwner(players[0]);
+		gui_controller.setOwner(players[0], 1);
+		gui_controller.setOwner(players[0], 3);
+		gui_controller.setOwner(players[0], 6);
+		gui_controller.setOwner(players[0], 8);
+		gui_controller.setOwner(players[0], 9);
 		
 		gameStarted = true;
 		play();
