@@ -415,7 +415,7 @@ public class Game {
 								gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at deltage i auktionen og fjernes nu derfra.");
 							}
 							
-							if(highestBid < currentBid) {
+							if(highestBid <= currentBid) {
 								highestBid = currentBid;
 								highestBidder = biddingPlayers[i];
 							} else {
