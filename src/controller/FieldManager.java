@@ -4,6 +4,7 @@ import entities.Beverage;
 import entities.Buyable;
 import entities.Card;
 import entities.Chance;
+import entities.DiceCup;
 import entities.Ferry;
 import entities.MoneyCard;
 import entities.MoveCard;
@@ -18,12 +19,15 @@ public class FieldManager {
 	private Board board;
 	private PropertyManager propertyManager;
 	private Game game;
-		
-	public FieldManager(GUI_Controller gui_controller, Board board, PropertyManager propertyManager, Game game) {
+	private DiceCup diceCup;
+	
+	public FieldManager(GUI_Controller gui_controller, Board board, PropertyManager propertyManager, Game game, DiceCup diceCup) {
+		super();
 		this.gui_controller = gui_controller;
 		this.board = board;
 		this.propertyManager = propertyManager;
 		this.game = game;
+		this.diceCup = diceCup;
 	}
 
 	public void checkField(Player player) {
@@ -72,7 +76,7 @@ public class FieldManager {
 	}
 
 	private void landedOnTax(Player player, int newFieldNo) {
-		gui_controller.showMessage("Ekstraordinær statsskat, betal 2000");
+		gui_controller.showMessage("Ekstraordinï¿½r statsskat, betal 2000");
 		player.addPoints(((Taxation) board.getField(newFieldNo)).getTax() * -1);
 		((Parking) board.getField(20)).increaseAmount(2000);
 		gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
@@ -80,7 +84,7 @@ public class FieldManager {
 	}
 
 	private void landedOnParking(Player player) {
-		gui_controller.showMessage("Du har landet på parkeringsfeltet og modtager " + ((Parking) board.getField(20)).getAmount() + " kr."  );
+		gui_controller.showMessage("Du har landet pï¿½ parkeringsfeltet og modtager " + ((Parking) board.getField(20)).getAmount() + " kr."  );
 		player.addPoints(((Parking) board.getField(20)).getAmount());
 		((Parking) board.getField(20)).setAmount(0);
 		gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
@@ -91,7 +95,7 @@ public class FieldManager {
 		currentField.createCardList();
 		Card drawncard = currentField.getCard();
 		
-		gui_controller.showMessage("Tryk [OK] for at trække et chancekort.");
+		gui_controller.showMessage("Tryk [OK] for at trï¿½kke et chancekort.");
 		gui_controller.displayChanceCard(((Chance) board.getField(newFieldNo)).getCardDescription());
 		
 		if(drawncard instanceof MoneyCard) {
@@ -131,7 +135,7 @@ public class FieldManager {
 			player.setJailed(true);
 		}
 		
-		gui_controller.showMessage("Gå i fængsel");
+		gui_controller.showMessage("Gï¿½ i fï¿½ngsel");
 		game.movePlayers();
 	}
 
@@ -170,8 +174,8 @@ public class FieldManager {
 		if(!player.equals(owner)) {
 			
 			if(((Beverage) board.getField(newFieldNo)).getOwner() == null) {
-				String[] options = {"Køb felt", "Spring over"};
-				String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
+				String[] options = {"Kï¿½b felt", "Spring over"};
+				String optionsChoice = gui_controller.multipleChoice("Vil du kï¿½be feltet?", options);
 
 				if(options[0].matches(optionsChoice)) {
 					if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
@@ -186,10 +190,12 @@ public class FieldManager {
 					beverageRent = beverageRent * 2;	
 				}
 				
+				beverageRent = beverageRent * diceCup.getDiceSum();
+				
 				gui_controller.showMessage("Du skal betale " + beverageRent + " kr.");
 				
 				player.addPoints(beverageRent * -1);
-				((Street) board.getField(newFieldNo)).getOwner().addPoints(beverageRent);
+				((Buyable) board.getField(newFieldNo)).getOwner().addPoints(beverageRent);
 				
 				game.checkBankrupt(player);
 			}
@@ -201,8 +207,8 @@ public class FieldManager {
 		
 		if(!player.equals(owner)) {
 			if(((Ferry) board.getField(newFieldNo)).getOwner() == null) { //Hvis der ikke findes en ejer.
-				String[] options = {"Køb felt", "Spring over"};
-				String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
+				String[] options = {"Kï¿½b felt", "Spring over"};
+				String optionsChoice = gui_controller.multipleChoice("Vil du kï¿½be feltet?", options);
 
 				if(options[0].matches(optionsChoice)) {
 					if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
@@ -238,9 +244,9 @@ public class FieldManager {
 				}
 				
 				if(ownerOwns == 1) {
-					ending = "færge";
+					ending = "fï¿½rge";
 				} else {
-					ending = "færger";
+					ending = "fï¿½rger";
 				}
 				
 				gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
@@ -256,11 +262,11 @@ public class FieldManager {
 	private void landedOnStreet(Player player, int newFieldNo) {
 		if (!player.equals(((Street) board.getField(newFieldNo)).getOwner())) {
 
-			//Hvis feltet ikke ejes af nogle kan det købes
+			//Hvis feltet ikke ejes af nogle kan det kï¿½bes
 			if(((Street) board.getField(newFieldNo)).getOwner() == null) {
 
-				String[] options = {"Køb felt", "Spring over"};
-				String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
+				String[] options = {"Kï¿½b felt", "Spring over"};
+				String optionsChoice = gui_controller.multipleChoice("Vil du kï¿½be feltet?", options);
 
 				if(options[0].matches(optionsChoice)) {
 					if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
