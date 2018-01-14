@@ -100,8 +100,6 @@ public class Game {
 					Player player = players[i];
 
 					playerActions(player);
-					
-					checkBankrupt(player);
 				}
 			}
 			getWinner();
