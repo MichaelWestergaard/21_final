@@ -12,6 +12,8 @@ public class Game {
 
 	private boolean gameStarted = false;
 	boolean runGame = true;
+	private boolean turnSkipped = false;
+	private int skippedTurn = 0;
 
 	public Player[] players;
 	private DiceCup diceCup = new DiceCup();
@@ -97,6 +99,11 @@ public class Game {
 			while (runGame) {
 
 				for (int i = 0; i < players.length; i++) {
+					if(turnSkipped) {
+						i = skippedTurn;
+						turnSkipped = false;
+					}
+					
 					Player player = players[i];
 
 					playerActions(player);
@@ -553,6 +560,13 @@ public class Game {
 					if(players[i] != player) {
 						newPlayers[addCounter] = players[i];
 						addCounter++;
+					}
+					
+					if(players[i] == player) {
+						if(i != players.length - 1) {
+							turnSkipped = true;
+							skippedTurn = i;
+						}
 					}
 				}
 				
