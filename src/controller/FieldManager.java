@@ -6,6 +6,7 @@ import entities.Card;
 import entities.Chance;
 import entities.DiceCup;
 import entities.Ferry;
+import entities.JailCard;
 import entities.MoneyCard;
 import entities.MoveCard;
 import entities.Parking;
@@ -132,6 +133,8 @@ public class FieldManager {
 				game.movePlayers();
 				checkField(player);
 			}
+		} else if(drawncard instanceof JailCard) {
+			player.setJailCard(1);
 		}
 		
 		game.movePlayers();
