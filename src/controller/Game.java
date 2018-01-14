@@ -11,6 +11,7 @@ import entities.Street;
 public class Game {
 
 	private boolean gameStarted = false;
+	boolean runGame = true;
 
 	public Player[] players;
 	private DiceCup diceCup = new DiceCup();
@@ -50,7 +51,7 @@ public class Game {
 				
 				// Hvis navnet ikke er optaget
 				if(nameTaken == false) {
-					players[i] = new Player(name, 30000);
+					players[i] = new Player(name, 0);
 					addCounter++;
 					
 				// Hvis navnet er optaget
@@ -85,7 +86,6 @@ public class Game {
 			gameSetup();
 		} else {
 
-			boolean runGame = true;
 			while (runGame) {
 
 				for (int i = 0; i < players.length; i++) {
@@ -94,10 +94,6 @@ public class Game {
 					playerActions(player);
 					
 					checkBankrupt(player);
-					
-					if(players.length == 1) {
-						runGame = false;
-					}
 				}
 			}
 			getWinner();
@@ -545,7 +541,7 @@ public class Game {
 				Player[] newPlayers = new Player[players.length - 1];
 				int addCounter = 0;
 				
-				for(int i = 0; i < players.length; i++) {					
+				for(int i = 0; i < players.length; i++) {
 					if(players[i] != player) {
 						newPlayers[addCounter] = players[i];
 						addCounter++;
@@ -554,6 +550,10 @@ public class Game {
 				
 				players = new Player[newPlayers.length];
 				players = newPlayers;
+				
+				if(players.length == 1) {
+					runGame = false;
+				}
 			
 			// Hvis spilleren v�lger at pants�tte en ejendom	
 			} else if(choice.matches(options[1])) {
