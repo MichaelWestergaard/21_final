@@ -194,18 +194,22 @@ public class FieldManager {
 				}
 				
 			} else {
-				if( ((Buyable) board.getField(12)).getOwner() == ((Buyable) board.getField(28)).getOwner() ) {
-					beverageRent = beverageRent * 2;	
+				if(!((Buyable) board.getField(newFieldNo)).isPledged()) {
+					if( ((Buyable) board.getField(12)).getOwner() == ((Buyable) board.getField(28)).getOwner() ) {
+						beverageRent = beverageRent * 2;	
+					}
+					
+					beverageRent = beverageRent * diceCup.getDiceSum();
+					
+					gui_controller.showMessage("Du skal betale " + beverageRent + " kr.");
+					
+					player.addPoints(beverageRent * -1);
+					((Buyable) board.getField(newFieldNo)).getOwner().addPoints(beverageRent);
+					
+					game.checkBankrupt(player);
+				} else {
+					gui_controller.showMessage("Denne ejendom er pantsat, så du skal ikke betale noget.");
 				}
-				
-				beverageRent = beverageRent * diceCup.getDiceSum();
-				
-				gui_controller.showMessage("Du skal betale " + beverageRent + " kr.");
-				
-				player.addPoints(beverageRent * -1);
-				((Buyable) board.getField(newFieldNo)).getOwner().addPoints(beverageRent);
-				
-				game.checkBankrupt(player);
 			}
 		}
 	}
@@ -227,42 +231,46 @@ public class FieldManager {
 				}
 			} else {
 				
-				int ownerOwns = propertyManager.getOwnerGroupAmount(newFieldNo);
-				int amountToPay = ((Ferry) board.getField(newFieldNo)).getRent();
-				
-				String ending;
-				
-				switch (ownerOwns) {
+				if(!((Buyable) board.getField(newFieldNo)).isPledged()) {
+					int ownerOwns = propertyManager.getOwnerGroupAmount(newFieldNo);
+					int amountToPay = ((Ferry) board.getField(newFieldNo)).getRent();
 					
-					case 2:
-						amountToPay = amountToPay * 2;
-						break;
+					String ending;
 					
-					case 3:
-						amountToPay = amountToPay * 4;
-						break;
-					
-					case 4:
-						amountToPay = amountToPay * 8;
-						break;
-
-					default:
+					switch (ownerOwns) {
 						
-						break;
-				}
-				
-				if(ownerOwns == 1) {
-					ending = "færge";
+						case 2:
+							amountToPay = amountToPay * 2;
+							break;
+						
+						case 3:
+							amountToPay = amountToPay * 4;
+							break;
+						
+						case 4:
+							amountToPay = amountToPay * 8;
+							break;
+
+						default:
+							
+							break;
+					}
+					
+					if(ownerOwns == 1) {
+						ending = "færge";
+					} else {
+						ending = "færger";
+					}
+					
+					gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
+					
+					player.addPoints(amountToPay*-1);
+					owner.addPoints(amountToPay);
+					
+					game.checkBankrupt(player);
 				} else {
-					ending = "færger";
+					gui_controller.showMessage("Denne ejendom er pantsat, så du skal ikke betale noget.");
 				}
-				
-				gui_controller.showMessage("Du betaler " + amountToPay + " kr til " + owner.getName() + ", da han ejer " + ownerOwns + " " + ending);
-				
-				player.addPoints(amountToPay*-1);
-				owner.addPoints(amountToPay);
-				
-				game.checkBankrupt(player);
 			}
 		}
 	}
@@ -284,18 +292,23 @@ public class FieldManager {
 					}
 				}
 			} else {
-				int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
-				
-				if(propertyManager.checkMonopoly(newFieldNo) == true && ((Street) board.getField(newFieldNo)).getHouse() == 0) {
-					amountToPay = amountToPay * 2;
+				if(!((Buyable) board.getField(newFieldNo)).isPledged()) {
+
+					int amountToPay = ((Street) board.getField(newFieldNo)).getRent();
+					
+					if(propertyManager.checkMonopoly(newFieldNo) == true && ((Street) board.getField(newFieldNo)).getHouse() == 0) {
+						amountToPay = amountToPay * 2;
+					}
+						
+					gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
+						
+					player.addPoints(amountToPay * -1);
+					((Street) board.getField(newFieldNo)).getOwner().addPoints(amountToPay);
+					
+					game.checkBankrupt(player);
+				} else {
+					gui_controller.showMessage("Denne ejendom er pantsat, så du skal ikke betale noget.");
 				}
-					
-				gui_controller.showMessage("Du skal betale " + amountToPay + " kr.");
-					
-				player.addPoints(amountToPay * -1);
-				((Street) board.getField(newFieldNo)).getOwner().addPoints(amountToPay);
-				
-				game.checkBankrupt(player);
 			}
 		}
 	}	
