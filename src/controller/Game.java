@@ -106,7 +106,7 @@ public class Game {
 		} else {
 			gui_controller.updateBalance(players);
 			
-			String nextAction = gui_controller.multipleChoice(player.getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
+			String nextAction = gui_controller.multipleChoice(player.getName() + "'s tur - Vælg handling", new String[] {"Administrer Ejendomme", "Kast terning"});
 
 			if(nextAction == "Kast terning") {
 				rollDice();
