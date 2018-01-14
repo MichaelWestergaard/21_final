@@ -111,7 +111,7 @@ public class Game {
 		} else {
 			gui_controller.updateBalance(players);
 			
-			String nextAction = gui_controller.getPlayerAmount(player.getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
+			String nextAction = gui_controller.multipleChoice(player.getName() + "'s tur - Vælg handling", new String[] {"Kast terning", "Administrer Ejendomme"});
 
 			if(nextAction == "Kast terning") {
 				rollDice();
@@ -123,7 +123,7 @@ public class Game {
 			
 			} else if (nextAction == "Administrer Ejendomme") {
 
-				String propertyAction = gui_controller.getPlayerAmount("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Auktionér Ejendom"});
+				String propertyAction = gui_controller.multipleChoice("Vælg handling til administration af dine ejendomme:", new String[] {"Huse/Hoteller", "Pantsæt Ejendom", "Auktionér Ejendom"});
 
 				if(propertyAction == "Huse/Hoteller") {
 
@@ -367,7 +367,7 @@ public class Game {
 			}
 
 
-			String chosenStreetName = gui_controller.multipleChoice("Hvilken ejendom vil du sælge?", ownedStreetOptions);
+			String chosenStreetName = gui_controller.getPlayerAmount("Hvilken ejendom vil du sælge?", ownedStreetOptions);
 
 			// Hvis spilleren v�lger at lade v�re med at s�lge noget alligevel
 			if (chosenStreetName.matches(ownedStreetOptions[0])) {
