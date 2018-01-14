@@ -120,6 +120,14 @@ public class FieldManager {
 				player.setJailed(true);
 				player.setFieldNo(((MoveCard) drawncard).getField());
 			} else {
+				
+				int fieldsMoved = Math.abs(player.getFieldNo() - ((MoveCard) drawncard).getField());
+				
+				if(player.getFieldNo() + fieldsMoved > 40) {
+					//Penge over start
+					player.addPoints(4000);
+					gui_controller.updateBalance(game.players);
+				}
 				player.setFieldNo(((MoveCard) drawncard).getField());
 				game.movePlayers();
 				checkField(player);

@@ -8,9 +8,9 @@ import entities.Player;
 public class Game {
 
 	private boolean gameStarted = false;
-		
+
+	public Player[] players;
 	private DiceCup diceCup = new DiceCup();
-	private Player[] players;
 	private GUI_Controller gui_controller = new GUI_Controller();
 	private Board board = new Board();
 	private PropertyManager propertyManager = new PropertyManager(gui_controller, board);
@@ -165,6 +165,7 @@ public class Game {
 						player.addPoints(4000);
 						movePlayers();
 						gui_controller.showMessage("Du kørte over start og modtog derfor 4000,-");
+						gui_controller.updateBalance(players);
 					}
 				}
 			} else {
