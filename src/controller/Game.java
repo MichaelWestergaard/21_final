@@ -1,9 +1,7 @@
 package controller;
 
-import entities.Beverage;
 import entities.Buyable;
 import entities.DiceCup;
-import entities.Ferry;
 import entities.Field;
 import entities.Player;
 import entities.Street;
@@ -70,16 +68,16 @@ public class Game {
 		gui_controller.addPlayers(players);
 
 //		Test		
-		((Buyable) board.getField(1)).setOwner(players[0]);
-		((Buyable) board.getField(3)).setOwner(players[0]);
-		((Buyable) board.getField(6)).setOwner(players[0]);
-		((Buyable) board.getField(8)).setOwner(players[0]);
-		((Buyable) board.getField(9)).setOwner(players[0]);
-		gui_controller.setOwner(players[0], 1);
-		gui_controller.setOwner(players[0], 3);
-		gui_controller.setOwner(players[0], 6);
-		gui_controller.setOwner(players[0], 8);
-		gui_controller.setOwner(players[0], 9);
+//		((Buyable) board.getField(1)).setOwner(players[0]);
+//		((Buyable) board.getField(3)).setOwner(players[0]);
+//		((Buyable) board.getField(6)).setOwner(players[0]);
+//		((Buyable) board.getField(8)).setOwner(players[0]);
+//		((Buyable) board.getField(9)).setOwner(players[0]);
+//		gui_controller.setOwner(players[0], 1);
+//		gui_controller.setOwner(players[0], 3);
+//		gui_controller.setOwner(players[0], 6);
+//		gui_controller.setOwner(players[0], 8);
+//		gui_controller.setOwner(players[0], 9);
 		
 		gameStarted = true;
 		play();
@@ -376,122 +374,166 @@ public class Game {
 			
 			// Hvis spilleren v�lger en ejendom, der skal s�lges	
 			} else {
-				if (board.getFieldFromName(chosenStreetName) != null) {					
-					Field chosenField = board.getFieldFromName(chosenStreetName);					
-					Player[] biddingPlayers = new Player[players.length - 1];
-					int addCounter = 0;
+				Field chosenStreet = board.getFieldFromName(chosenStreetName);
+				int chosenStreetNumber = chosenStreet.getFieldNo();
+				
+				if (chosenStreet != null) {
 					
-					for(int i = 0; i < players.length; i++) {					
-						if(players[i] != player) {
-							biddingPlayers[addCounter] = players[i];
-							addCounter++;
-						}
-					}
+					boolean hasHouses = false; 
 					
-					Player highestBidder = null;
-					boolean auctioning = true;
-					int highestBid = 0;
-					
-					if(((Buyable) chosenField).isPledged()) {
-						highestBid = ((Buyable) chosenField).getPledgePrice();
-					} else {
-						highestBid = ((Buyable) chosenField).getPrice();
-					}
-					
-					int auctionTurn = 0;
-					
-					while(auctioning == true) {
-						if(auctionTurn == biddingPlayers.length) {
-							auctionTurn = 0;
+					if(chosenStreet instanceof Street) {
+						int houses = 0;
+						if(propertyManager.checkMonopoly(chosenStreetNumber)) {
+							
+							int[] ownedFields = player.getOwnedFieldNumbers();
+							int[] ownedStreetNumbers = new int[ownedFieldNumbers.length];
+							int numberOfStreets = 0;
+							
+							//Sorter alle "Street" i et nyt array
+							for(int j = 0; j < ownedFields.length; j++) {
+								if(board.getField(ownedFields[j]).getType() == "entities.Street") {
+									if(((Buyable) board.getField(ownedFields[j])).getGroup() == ((Buyable) chosenStreet).getGroup()) {
+										ownedStreetNumbers[numberOfStreets] = ownedFields[j];
+										numberOfStreets++;
+									}
+								}
+							}
+							
+							int groupAmount = propertyManager.getOwnerGroupAmount(chosenStreetNumber);
+											
+							for(int j = 0; j < groupAmount; j++) {
+								if(((Buyable) chosenStreet).getGroup() == ((Buyable) board.getField(ownedStreetNumbers[j])).getGroup()) {
+									houses += ((Street) board.getField(ownedStreetNumbers[j])).getHouse();
+								}
+							}
+														
 						}
 						
-						for(int i = auctionTurn; i < biddingPlayers.length; i++) {
-							int currentBid = 0;
+						if(houses > 0) {
+							hasHouses = true;
+						} else {
+							hasHouses = false;
+						}
+						
+					}
+					
+					if(!hasHouses) {
+						Field chosenField = board.getFieldFromName(chosenStreetName);					
+						Player[] biddingPlayers = new Player[players.length - 1];
+						int addCounter = 0;
+						
+						for(int i = 0; i < players.length; i++) {					
+							if(players[i] != player) {
+								biddingPlayers[addCounter] = players[i];
+								addCounter++;
+							}
+						}
+						
+						Player highestBidder = null;
+						boolean auctioning = true;
+						int highestBid = 0;
+						
+						if(((Buyable) chosenField).isPledged()) {
+							highestBid = ((Buyable) chosenField).getPledgePrice();
+						} else {
+							highestBid = ((Buyable) chosenField).getPrice();
+						}
+						
+						int auctionTurn = 0;
+						
+						while(auctioning == true) {
+							if(auctionTurn == biddingPlayers.length) {
+								auctionTurn = 0;
+							}
 							
-							if(biddingPlayers[i].getPoints() >= highestBid) {
-								try {
-									int proposedBid = Integer.parseInt(gui_controller.getUserInput(biddingPlayers[i].getName() + ", hvor meget vil du byde på " + chosenStreetName + "?"
-																							+ "\n Mindst mulige bud = " + highestBid + "kr."
-																							+ "\n Indtast en lavere værdi, for at forlade auktionen."));
-									if(biddingPlayers[i].getPoints() >= proposedBid) {
-										currentBid = proposedBid;
-									} else {
-										gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at byde dette beløb."
-																+ "\n Du byder nu automatisk alle dine kontanter - undtagen en 50'er."
-																+ "\n Hvis det automatiske bud ikke er h�jt nok, fjernes du fra auktionen.");
-										currentBid = biddingPlayers[i].getPoints() - 50;										
+							for(int i = auctionTurn; i < biddingPlayers.length; i++) {
+								int currentBid = 0;
+								
+								if(biddingPlayers[i].getPoints() >= highestBid) {
+									try {
+										int proposedBid = Integer.parseInt(gui_controller.getUserInput(biddingPlayers[i].getName() + ", hvor meget vil du byde på " + chosenStreetName + "?"
+																								+ "\n Mindst mulige bud = " + highestBid + "kr."
+																								+ "\n Indtast en lavere værdi, for at forlade auktionen."));
+										if(biddingPlayers[i].getPoints() >= proposedBid) {
+											currentBid = proposedBid;
+										} else {
+											gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at byde dette beløb."
+																	+ "\n Du byder nu automatisk alle dine kontanter - undtagen en 50'er."
+																	+ "\n Hvis det automatiske bud ikke er h�jt nok, fjernes du fra auktionen.");
+											currentBid = biddingPlayers[i].getPoints() - 50;										
+										}
+									} catch (Exception e) {
+										gui_controller.showMessage("Fejl: Du skal indtaste et helt, positivt tal, når du byder.");
+										break;
 									}
-								} catch (Exception e) {
-									gui_controller.showMessage("Fejl: Du skal indtaste et helt, positivt tal, når du byder.");
+								} else {
+									gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at deltage i auktionen og fjernes nu derfra.");
+								}
+								
+								if(highestBid <= currentBid) {
+									highestBid = currentBid;
+									highestBidder = biddingPlayers[i];
+								} else {
+									// Fjerner spilleren fra auktionen
+									Player[] newBiddingPlayers = new Player[biddingPlayers.length - 1];
+									int addCounter2 = 0;
+									
+									for(int j = 0; j < biddingPlayers.length; j++) {					
+										if(biddingPlayers[j] != biddingPlayers[i]) {
+											newBiddingPlayers[addCounter2] = biddingPlayers[j];
+											addCounter2++;
+										}
+									}
+									
+									biddingPlayers = new Player[newBiddingPlayers.length];
+									biddingPlayers = newBiddingPlayers;
+								}
+								
+								if(biddingPlayers.length == 1) {
+									highestBidder = biddingPlayers[0];
+									auctioning = false;
 									break;
 								}
-							} else {
-								gui_controller.showMessage(biddingPlayers[i].getName() + ", du har ikke penge nok til at deltage i auktionen og fjernes nu derfra.");
-							}
-							
-							if(highestBid <= currentBid) {
-								highestBid = currentBid;
-								highestBidder = biddingPlayers[i];
-							} else {
-								// Fjerner spilleren fra auktionen
-								Player[] newBiddingPlayers = new Player[biddingPlayers.length - 1];
-								int addCounter2 = 0;
 								
-								for(int j = 0; j < biddingPlayers.length; j++) {					
-									if(biddingPlayers[j] != biddingPlayers[i]) {
-										newBiddingPlayers[addCounter2] = biddingPlayers[j];
-										addCounter2++;
-									}
-								}
-								
-								biddingPlayers = new Player[newBiddingPlayers.length];
-								biddingPlayers = newBiddingPlayers;
+								auctionTurn++;
 							}
-							
-							if(biddingPlayers.length == 1) {
-								highestBidder = biddingPlayers[0];
-								auctioning = false;
-								break;
-							}
-							
-							auctionTurn++;
-						}
-					}
-					
-					String[] finalAuctionOptions = {"Ja", "Nej"};
-					String finalAuctionChoice = gui_controller.multipleChoice(player.getName() + ", vil du sælge " + chosenStreetName 
-																								+ " til " + highestBidder.getName() 
-																								+ " for: " + highestBid + ",-.?", finalAuctionOptions);
-					
-					// Hvis k�beren v�lger at fuldf�re auktionen
-					if(finalAuctionChoice.matches(finalAuctionOptions[0])) {
-						if ( ((Buyable) chosenField).isPledged()) {
-							gui_controller.showMessage(highestBidder.getName() + " har valgt at købe den pantsatte ejendom: " + chosenStreetName + 
-														".\n" + player.getName() + " modtager nu " + highestBid + "kr. fra " + highestBidder.getName());						
-						} else {
-							gui_controller.showMessage(highestBidder.getName() + " har valgt at købe ejendommen: " + chosenStreetName + 
-														".\n" + player.getName() + " modtager nu " + highestBid + "kr. fra " + highestBidder.getName());							
-		
 						}
 						
-						player.addPoints(highestBid);
-						((Buyable) chosenField).resetOwner(player);
-	
-						for(int i = 0; i < players.length; i++) {
-							if(players[i] == highestBidder) {
-								players[i].addPoints(highestBid * -1);
+						String[] finalAuctionOptions = {"Ja", "Nej"};
+						String finalAuctionChoice = gui_controller.multipleChoice(player.getName() + ", vil du sælge " + chosenStreetName 
+																									+ " til " + highestBidder.getName() 
+																									+ " for: " + highestBid + ",-.?", finalAuctionOptions);
+						
+						// Hvis k�beren v�lger at fuldf�re auktionen
+						if(finalAuctionChoice.matches(finalAuctionOptions[0])) {
+							if ( ((Buyable) chosenField).isPledged()) {
+								gui_controller.showMessage(highestBidder.getName() + " har valgt at købe den pantsatte ejendom: " + chosenStreetName + 
+															".\n" + player.getName() + " modtager nu " + highestBid + "kr. fra " + highestBidder.getName());						
+							} else {
+								gui_controller.showMessage(highestBidder.getName() + " har valgt at købe ejendommen: " + chosenStreetName + 
+															".\n" + player.getName() + " modtager nu " + highestBid + "kr. fra " + highestBidder.getName());							
 			
-								((Buyable) chosenField).setOwner(players[i]);
-								gui_controller.setOwner(players[i], chosenField.getFieldNo());
 							}
+							
+							player.addPoints(highestBid);
+							((Buyable) chosenField).resetOwner(player);
+		
+							for(int i = 0; i < players.length; i++) {
+								if(players[i] == highestBidder) {
+									players[i].addPoints(highestBid * -1);
+				
+									((Buyable) chosenField).setOwner(players[i]);
+									gui_controller.setOwner(players[i], chosenField.getFieldNo());
+								}
+							}
+							
+						// Hvis k�beren v�lger at annullere auktionen	
+						} else if(finalAuctionChoice.matches(finalAuctionOptions[1])) {
+							
 						}
-						
-					// Hvis k�beren v�lger at annullere auktionen	
-					} else if(finalAuctionChoice.matches(finalAuctionOptions[1])) {
-						
-					}					
-				} else {
-					gui_controller.showMessage("Fejl: spillet kunne ikke finde den ønskede ejendom.");
+					} else {
+						gui_controller.showMessage("Ejendommen, eller andre af samme type, har huse på sig.\nDisse skal sælges før du kan auktionere dette felt.");
+					}
 				}
 			}								
 		} else {
