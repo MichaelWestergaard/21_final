@@ -28,10 +28,6 @@ public class DiceCupTest {
 		int diceSum = diceCupTest.getDiceSum();
 		
 		switch (diceSum) {
-			case 1:
-				expected = 1;
-				assertEquals(expected, diceSum);
-				break;
 			case 2:
 				expected = 2;
 				assertEquals(expected, diceSum);
@@ -78,7 +74,7 @@ public class DiceCupTest {
 				break;
 	
 			default:
-				fail("Tallet ligger ikke inden for 1-12");
+				fail("Tallet ligger ikke inden for 2-12");
 				break;
 		}
 	}
