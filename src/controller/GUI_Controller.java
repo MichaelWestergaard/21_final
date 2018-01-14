@@ -151,9 +151,7 @@ public class GUI_Controller {
 			i++;
 		}
 		
-
 		movePlayers(players);
-		
 		
 	}
 	

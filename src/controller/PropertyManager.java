@@ -138,7 +138,7 @@ public class PropertyManager {
 				int minNumberHouse = Math.min(sameGroupHouses[0], Math.min(sameGroupHouses[1], sameGroupHouses[2]));
 				houseDifference = maxNumberHouse - minNumberHouse;
 				
-				if(houseDifference < 2) {
+				if(houseDifference < 2 && houseDifference > 0) {
 					if(chosenStreetHouse == maxNumberHouse) {
 						evenlyDistributed = true;
 					}	
@@ -247,9 +247,7 @@ public class PropertyManager {
 			else {
 				gui_controller.showMessage("Du kan maksimalt have 4 huse på én grund.");
 			}
-		}
-		
-		else {
+		} else {
 			gui_controller.showMessage("Du skal eje alle felter af samme farve for at kunne bygge huse på et af dem.");
 		}
 	} 
