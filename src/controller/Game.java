@@ -73,7 +73,7 @@ public class Game {
 		play();
 	}
 
-	public void play() {
+	private void play() {
 
 		// N�r en har tabt, skal der t�lles hvem har flest penge. N�r det er
 		// talt, skal
@@ -101,7 +101,7 @@ public class Game {
 		}
 	}
 
-	public void playerActions(Player player) {
+	private void playerActions(Player player) {
 		
 		if (player.isJailed()) {
 			playerJailed(player);
@@ -149,7 +149,7 @@ public class Game {
 		
 	}
 
-	public void moveAnimation(Player player) {
+	private void moveAnimation(Player player) {
 		int field = player.getFieldNo();
 
 		int newFieldNo = field + diceCup.getDiceSum();
@@ -184,7 +184,7 @@ public class Game {
 		gui_controller.movePlayers(players);
 	}
 	
-	public void checkEqualDice(Player player) {
+	private void checkEqualDice(Player player) {
 		if (diceCup.getDiceValue(0) == diceCup.getDiceValue(1)) {
 			player.increaseHitDouble();
 
@@ -207,7 +207,7 @@ public class Game {
 		}
 	}
 
-	public void playerJailed(Player player) {
+	private void playerJailed(Player player) {
 
 		gui_controller.showMessage(player.getName() + " sidder i fængsel. \n Tryk [OK] for at vælge, hvordan du vil fortsætte");
 		//board.getField(players[i].getFieldNo()).landOnField(players[i]);
@@ -279,7 +279,7 @@ public class Game {
 		}
 	}
 
-	public void pledgeSequence(Player player) {
+	private void pledgeSequence(Player player) {
 		int[] ownedFieldNumbers = player.getOwnedFieldNumbers();
 
 		int ownedStreets = 0;
@@ -335,7 +335,7 @@ public class Game {
 		gui_controller.updateBalance(players);
 	}
 	
-	public void auctionSequence(Player player) {
+	private void auctionSequence(Player player) {
 		int[] ownedFieldNumbers = player.getOwnedFieldNumbers();							
 		int ownedStreetsCounter = 0;
 
@@ -493,12 +493,12 @@ public class Game {
 		gui_controller.updateBalance(players);
 	}
 	
-	public void rollDice() {
+	private void rollDice() {
 		diceCup.rollDices();
 		gui_controller.setDice(diceCup.getDiceValue(0),diceCup.getDiceValue(1));
 	}
 
-	public void getWinner() {
+	private void getWinner() {
 		int highscore = 0;
 		Player winner = null;
 		for (int i = 0; i < players.length; i++) {
