@@ -51,7 +51,7 @@ public class Game {
 				
 				// Hvis navnet ikke er optaget
 				if(nameTaken == false) {
-					players[i] = new Player(name, 0);
+					players[i] = new Player(name, 30000);
 					addCounter++;
 					
 				// Hvis navnet er optaget
