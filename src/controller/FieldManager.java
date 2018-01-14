@@ -185,10 +185,10 @@ public class FieldManager {
 		if(!player.equals(owner)) {
 			
 			if(((Beverage) board.getField(newFieldNo)).getOwner() == null) {
-				String[] options = {"Køb felt", "Spring over"};
+				String[] options = {"Spring over", "Køb felt"};
 				String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
 
-				if(options[0].matches(optionsChoice)) {
+				if(options[1].matches(optionsChoice)) {
 					if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
 						player.addPoints(((Buyable) board.getField(newFieldNo)).getPrice() * -1);
 						((Buyable) board.getField(newFieldNo)).setOwner(player);
@@ -222,10 +222,10 @@ public class FieldManager {
 		
 		if(!player.equals(owner)) {
 			if(((Ferry) board.getField(newFieldNo)).getOwner() == null) { //Hvis der ikke findes en ejer.
-				String[] options = {"Køb felt", "Spring over"};
+				String[] options = {"Spring over", "Køb felt"};
 				String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
 
-				if(options[0].matches(optionsChoice)) {
+				if(options[1].matches(optionsChoice)) {
 					if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
 						player.addPoints(-1 * ((Buyable) board.getField(newFieldNo)).getPrice());
 						((Buyable) board.getField(newFieldNo)).setOwner(player);
@@ -276,7 +276,7 @@ public class FieldManager {
 				}
 			}
 		}
-	}
+	} 
 
 	private void landedOnStreet(Player player, int newFieldNo) {
 		if (!player.equals(((Street) board.getField(newFieldNo)).getOwner())) {
@@ -284,10 +284,10 @@ public class FieldManager {
 			//Hvis feltet ikke ejes af nogle kan det k�bes
 			if(((Street) board.getField(newFieldNo)).getOwner() == null) {
 
-				String[] options = {"Køb felt", "Spring over"};
+				String[] options = {"Spring over", "Køb felt"};
 				String optionsChoice = gui_controller.multipleChoice("Vil du købe feltet?", options);
 
-				if(options[0].matches(optionsChoice)) {
+				if(options[1].matches(optionsChoice)) {
 					if(player.getPoints() >= ((Buyable) board.getField(newFieldNo)).getPrice()) {
 						player.addPoints(((Buyable) board.getField(newFieldNo)).getPrice() * -1);
 						((Buyable) board.getField(newFieldNo)).setOwner(player);

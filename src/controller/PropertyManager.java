@@ -250,7 +250,7 @@ public class PropertyManager {
 		} else {
 			gui_controller.showMessage("Du skal eje alle felter af samme farve for at kunne bygge huse på et af dem.");
 		}
-	} 
+	}  
 	
 	public int getOwnerGroupAmount(int fieldNo) {
 		int ownerGroupAmount = 0;
