@@ -544,6 +544,8 @@ public class Game {
 				}
 				
 				// Fjerner spilleren fra spillet
+				player.getGUI_player().setName(player.getName() + " [Forladt]");
+				
 				Player[] newPlayers = new Player[players.length - 1];
 				int addCounter = 0;
 				
