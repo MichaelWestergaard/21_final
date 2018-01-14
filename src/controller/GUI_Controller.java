@@ -126,6 +126,7 @@ public class GUI_Controller {
 				GUIFields[field.getFieldNo()] = new GUI_Tax();
 				GUIFields[field.getFieldNo()].setDescription(field.getName());
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
+				GUIFields[field.getFieldNo()].setSubText(null);
 				
 			}
 			
