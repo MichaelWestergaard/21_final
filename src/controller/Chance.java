@@ -1,4 +1,10 @@
-package entities;
+package controller;
+
+import entities.Card;
+import entities.Field;
+import entities.JailCard;
+import entities.MoneyCard;
+import entities.MoveCard;
 
 public class Chance extends Field {
 	
@@ -55,7 +61,7 @@ public class Chance extends Field {
 	}
 
 	public String getCardDescription() {
-		return drawncard.description;
+		return drawncard.getDescription();
 	}
 
 	public void setDrawncard(Card drawncard) {
