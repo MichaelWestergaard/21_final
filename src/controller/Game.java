@@ -587,7 +587,18 @@ public class Game {
 
 					// GUI'en fjerner spilleren som owner af feltet
 					gui_controller.setOwner(null, currentField.getFieldNo());
-					}			
+					}
+					
+					if (currentField.getType() == "entities.Street") {
+						int houseCount = ((Street) currentField).getHouse();
+						
+						for(int j = 0; j < houseCount; j++) {
+							((Street) currentField).sellHouse();
+						}
+						
+						gui_controller.setHouses(currentField.getFieldNo(), 0);
+						gui_controller.setHotel(currentField.getFieldNo(), false);
+					}
 				}
 				
 				// Fjerner spilleren fra spillet
