@@ -3,6 +3,7 @@ package controller;
 import entities.Beverage;
 import entities.Buyable;
 import entities.Card;
+import entities.Chance;
 import entities.DiceCup;
 import entities.Ferry;
 import entities.JailCard;
