@@ -1,4 +1,10 @@
-package entities;
+package controller;
+
+import entities.Card;
+import entities.Field;
+import entities.JailCard;
+import entities.MoneyCard;
+import entities.MoveCard;
 
 public class Chance extends Field {
 	

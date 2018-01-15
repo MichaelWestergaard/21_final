@@ -87,7 +87,7 @@ public class GUI_Controller {
 				GUIFields[field.getFieldNo()].setTitle(field.getName());
 				GUIFields[field.getFieldNo()].setSubText(field.getName());
 
-			} else if (field.getType() == "entities.Chance") {
+			} else if (field.getType() == "controller.Chance") {
 
 				GUIFields[field.getFieldNo()] = new GUI_Chance();
 				GUIFields[field.getFieldNo()].setBackGroundColor(Color.BLACK);

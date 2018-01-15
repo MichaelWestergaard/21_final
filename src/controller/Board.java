@@ -1,7 +1,6 @@
 package controller;
 
 import entities.Beverage;
-import entities.Chance;
 import entities.Ferry;
 import entities.Field;
 import entities.GovernmentTax;

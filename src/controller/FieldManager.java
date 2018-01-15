@@ -3,7 +3,6 @@ package controller;
 import entities.Beverage;
 import entities.Buyable;
 import entities.Card;
-import entities.Chance;
 import entities.DiceCup;
 import entities.Ferry;
 import entities.JailCard;
@@ -39,7 +38,7 @@ public class FieldManager {
 
 	private void getFieldLandedOn(Player player, int newFieldNo) {
 		
-		if (board.getField(newFieldNo).getType() == "entities.Chance") {
+		if (board.getField(newFieldNo).getType() == "controller.Chance") {
 			
 			landedOnChance(player, newFieldNo);
 			
