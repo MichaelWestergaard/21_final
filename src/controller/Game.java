@@ -483,6 +483,7 @@ public class Game {
 									Player[] newBiddingPlayers = new Player[biddingPlayers.length - 1];
 									int addCounter2 = 0;
 									
+									
 									for(int j = 0; j < biddingPlayers.length; j++) {					
 										if(biddingPlayers[j] != biddingPlayers[i]) {
 											newBiddingPlayers[addCounter2] = biddingPlayers[j];
@@ -494,13 +495,13 @@ public class Game {
 									biddingPlayers = newBiddingPlayers;
 								}
 								
+								
 								if(biddingPlayers.length == 1) {
 									highestBidder = biddingPlayers[0];
 									auctioning = false;
 									break;
 								}
 								
-								auctionTurn++;
 							}
 						}
 						
