@@ -68,16 +68,16 @@ public class Game {
 		}
  
 		gui_controller.addPlayers(players);
-		((Buyable) board.getField(1)).setOwner(players[0]);
-		((Buyable) board.getField(3)).setOwner(players[0]);
-		((Buyable) board.getField(6)).setOwner(players[0]);
-		((Buyable) board.getField(8)).setOwner(players[0]);
-		((Buyable) board.getField(9)).setOwner(players[0]);
-		gui_controller.setOwner(players[0], 1);
-		gui_controller.setOwner(players[0], 3);
-		gui_controller.setOwner(players[0], 6);
-		gui_controller.setOwner(players[0], 8);
-		gui_controller.setOwner(players[0], 9);
+//		((Buyable) board.getField(1)).setOwner(players[0]);
+//		((Buyable) board.getField(3)).setOwner(players[0]);
+//		((Buyable) board.getField(6)).setOwner(players[0]);
+//		((Buyable) board.getField(8)).setOwner(players[0]);
+//		((Buyable) board.getField(9)).setOwner(players[0]);
+//		gui_controller.setOwner(players[0], 1);
+//		gui_controller.setOwner(players[0], 3);
+//		gui_controller.setOwner(players[0], 6);
+//		gui_controller.setOwner(players[0], 8);
+//		gui_controller.setOwner(players[0], 9);
 		
 		gameStarted = true;
 		play();
@@ -587,7 +587,18 @@ public class Game {
 
 					// GUI'en fjerner spilleren som owner af feltet
 					gui_controller.setOwner(null, currentField.getFieldNo());
-					}			
+					}
+					
+					if (currentField.getType() == "entities.Street") {
+						int houseCount = ((Street) currentField).getHouse();
+						
+						for(int j = 0; j < houseCount; j++) {
+							((Street) currentField).sellHouse();
+						}
+						
+						gui_controller.setHouses(currentField.getFieldNo(), 0);
+						gui_controller.setHotel(currentField.getFieldNo(), false);
+					}
 				}
 				
 				// Fjerner spilleren fra spillet

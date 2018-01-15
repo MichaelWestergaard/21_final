@@ -71,7 +71,10 @@ public class PropertyManager {
 			} else if(optionsBuySell[1].matches(buySellChoice)) {
 
 				String[] optionsHouseHotel = {"Tilbage", "Hus", "Hotel"};
-				String houseHotelChoice = gui_controller.multipleChoice("Hvad vil du bygge?", optionsHouseHotel);
+				String houseHotelChoice = gui_controller.multipleChoice("Hvad vil du bygge?"
+						+ "\n Prisen for at bygge på denne ejendom er: [ "
+						+ ((Street) board.getField(chosenStreetNumber)).getHousePrice()
+						+ " kr. ]", optionsHouseHotel);
 
 				//K�b hus eller hotel
 				if(optionsHouseHotel[0].matches(houseHotelChoice)) {
