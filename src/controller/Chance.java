@@ -44,7 +44,7 @@ public class Chance extends Field {
 		cardList[12]	= new MoneyCard("Money","Efter auktionen på Assistenshuset, hvor de havde pantsat deres tøj, modtager de ekstra kr. 1200",1200);
 		cardList[13]	= new MoneyCard("Money","Deres præmieobligation er kommet ud. De modtager kr.1000,00 af banken",1000);
 		cardList[14]	= new MoneyCard("Money", "De vandt i lotto. Modtag 250 kr. af banken", 250);
-		cardList[15]	= new MoveCard("Move", "Tag ind på Rødhuspladsen", 39);
+		cardList[15]	= new MoveCard("Move", "Tag ind på Rådhuspladsen", 39);
 		cardList[16]	= new MoveCard("Move", "Ryk frem til Grønningen. Hvis De passerer >>Start<<, indkasser da 4000 kr.", 24);
 		cardList[17]	= new MoveCard("Move", "Tag med Øresundsbåden --- Flyt brikken frem, og hvis De passerer >>Start<<, indkasser 4000 kr.", 5);
 		cardList[18]	= new MoveCard("Move", "Gå i fængsel. Ryk direkte til fængslet. Selv om De passerer >>Start<<, indkasserer De ikke 4000 kr.", 10);
