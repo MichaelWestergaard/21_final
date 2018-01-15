@@ -100,6 +100,10 @@ public class FieldManager {
 		
 		if(drawncard instanceof MoneyCard) {
 			player.addPoints(((MoneyCard) drawncard).getAmount());
+			if(((MoneyCard) drawncard).getAmount() < 0) {
+				((Parking) board.getField(20)).increaseAmount(((MoneyCard) drawncard).getAmount() * -1);
+				gui_controller.updateGUIField(20, "subText", ((Parking) board.getField(20)).getAmount() + " kr.");
+			}
 			
 			if(((MoneyCard) drawncard).getAmount() < 0) {
 				game.checkBankrupt(player);
