@@ -20,7 +20,7 @@ public class Board {
 
 		Start start = new Start(0, 4000, "Start");
 		fields[0] = start;
-		 
+		  
 		Street[] streets = new Street[] {
 			new Street(1, "Rødovrevej", null, Group.LIGHTBLUE, 1200, new int[] {50, 250, 750, 2250, 4000, 6000}, 1000),
 			new Street(3, "Hvidovrevej", null, Group.LIGHTBLUE, 1200, new int[] {50, 250, 750, 2250, 4000, 6000}, 1000),

@@ -20,7 +20,7 @@ public class Chance extends Field {
 		setDrawncard(cardList[random]);
 		return cardList[random];
 	}
-
+ 
 	public Card[] getCardList() {
 		return cardList;
 	}

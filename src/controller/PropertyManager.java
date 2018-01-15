@@ -14,7 +14,7 @@ public class PropertyManager {
 		super();
 		this.gui_controller = gui_controller;
 		this.board = board;
-	}
+	} 
 
 	public void manageHousesAndHotels(Player player) {
 		String[] optionsBuySell = {"Tilbage", "Køb", "Sælg"};

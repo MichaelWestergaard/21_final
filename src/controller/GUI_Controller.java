@@ -28,7 +28,7 @@ public class GUI_Controller {
 	public void setupGUI(Field[] fields) {
 		createGUIFields(fields);
 		this.gui = new GUI(this.fields);
-	}
+	} 
  
 	public void createGUIFields(Field[] fields) {
 				

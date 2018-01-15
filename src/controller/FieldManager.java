@@ -29,7 +29,7 @@ public class FieldManager {
 		this.game = game;
 		this.diceCup = diceCup;
 	}
-
+ 
 	public void checkField(Player player) {
 		int newFieldNo = player.getFieldNo();
 
